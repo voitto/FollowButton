@@ -24,6 +24,10 @@ A. It's a self-hosted sharing tool, with a portable friends list. Follow our [bl
 
 A. Try it at [try.followbutton.com](http://try.followbutton.com).
 
+**Q. How can I help out?**
+
+A. Check our wiki [followbutton.github.com](http://followbutton.github.com).
+
 
 BUGS?
 -----
