@@ -1,0 +1,344 @@
+/* 
+* Skeleton V1.0.2
+* Copyright 2011, Dave Gamache
+* www.getskeleton.com
+* Free to use under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+* 5/20/2011
+*/
+
+/* Table of Content
+==================================================
+	#Site Styles
+	#Page Styles
+	#Media Queries
+	#Font-Face */
+	
+/* #Site Styles
+================================================== */
+
+input[type="button"] {
+	height: 50px;
+	width: auto;
+	-moz-border-radius: 30px;
+	-webkit-border-radius: 30px;
+	border-radius: 30px;
+	font-size:22px;
+	font-family: '';
+	color:#fff;
+	text-shadow:1px 1px 1px #000;
+	border:2px solid white;
+	margin:auto 30px;
+	background: #80C45C;
+	background:-webkit-gradient(linear,center top,center bottom, from(#70b44c), to(#a0f47c));
+	padding: 4px 12px;
+	width: auto;
+	height: 50px;
+	font-weight: bold;
+	text-decoration: none;
+	cursor: pointer;
+	margin-bottom: 20px;
+	line-height: 21px;
+	font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+input[type="text"] {
+
+		padding: 6px 4px;
+		outline: none;
+		-moz-border-radius: 2px;
+		-webkit-border-radius: 2px;
+		border-radius: 2px;
+		font: 13px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+		color: #777;
+		margin: 0;
+		width: 300px;
+		max-width: 100%;
+		display: inline;
+		margin-bottom: 20px;
+		background: #fff;
+}
+
+	input[type="text"]:focus,
+	input[type="password"]:focus,
+	input[type="email"]:focus, 
+	textarea:focus {
+		border: 1px solid #aaa;
+ 		color: #444;
+ 		-moz-box-shadow: 0 0 3px rgba(0,0,0,.2);
+		-webkit-box-shadow: 0 0 3px rgba(0,0,0,.2);
+		box-shadow:  0 0 3px rgba(0,0,0,.2); }
+		
+#tooltip {
+	padding: 5px 10px;
+    background: #cad7e0;
+    border: 1px solid #b2bdc3;
+    opacity: 0.90;
+	color:black;
+}
+
+/* #Page Styles
+================================================== */
+
+body {
+	background: #d6e3c7;
+	background: -webkit-gradient(radial, 50% 25%, 0, 50% 25%, 500, from(#89a7c4), to(#496784));
+	color: white;
+	font-family: "helvetica neue";
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+.column, .columns {
+	 text-align:center;
+	 /*color:white;*/
+}
+
+#header {
+	background: #395774;
+	padding: 5px 0 0;
+	margin-bottom: 30px;
+	-webkit-border-bottom-left-radius: 40px;
+	-moz-border-radius-bottomleft: 40px;
+	border-bottom-left-radius: 40px;
+	-webkit-border-bottom-right-radius: 40px;
+	-moz-border-radius-bottomright: 40px;
+	border-bottom-right-radius: 40px;
+	-moz-box-shadow: 0 0 5px rgba(0,0,0,.6);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,1);
+	box-shadow:  0 0 5px rgba(0,0,0,.6); 
+		}
+		
+#fblogo {
+	width: 120px;
+	height:50px;
+	}
+	
+#signin {
+	padding-top: 20px;
+	}
+	
+.reasons {
+	margin-bottom:60px;
+
+}
+	
+.info {
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+/*	font-family: 'minion pro';
+*/	/*border-bottom: 3px solid #ccc;*/
+}
+	
+#content {
+	background: #395774;
+	-webkit-box-shadow: 0 0 40px rgba(0,0,0,1);
+	padding-top: 15px;
+	margin-bottom: 50px;
+	margin-top:0px;
+	/*color: black;*/
+}
+	
+#thepitch {
+	font-family: 'minion pro';
+	font-size: 50px;
+	margin-bottom: 10px;
+	text-shadow: 1px 1px rgba(0, 0, 0, .75);
+	color:white;
+}
+
+.stuff {
+	font-size: 25px;
+	margin-right: 30px;
+
+}
+	
+	
+#setupvid {
+	margin-top: 10px;
+	-moz-box-shadow: 0 0 5px rgba(0,0,0,.6);
+	-webkit-box-shadow: 0 0 5px rgba(0,0,0,.6);
+	box-shadow:  0 0 5px rgba(0,0,0,.6); 
+	}
+	
+#userinfo {
+	 width: 466px;
+  font-size: 24px;
+  font-family: inherit;
+  line-height: 1.4em;
+  border: 0;
+  outline: none;
+  margin-top: 40px;
+  padding: 6px;
+  border: 1px solid #999999;
+  
+  -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+  -o-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+}
+
+#footer {
+	height: 53px;
+	-moz-box-shadow: 0 0 5px rgba(0,0,0,.6);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,1);
+	box-shadow:  0 0 5px rgba(0,0,0,.6);
+	background: #395774;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+	padding-top: 27px;
+	font-size: 25px;
+	color: white;
+}
+
+.footercont {
+	margin: 50px;
+}
+
+/*input:active {
+	background:#00f;
+}*/
+
+#jsddm
+{	margin: 0;
+	padding: 0}
+	
+	#jsddm li
+	{	/*float: left;*/
+		list-style: none;
+		/*font: 12px Tahoma, Arial*/}
+
+	#jsddm li a
+	{	display: block;
+		background: #395774;
+		padding: 10px 12px;
+		text-decoration: none;
+		/*border-right: 1px solid white;*/
+		font-size: 20px;
+		width: 300px;
+		color: white;
+		white-space: nowrap;
+		cursor:pointer;}
+
+	#jsddm li a:hover
+	{	background: #1A4473;
+	/*border:1px solid white;*/}
+		
+		#jsddm li ul
+		{	margin: 0;
+			padding: 0;
+			position: absolute;
+			visibility: hidden;
+			/*border-top: 1px solid white*/}
+		
+		#jsddm li ul li
+		{	float: none;
+			display: inline;
+			/*border:1px solid white;*/}
+		
+		#jsddm li ul li a
+		{	width: 300px;
+			background: #395774}
+		
+		#jsddm li ul li a:hover
+		{	background: #1A4473}
+
+/* #Media Queries
+================================================== */
+	
+	/* iPad Portrait/Browser */
+	@media only screen and (min-width: 768px) and (max-width: 959px) {
+		
+		#setupvid {
+			width: 350px;
+			height: 240px;
+		}
+		
+	}
+	
+	/* Mobile/Browser */
+	@media only screen and (max-width: 767px) {
+		
+		#setupvid {
+			width: 250px;
+			height: 130px;
+		}
+		
+		#userinfo {
+			width: 250px;
+			margin: 20px auto;
+		}
+		
+		.footercont {
+			margin: 20px;
+			font-size: 20px;
+		}
+		
+	}
+	
+	/* Mobile Landscape/Browser */
+	@media only screen and (min-width: 480px) and (max-width: 767px) {
+		
+		#setupvid {
+			width: 250px;
+			height: 130px;
+		}		
+		
+		#userinfo {
+			width: 250px;
+			margin: 20px auto;
+		}
+		
+		.footercont {
+			margin: 15px;
+			font-size: 20px;
+		}
+		
+	}
+	
+	@media only screen and (max-width: 479px) {
+		#fblogo {
+			width: 250px;
+			height: 55px;
+		}	
+		
+		.footercont {
+			margin: 10px;
+			font-size: 15px;
+		}
+	}
+	
+	/* Anything smaller than standard 960 */
+	@media only screen and (max-width: 959px) {}
+	
+	/* iPad Portrait Only */
+	@media only screen and (min-width: 768px) and (max-width: 991px) and (max-device-width: 1000px) {}
+	
+	/* Mobile Only */
+	@media only screen and (max-width: 767px) and (max-device-width: 1000px) {}
+	
+	/* Mobile Landscape Only */
+	@media only screen and (min-width: 480px) and (max-width: 767px) and (max-device-width: 1000px) {}
+	
+
+/* #Font-Face
+================================================== */
+/* 	This is the proper syntax for an @font-face file 
+		Just create a "fonts" folder at the root, 
+		copy your FontName into code below and remove
+		comment brackets */
+		
+/*	@font-face {
+	    font-family: 'FontName';
+	    src: url('../fonts/FontName.eot');
+	    src: url('../fonts/FontName.eot?iefix') format('eot'),
+	         url('../fonts/FontName.woff') format('woff'),
+	         url('../fonts/FontName.ttf') format('truetype'),
+	         url('../fonts/FontName.svg#webfontZam02nTh') format('svg');
+	    font-weight: normal;
+	    font-style: normal; }
+*/

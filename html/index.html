@@ -1,0 +1,440 @@
+<!doctype html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8" />
+	<title>Follow Button</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+	
+	<!-- CSS
+  ================================================== -->
+	<link rel="stylesheet" href="css/base2.css">
+	<link rel="stylesheet" href="css/skeleton.css">
+	<link rel="stylesheet" href="css/software.css">
+  <link rel="stylesheet" href="css/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
+
+	
+	<!-- Favicons
+	================================================== -->
+	<link rel="shortcut icon" href="image/favicon.ico">
+	<link rel="apple-touch-icon" href="image/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="image/apple-touch-icon-72x72.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="image/apple-touch-icon-114x114.png" />
+
+
+	<!-- SPINE STUFF THAT BRIAN ADDED TO SKELETON INCLUDING CSS !!!!!!!!!!!!!
+	================================================== -->
+	<!-- by Brian 8/6/11
+
+  <link rel="stylesheet" href="stylesheets/application.css" type="text/css" charset="utf-8">
+  -->
+  <script src="lib/json2.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/mustache.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/spine.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/spine.ajax.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/jquery.hoverbox.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/jquery.fancybox-1.3.4.js" type="text/javascript" charset="utf-8"></script>
+
+  <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+
+
+
+
+	<!-- by Brian 8/6/11
+  <script src="app/application.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../javascripts/app.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" src="../test/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+  <script type="text/javascript" src="../javascripts/action2.js"></script>
+
+  <script type="text/javascript" src="../javascripts/jquery.hoverbox.js"></script>
+  
+-->  
+
+  
+
+</head>
+<body>	
+
+
+
+
+
+	<!-- Primary Page Layout
+	================================================== -->
+	
+	<!-- Delete everything in this .container and get started on your own site! -->
+
+<div class="container">	
+
+		
+    <div class="sixteen columns" id="header">
+    
+    
+    	<div class="five columns">
+        <h2 style="margin-top:10px;cursor:pointer;" id="username" class="hovertip" title="Return home">[Username]</h2>
+        </div>
+        
+        <div class="five columns">
+        
+        <!--Menu courtesy javascript-array.com-->
+        <ul id="jsddm">
+            <li><a href="#"><h2>Settings</h2></a>
+                <ul>
+                
+                    <li><a id="following">Following</a></li>
+                    <li><a id="privacy">Privacy</a></li>
+                    <li><a id="appearance">Appearance</a></li>
+                    <li><a id="activity">Activity Feed</a></li>
+                    <li><a>Log Out</a></li>
+                    
+                </ul>
+            </li>
+   
+		</ul>
+        
+        
+        </div>
+    
+        <div class="five columns">
+        <a href="#follow" id="fancylink"><img style="margin-top:10px;cursor:pointer;" src="image/follow.png" id="fblogo" class="hovertip" title="Click to follow someone!" /></a>
+        </div>
+        
+       <!-- <div class="seven columns" id="signin">
+        <input type="button" value="Login" id="logbtn" />
+        <input type="button" value="Sign Up!" id="signbtn" />
+        </div>-->
+        
+    </div>
+    
+    <div id="mainstuff">
+    <div class="eleven columns">
+    	
+        <h1 id="thepitch" style="float:right;">Share Something</h1>
+        <!--<input type="button" value="Hide" style="position:absolute; float:right;" />-->
+    
+    </div>
+    
+    <div id="showhide" class="five columns">
+    <img src="image/hide.png" style="height:40px;width:140px;margin-top:8px;cursor: pointer;" id="hideshare" />
+    <img src="image/show.png" style="height:40px;width:140px;margin-top:8px;display:none;cursor: pointer;" id="showshare" />
+    </div>
+    
+    <div id="tohide">
+    <div class="sixteen columns">
+    
+    <input type="button" value="Photo" id="photobtn" />
+    <input type="button" value="Video" id="videobtn" />
+    <br />
+    <input type="file" style="display:none;margin-bottom:10px;" id="upphoto" />
+    <input type="file" style="display:none;margin-bottom:10px;" id="upvideo" />
+    
+    </div>
+    
+    <div class="thirteen columns">
+    	<span class="stuff">Title (optional)</span>
+        <input type="text" id="thetitle" />
+    
+    </div>
+    
+    <div class="sixteen columns">
+    
+    <div style="width: 470px; margin: 0 0 0 320px;">
+    	<textarea style="float:left;display:inline;width:300px;height:100px;" id="thepost"></textarea>
+        <input type="button" value="Share!" id="submitbtn" style="float:left;display:inline;margin-top:30px;" />
+    </div>
+    </div>
+    </div>
+   
+   
+    <div class="sixteen columns">
+        
+        <div style="width:400px; margin:20px auto;">
+        <ul class="tabs">
+            <!-- Give href an ID value of corresponding "tabs-content" <li>'s -->
+            <li><a class="active" href="#Me">Me</a></li>
+            <li><a href="#Split">Split</a></li>
+            <li><a href="#Everyone">Everyone</a></li>
+		</ul>
+        </div>
+    
+    </div>
+    
+    
+    <div class="sixteen columns" id="content">
+    
+        <ul class="tabs-content">
+      <!-- Give ID that matches HREF of above anchors -->
+            <li id="MeTab" class="active">
+            
+            	<div class="one-half column">
+                	<img style="width:300px; height:250px; border:1px solid black;" />
+                    <h3>My photos</h3>
+                </div>
+                
+                <div class="one-half column">
+                	<video style="width:300px; height: 250px; border:1px solid black;">
+                    </video>
+                    <h3>My videos</h3>
+                </div>
+                
+                <div class="nested full">
+                	<h1 style="padding-bottom:10px; border-bottom:3px dashed white;">Activity</h1>
+                    
+                    <script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'profile',
+  rpp: 4,
+  interval: 6000,
+  width: 800,
+  height: 300,
+  theme: {
+    shell: {
+      background: '#000000',
+      color: '#ffffff'
+    },
+    tweets: {
+      background: '#395774',
+      color: '#ffffff',
+      links: '#4aed05'
+    }
+  },
+  features: {
+    scrollbar: false,
+    loop: false,
+    live: false,
+    hashtags: true,
+    timestamp: true,
+    avatars: true,
+    behavior: 'all'
+  }
+}).render().setUser('brianjesse').start();
+</script>
+                    
+                    <div class="nested full">
+                <div class="four columns">
+                	<img style="border:1px solid black; height:80px;width:50px;" />
+                    <p>[User]</p>
+                </div>
+                    
+                <div class="ten columns">
+                	<h3>[Title]</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+                </div>
+                
+                <div class="fifteen columns">
+                <ul id="newstuff">
+                </ul>
+                </div>	
+                </div>
+            
+            
+            </li>
+            
+            <li id="SplitTab">
+            
+            	<div class="one-half column" style="margin:0 0 0 -2px; border-right:3px white dashed;">
+                <h1 style="padding-bottom:10px; border-bottom:3px dashed white;">My Activity</h1>
+                <div class="two columns">
+                	<img style="border:1px solid black; height:80px;width:50px;" />
+                    <p>[User]</p>
+                </div>
+                
+                <div class="four columns">
+                	<h3>[Title]</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+                
+                </div>
+                
+                <div class="one-half column" style="margin: 0 0 0 -2px;padding:0 0 0 20px;">
+                <h1 style="padding-bottom:10px; border-bottom:3px dashed white;">Everyone's Activity</h1>
+                
+                <div class="two columns">
+                	<img style="border:1px solid black; height:80px;width:50px;" />
+                    <p>[User]</p>
+                </div>
+                
+                <div class="four columns">
+                	<h3>[User] Posted a video.</h3>
+                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
+                    <video style="height:150px;width:200px;border:1px solid white;"></video>
+                    
+                    
+                </div>
+                
+                </div> 
+            
+            
+            </li>
+            <li id="EveryoneTab">
+            
+            	
+                <h1 style="padding-bottom:10px; border-bottom:3px dashed white;">Everyone's Activity</h1>
+                <div class="nested full">
+                <div class="four columns">
+                	<img style="border:1px solid black; height:80px;width:50px;" />
+                    <p>[User]</p>
+                </div>
+                    
+                <div class="ten columns">
+                	<h3>[Title]</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+                </div>
+                
+                 <!--<div class="two columns">
+                	<img style="border:1px solid black; height:80px;width:50px;" />
+                    <p>[User]</p>
+                </div>
+                
+                <div class="ten columns">
+                	<h3>[User] Posted a video.</h3>
+                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
+                    <video style="height:150px;width:200px;border:1px solid white;"></video>
+                    
+                    
+                </div>-->
+            
+            </li>
+        </ul>
+    
+    </div>
+   <!-- <div class="sixteen columns" id="footer">
+    
+        <span class="footercont">home</span>
+        <span class="footercont">developers</span>
+        <span class="footercont">about</span>
+        <span class="footercont">blog</span>
+        
+    </div>-->
+    
+    <div style="display:none;">
+    <div id="follow" style="color:black;text-align:center;">
+    
+    	<h4>Who would you like to follow?</h4>
+        <h5>Enter the URL of a blog, feed, or almost anything!</h5>
+        <input type="text" />
+        <h5>Import your friends from facebook.</h5>
+        
+        
+        <div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=APP_ID&amp;xfbml=1"></script><fb:login-button show-faces="false" width="200" max-rows="1"></fb:login-button>
+        
+    
+    </div>
+    </div>
+    </div>
+    
+    
+    <div id="followstuff" class="sixteen columns" style="display:none">
+        <h1 style="padding-bottom:20px;margin-bottom:20px;border-bottom:3px dashed white;">Who I'm Following</h1>
+        <div title="Stop following" class="two columns hovertip getrid"><img style="height:30px;width:50px;" />[User]</div>
+        <div title="Stop following" class="two columns hovertip getrid"><img style="height:30px;width:50px;" />[User]</div>
+        <div title="Stop following" class="two columns hovertip getrid"><img style="height:30px;width:50px;" />[User]</div>
+        <div title="Stop following" class="two columns hovertip getrid"><img style="height:30px;width:50px;" />[User]</div>
+        <div title="Stop following" class="two columns hovertip getrid"><img style="height:30px;width:50px;" />[User]</div>
+        <div title="Stop following" class="two columns hovertip getrid"><img style="height:30px;width:50px;" />[User]</div>
+        <div title="Stop following" class="two columns hovertip getrid"><img style="height:30px;width:50px;" />[User]</div>
+        <div title="Stop following" class="two columns hovertip getrid"><img style="height:30px;width:50px;" />[User]</div>
+        <div title="Stop following" class="two columns hovertip getrid"><img style="height:30px;width:50px;" />[User]</div>
+        <div title="Stop following" class="two columns hovertip getrid"><img style="height:30px;width:50px;" />[User]</div>
+        <div title="Stop following" class="two columns hovertip getrid"><img style="height:30px;width:50px;" />[User]</div>
+        <div title="Stop following" class="two columns hovertip getrid"><img style="height:30px;width:50px;" />[User]</div>
+        <div title="Stop following" class="two columns hovertip getrid"><img style="height:30px;width:50px;" />[User]</div>
+        <div title="Stop following" class="two columns hovertip getrid"><img style="height:30px;width:50px;" />[User]</div>
+        <br />
+        <h1 style="padding-bottom:20px;margin-bottom:20px;margin-top:80px;border-bottom:3px dashed white;">My Groups</h1>
+        <div class="seven columns" style="margin-top:30px;"><h2>[Group Name]</h2></div>
+        <div class="seven columns">
+        	<h3>People in this group</h3>
+            <div class="two columns"><img style="height:30px;width:50px;" />[User]</div>
+            <div class="two columns"><img style="height:30px;width:50px;" />[User]</div>
+            <div class="two columns"><img style="height:30px;width:50px;" />[User]</div>
+            <div class="two columns"><img style="height:30px;width:50px;" />[User]</div>
+            <div class="two columns"><img style="height:30px;width:50px;" />[User]</div>
+            <div class="two columns"><img style="height:30px;width:50px;" />[User]</div>
+        </div>
+            
+    </div>
+    
+    <div id="privacystuff" class="sixteen columns" style="display:none;">
+    <h1 style="padding-bottom:20px;margin-bottom:20px;margin-top:20px;border-bottom:3px dashed white;">My page can be seen by:</h1>
+    <input type="checkbox"  />Everyone 
+    <input id="groupcheck" type="checkbox" />These groups
+    <select id="options" style="display:none">
+    	<option>Group 1</option>
+        <option>Group 2</option>
+        <option>Group 3</option>
+    </select>
+    
+    <input type="checkbox" />Custom
+    
+    </div>
+    
+    <div id="appearancestuff" class="sixteen columns" style="display:none">
+
+   
+   	<h1 style="padding-bottom:20px;margin-bottom:20px;margin-top:20px;border-bottom:3px dashed white;">Customize Your Appearance</h1>
+    
+     		<div class="two columns"><img style="height:30px;width:50px;" />Theme</div>
+            <div class="two columns"><img style="height:30px;width:50px;" />Theme</div>
+            <div class="two columns"><img style="height:30px;width:50px;" />Theme</div>
+            <div class="two columns"><img style="height:30px;width:50px;" />Theme</div>
+            <div class="two columns"><img style="height:30px;width:50px;" />Theme</div>
+            <div class="two columns"><img style="height:30px;width:50px;" />Theme</div>
+            
+            <br />
+    <h1 style="padding-bottom:20px;margin-bottom:20px;margin-top:80px;border-bottom:3px dashed white;">Make your own Layout</h1>       
+    
+    
+    </div>
+    
+    <div id="activitystuff" class="sixteen columns" style="display:none">
+    <h1 style="padding-bottom:20px;margin-bottom:20px;margin-top:20px;border-bottom:3px dashed white;">Show Me the Activity Of:</h1>
+    
+     <input type="checkbox"  />Everyone 
+    <input id="groupcheck" type="checkbox" />These groups
+    <select id="options" style="display:none">
+    	<option>Group 1</option>
+        <option>Group 2</option>
+        <option>Group 3</option>
+    </select>
+    
+    <input type="checkbox" />Custom
+   
+    
+    </div>
+    
+    
+</div><!-- container -->
+
+		
+		
+		
+		
+	<!-- JS
+	================================================== -->
+	<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+	<script>window.jQuery || document.write("<script src='javascripts/jquery-1.5.1.min.js'>\x3C/script>")</script>
+	<script src="javascripts/app.js"></script>-->
+	
+<!-- End Document
+================================================== -->
+</body>
+</html>
