@@ -116,6 +116,14 @@ textarea:focus {
 ================================================== */
 
 
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> b31eb46189caa2ed470b3c770c8820ad50252570
+>>>>>>> a7f2c24318591881f8c9e9f18e17429856b72f52
 body {
 	background: #496784;
 	background: -webkit-gradient(radial, 50% 25%, 0, 50% 25%, 500, from(#89a7c4), to(#496784));
@@ -130,6 +138,13 @@ body {
 	font-size: 100%;
 	vertical-align: baseline;
 }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> d4e12accb9926bed088a1d808501e7b8172e9f87
+>>>>>>> b31eb46189caa2ed470b3c770c8820ad50252570
+>>>>>>> a7f2c24318591881f8c9e9f18e17429856b72f52
 
 .column, .columns {
 	 text-align:center;
