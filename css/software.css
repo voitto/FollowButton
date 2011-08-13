@@ -96,7 +96,24 @@ textarea:focus {
 /* #Page Styles
 ================================================== */
 
+<<<<<<< HEAD
 
+=======
+body {
+	background: #496784;
+	background: -webkit-gradient(radial, 50% 25%, 0, 50% 25%, 500, from(#89a7c4), to(#496784));
+	background:  -moz-radial-gradient(center 45deg, circle, #89a7c4 0%, #496784 80%);
+	background:  -o-radial-gradient(center 45deg, circle, #89a7c4 0%, #496784 80%);
+	
+	color: white;
+	font-family: "helvetica neue";
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+>>>>>>> 60b2b5238b800d446d995c84ac6464c6f386c9af
 
 .column, .columns {
 	 text-align:center;
