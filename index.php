@@ -12,7 +12,6 @@ respond( 'GET',      '/',                   'index' );
 
 function constructor($request,$response) {
   require 'lib/Mullet.php';
-  if (!isset($request->resource)) return;
   $model = 'model/'.$request->resource.".php";
   if (file_exists($model)) include $model;
   $action = strtolower($request->method());
@@ -21,14 +20,13 @@ function constructor($request,$response) {
     $obj = new $mapper;
   header('HTTP/1.1 200 OK');
   header('Content-Type: application/json');
-  if (isset($obj) && method_exists($obj,$action)) {
+  if (isset($obj) && method_exists($obj,$action))
     echo json_encode($obj->$action($request,$response))."\n";
-    exit;
-  }
-  echo json_encode(array(
-    'error'=>'internal error',
-    'code'=>500
-  ));
+  else
+    echo json_encode(array(
+      'error'=>'internal error',
+      'code'=>500
+    ));
 }
 
 function index($request,$response) {
