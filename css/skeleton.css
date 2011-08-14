@@ -14,7 +14,8 @@
 	#Tablet (Portrait)
 	#Mobile (Portrait) 
 	#Mobile (Landscape)
-	#Clearing */
+	#Clearing
+	#Custom			 */
 	
 	
 
@@ -239,5 +240,10 @@
 	  height: 0;
 	}
 	
-	
+/* #Custom
+================================================== */
+
+	.column, .columns {
+		 text-align:center;
+	}
 	
