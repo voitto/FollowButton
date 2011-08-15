@@ -149,7 +149,9 @@ textarea:focus {
 }
 	
 #content {
-	background: #395774;
+	color:white;
+	color:black;
+	background: #fff;
 	-webkit-box-shadow: 0 0 40px rgba(0,0,0,1);
 	-moz-box-shadow: 0 0 40px rgba(0,0,0,1);
 	box-shadow: 0 0 40px rgba(0,0,0,1);
