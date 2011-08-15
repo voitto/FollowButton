@@ -25,47 +25,18 @@
 
 /* #Reset & Basics (Inspired by E. Meyers)
 ================================================== */
-	html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-		margin: 0;
-		padding: 0;
-		border: 0;
-		font-size: 100%;
-		font: inherit;
-		vertical-align: baseline; }
-	article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-		display: block; }
-	body {
-		line-height: 1; }
-	ol, ul {
-		list-style: none; }
-	blockquote, q {
-		quotes: none; }
-	blockquote:before, blockquote:after,
-	q:before, q:after {
-		content: '';
-		content: none; }
-	table {
-		border-collapse: collapse;
-		border-spacing: 0; }
+	
 		
 		
 /* #Basic Styles
-================================================== */
-	body { 
-		background: #fff;
-		font: 14px/21px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-		/*color: #444; */
-		-webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
-		/*-webkit-text-size-adjust: none;*/
- }
-	
+
 
 /* #Typography
 ================================================== */
-	h1, h2, h3, h4, h5, h6 { 
-		/*color: #181818; */
-		/*font-family: "Georgia", "Times New Roman", Helvetica, Arial, sans-serif;
-		font-weight: normal;*/ }
+	/*h1, h2, h3, h4, h5, h6 { 
+		color: #181818; 
+		font-family: "Georgia", "Times New Roman", Helvetica, Arial, sans-serif;
+		font-weight: normal; }
 	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { font-weight: inherit; }
 	h1 { font-size: 46px; line-height: 50px; margin-bottom: 14px;}
 	h2 { font-size: 35px; line-height: 40px; margin-bottom: 10px; }
@@ -83,26 +54,26 @@
 	strong { font-weight: bold; color: #333; }
 	small { font-size: 80%; }
 	
-/*	Blockquotes  */
+	Blockquotes  
 	blockquote, blockquote p { font-size: 17px; line-height: 24px; color: #777; font-style: italic; }
 	blockquote { margin: 0 0 20px; padding: 9px 20px 0 19px; border-left: 1px solid #ddd; }
 	blockquote cite { display: block; font-size: 12px; color: #555; }
 	blockquote cite:before { content: "\2014 \0020"; }
 	blockquote cite a, blockquote cite a:visited, blockquote cite a:visited { color: #555; }
 	
-	hr { border: solid #ddd; border-width: 1px 0 0; clear: both; margin: 10px 0 30px; height: 0; }
+	hr { border: solid #ddd; border-width: 1px 0 0; clear: both; margin: 10px 0 30px; height: 0; }*/
 
 
 /* #Links
 ================================================== */
-	a, a:visited { color: #333; text-decoration: underline; outline: 0; }
+	/*a, a:visited { color: #333; text-decoration: underline; outline: 0; }
 	a:hover, a:focus { color: #000; }
 	p a, p a:visited { line-height: inherit; }
-	
+	*/
 
 /* #Lists
 ================================================== */
-	ul, ol { margin-bottom: 20px; }
+	/*ul, ol { margin-bottom: 20px; }
 	ul { list-style: none outside; }
 	ol { list-style: decimal; }
 	ol, ul.square, ul.circle, ul.disc { margin-left: 30px; }
@@ -115,14 +86,14 @@
 	ol ol li, ol ul li { margin-bottom: 6px; }
 	li { line-height: 18px; margin-bottom: 12px; }
 	ul.large li { line-height: 21px; }
-	li p { line-height: 21px; }
+	li p { line-height: 21px; }*/
 	
 /* #Images
 ================================================== */
 
-	img.scale-with-grid { 
+	/*img.scale-with-grid { 
 		max-width: 100%;
-		height: auto; }
+		height: auto; }*/
 
 
 /* #Buttons
@@ -206,81 +177,7 @@
 	
 /* #Tabs (activate in app.js)
 ================================================== */
-	ul.tabs { 
-		display: block;
-		margin: 0 0 -5px 0;
-		padding: 0;
-		/*border-bottom: solid 1px #ddd;*/
-		 }
-	ul.tabs li { 
-		display: block;
-		margin:30px auto 0;
-		margin-bottom: -5px;
-		width: auto;
-		height: 30px;
-		padding: 0;
-		float: left;
-		margin-bottom: 0;
-		 }
-	ul.tabs li a { 
-		display: block; 
-		text-decoration: none;
-		width: 80px; 
-		height: 35px; 
-		padding: 5px 20px 0; 
-		line-height: 30px; 
-		border: solid 3px #fff;
-		color:white;
-		/*border-width: 1px 0 0 1px; */
-		margin: 0 auto;  
-		margin-bottom:-5px;
-		background: #395774;
-		font-size: 20px;
-		-webkit-border-top-right-radius: 10px; 
-		-webkit-border-top-left-radius: 10px;}
-	ul.tabs li a.active { 
-		background: #395774; 
-		height: 49px;
-		position: relative;
-		top: -12px;
-		/*padding-top: 4px;*/
-		/*border-right-width: 1px;*/
-		margin: 0 -3px 0 ;
-		border-bottom:none;
-		/*color: #111;*/
-		/*-moz-border-radius-topleft: 2px;
-		-webkit-border-top-left-radius: 2px;
-		border-top-left-radius: 2px;
-		-moz-border-radius-topright: 2px;
-		-webkit-border-top-right-radius: 2px;
-		border-top-right-radius: 2px;*/ }
-	ul.tabs li:first-child a {
-		/*-moz-border-radius-topleft: 2px;
-		-webkit-border-top-left-radius: 2px;
-		border-top-left-radius: 2px;*/ }
-	ul.tabs li:last-child a {
-		/*border-width: 1px 1px 0 1px;
-		-moz-border-radius-topright: 2px;
-		-webkit-border-top-right-radius: 2px;
-		border-top-right-radius: 2px;*/ }
 	
-	ul.tabs-content { margin: 0; display: block; }
-	ul.tabs-content > li { display:none; }
-	ul.tabs-content > li.active { display: block; }
-		
-	/* Clearfixing tabs for beautiful stacking */
-	ul.tabs:before,
-	ul.tabs:after {
-	  content: '\0020';
-	  display: block;
-	  overflow: hidden;
-	  visibility: hidden;
-	  width: 0;
-	  height: 0; }
-	ul.tabs:after {
-	  clear: both; }
-	ul.tabs {
-	  zoom: 1; }
 			
 			
 /* #Forms
