@@ -37,11 +37,59 @@ jQuery(function($){
     },
   
     events: {
-      "click #showhide" : "showHide"
+      "click #showhide" : "showHide",
+      "click #settings" : "settings"
+    },
+
+    settings: function() {
+      $.ajax({
+        type : 'GET',
+      	url : 'html/profiles/_settings.html',
+        success : function(html) {
+          var tpl = html;
+          $.ajax({
+            contentType: 'application/json',
+            dataType: 'json',
+      			type : 'POST',
+      			data : JSON.stringify({}),
+            url : '/profiles/_settings',
+            success : function(req) {
+              if (false == req['ok']) {
+         				alert('sorry, there was an error logging out');
+              } else  {
+                $("#partials").html($(Mustache.to_html(tpl, req)));
+      	      }
+            }
+          })
+        }
+      });
     },
 
     init: function() {
       Profiles.init({ el:$("body") });
+      $.ajax({
+        type : 'GET',
+      	url : 'html/_index.html',
+        success : function(html) {
+          
+          var tpl = html;
+          $.ajax({
+            contentType: 'application/json',
+            dataType: 'json',
+      			type : 'POST',
+      			data : JSON.stringify({}),
+            url : '/profiles/index',
+            success : function(req) {
+              if (false == req['ok']) {
+         				alert('sorry, there was an error logging out');
+              } else  {
+                $("#partials").html($(Mustache.to_html(tpl, req)));
+      	      }
+            }
+          })
+          
+        }
+      });
     },
   
     showHide: function() {
