@@ -55,6 +55,10 @@ class Profiles extends MulletMapper {
 		}
 		return array('ok'=>false);
   }
+  
+  function index( $request, $response ) {
+    return array('ok'=>true,'username'=>'cow-man');
+  }
 
   function loggedin( $request, $response ) {
   	session_start();
