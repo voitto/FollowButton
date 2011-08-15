@@ -3,18 +3,21 @@
 require 'config.php';
 require 'lib/Klein.php';
 
-respond( 'GET',      '/[:resource]',        'constructor' );
-respond( 'POST',     '/[:resource]',        'constructor' );
-respond( 'PUT',      '/[:resource]/[:id]',  'constructor' );
-respond( 'DELETE',   '/[:resource]/[:id]',  'constructor' );
-
-respond( 'GET',      '/',                   'index' );
+respond( 'GET',      '/[:resource]',             'constructor' );
+respond( 'POST',     '/[:resource]',             'constructor' );
+respond( 'PUT',      '/[:resource]/[:id]',       'constructor' );
+respond( 'DELETE',   '/[:resource]/[:id]',       'constructor' );
+respond( 'GET',      '/[:resource]/[:action]',   'constructor' );
+respond( 'POST',     '/[:resource]/[:action]',   'constructor' );
+respond( 'GET',      '/',                        'index' );
 
 function constructor($request,$response) {
   require 'lib/Mullet.php';
   $model = 'model/'.$request->resource.".php";
   if (file_exists($model)) include $model;
   $action = strtolower($request->method());
+  if (isset($request->action))
+    $action = $request->action;
   $mapper = ucwords($request->resource);
   if (class_exists($mapper))
     $obj = new $mapper;

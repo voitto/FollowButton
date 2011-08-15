@@ -27,7 +27,7 @@ jQuery(function($){
 
 
 
-  window.DomainEditorApp = Spine.Controller.create({
+  window.FollowButtonApp = Spine.Controller.create({
   
     el: $("body"),
   
@@ -41,6 +41,7 @@ jQuery(function($){
     },
 
     init: function() {
+      Profiles.init({ el:$("body") });
     },
   
     showHide: function() {
@@ -53,49 +54,29 @@ jQuery(function($){
 
   window.Profiles = Spine.Controller.create({
     events: {
-      "submit #login_form": "login",
-      "keyup #login_form": "key",
-      "click #logbtn": "logbtn",
-      "click #signbtn": "signbtn"
-    },
-    key: function(e){
-      if (e.keyCode == 13) $("#logbtn").trigger("click");
+      "click #signout": "signout"
     },
     init: function(){
       $("#login_name").focus();
     },
-    logbtn: function(e) {
-      if ($("#logbtn").attr('value') == 'Logout') {
-        this.leave();
-      } else {
-    	  this.login(e);
-  	  }
+    signout: function(e) {
+        $.ajax({
+          contentType: 'application/json',
+          dataType: 'json',
+    			type : 'POST',
+    			data : JSON.stringify({}),
+          url : '/profiles/logout',
+          success : function(req) {
+            if (false == req['ok']) {
+       				alert('sorry, there was an error logging out');
+            } else  {
+              window.location.href = 'http://'+$("#user").html()+'followbutton.com/';
+    	      }
+          }
+        })
     },
     signbtn: function(e) {
-  		window.location.href = 'https://followbutton.com/register.php';
-    },
-    leave: function(e) {
-      $.ajax({
-        contentType: 'application/json',
-        dataType: 'json',
-  			type : 'POST',
-  			data : JSON.stringify({}),
-        url : '/profiles/logout',
-        success : function(req) {
-          if (false == req['ok']) {
-     				alert('sorry, there was an error logging out');
-          } else  {
-            $("#logbtn").attr('value','Login');
-            $("#signbtn").show();
-            $("#formhider").show();
-            $("#thepitch").show();
-            $("#editorhider").hide();
-            $("#sublist").hide();
-            $("#useremail").html('');
-            $("#useremail").hide();
-  	      }
-        }
-      })
+//  		window.location.href = 'https://followbutton.com/';
     },
     login: function(e){
       e.preventDefault();
@@ -161,7 +142,7 @@ jQuery(function($){
       })
     },
     after: function() {
-      var resource = 'subdomains';
+      var resource = 'posts';
       var action = 'index';
       $.ajax({
         type : 'GET',
@@ -172,6 +153,6 @@ jQuery(function($){
     }
   });
 
-  window.App = DomainEditorApp.init();
+  window.App = FollowButtonApp.init();
 
 });
