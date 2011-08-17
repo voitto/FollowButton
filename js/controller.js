@@ -38,9 +38,12 @@ jQuery(function($){
   
     events: {
       "click #showhide"  : "showHide",
-      "click #settings"  : "settings"
-	},
-	  	
+      "click #settings"  : "settings",
+	  "click #privacy"   : "privacy",
+	  "click #following" : "following",
+	  "click #appearance": "appearance",
+      "click #logout"    : "logout"
+    },
     
     logout: function() {
       $.ajax({
