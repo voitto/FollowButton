@@ -38,12 +38,27 @@ jQuery(function($){
   
     events: {
       "click #showhide"  : "showHide",
-      "click #settings"  : "settings",
-	  "click #privacy"   : "privacy",
-	  "click #following" : "following",
-	  "click #appearance": "appearance"
+      "click #settings"  : "settings"
+	},
+	  	
+    
+    logout: function() {
+      $.ajax({
+        contentType: 'application/json',
+        dataType: 'json',
+  			type : 'POST',
+  			data : JSON.stringify({}),
+        url : '/profiles/logout',
+        success : function(req) {
+          if (false == req['ok']) {
+     				alert('sorry, there was an error logging out');
+          } else  {
+            window.location.href = 'http://followbutton.com/';
+  	      }
+        }
+      })
     },
-
+    
     settings: function() {
       $.ajax({
         type : 'GET',
@@ -58,7 +73,7 @@ jQuery(function($){
             url : '/profiles/_settings',
             success : function(req) {
               if (false == req['ok']) {
-         				alert('sorry, there was an error logging out');
+         				alert('sorry, there was an error loading the page');
               } else  {
                 $("#partials").html($(Mustache.to_html(tpl, req)));
       	      }
@@ -156,7 +171,7 @@ jQuery(function($){
             url : '/profiles/index',
             success : function(req) {
               if (false == req['ok']) {
-         				alert('sorry, there was an error logging out');
+         				alert('sorry, there was an error loading the page');
               } else  {
                 $("#partials").html($(Mustache.to_html(tpl, req)));
       	      }
@@ -177,26 +192,10 @@ jQuery(function($){
 
   window.Profiles = Spine.Controller.create({
     events: {
-      "click #signout": "signout"
+  
     },
     init: function(){
       $("#login_name").focus();
-    },
-    signout: function(e) {
-        $.ajax({
-          contentType: 'application/json',
-          dataType: 'json',
-    			type : 'POST',
-    			data : JSON.stringify({}),
-          url : '/profiles/logout',
-          success : function(req) {
-            if (false == req['ok']) {
-       				alert('sorry, there was an error logging out');
-            } else  {
-              window.location.href = 'http://'+$("#user").html()+'followbutton.com/';
-    	      }
-          }
-        })
     },
     signbtn: function(e) {
 //  		window.location.href = 'https://followbutton.com/';
