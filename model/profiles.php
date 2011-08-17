@@ -64,6 +64,18 @@ class Profiles extends MulletMapper {
     return array();
   }
   
+  function _privacy( $request, $response ) {
+    return array();
+  }
+  
+  function _following( $request, $response ) {
+    return array();
+  }
+  
+  function _appearance( $request, $response ) {
+    return array();
+  }
+  
   function loggedin( $request, $response ) {
   	session_start();
 		if (isset($_SESSION['current_user']))

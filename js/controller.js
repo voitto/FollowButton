@@ -37,8 +37,11 @@ jQuery(function($){
     },
   
     events: {
-      "click #showhide" : "showHide",
-      "click #settings" : "settings"
+      "click #showhide"  : "showHide",
+      "click #settings"  : "settings",
+	  "click #privacy"   : "privacy",
+	  "click #following" : "following",
+	  "click #appearance": "appearance"
     },
 
     settings: function() {
@@ -53,6 +56,78 @@ jQuery(function($){
       			type : 'POST',
       			data : JSON.stringify({}),
             url : '/profiles/_settings',
+            success : function(req) {
+              if (false == req['ok']) {
+         				alert('sorry, there was an error logging out');
+              } else  {
+                $("#partials").html($(Mustache.to_html(tpl, req)));
+      	      }
+            }
+          })
+        }
+      });
+    },
+	
+	 privacy: function() {
+      $.ajax({
+        type : 'GET',
+      	url : 'html/profiles/_privacy.html',
+        success : function(html) {
+          var tpl = html;
+          $.ajax({
+            contentType: 'application/json',
+            dataType: 'json',
+      			type : 'POST',
+      			data : JSON.stringify({}),
+            url : '/profiles/_privacy',
+            success : function(req) {
+              if (false == req['ok']) {
+         				alert('sorry, there was an error logging out');
+              } else  {
+                $("#partials").html($(Mustache.to_html(tpl, req)));
+      	      }
+            }
+          })
+        }
+      });
+    },
+	
+	 following: function() {
+      $.ajax({
+        type : 'GET',
+      	url : 'html/profiles/_following.html',
+        success : function(html) {
+          var tpl = html;
+          $.ajax({
+            contentType: 'application/json',
+            dataType: 'json',
+      			type : 'POST',
+      			data : JSON.stringify({}),
+            url : '/profiles/_following',
+            success : function(req) {
+              if (false == req['ok']) {
+         				alert('sorry, there was an error logging out');
+              } else  {
+                $("#partials").html($(Mustache.to_html(tpl, req)));
+      	      }
+            }
+          })
+        }
+      });
+    },
+	
+	 appearance: function() {
+      $.ajax({
+        type : 'GET',
+      	url : 'html/profiles/_appearance.html',
+        success : function(html) {
+          var tpl = html;
+          $.ajax({
+            contentType: 'application/json',
+            dataType: 'json',
+      			type : 'POST',
+      			data : JSON.stringify({}),
+            url : '/profiles/_appearance',
             success : function(req) {
               if (false == req['ok']) {
          				alert('sorry, there was an error logging out');
