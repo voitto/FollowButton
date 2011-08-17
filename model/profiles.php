@@ -112,4 +112,26 @@ class Profiles extends MulletMapper {
   	return array('ok'=>true);
   }
 
+  function facebook( $request, $response ) {
+    session_start();
+ 		require 'lib/facebook.php';
+		add_include_path('lib/facebook');
+		require 'lib/facebook/Services/Facebook.php';
+		$fblogin = 'http://'.$_SESSION['current_user'].'.followbutton.com/profiles/facebook';
+
+		$f = new Facebook( FB_KEY, FB_SEC, FB_AID, FB_NAM, false, $fblogin );
+		if (!isset($_GET['auth_token'])) {
+			$token = $f->request_token();
+			redirect_to( $token->authorize_url() );
+		}
+		list($userid,$sesskey) = $f->authorize_from_access();
+		if (empty($userid) || empty($sesskey))
+			trigger_error('error: could not get session or userid from Facebook',E_USER_ERROR);
+		$_SESSION['face_userid'] = $userid;
+		$_SESSION['face_session'] = $sesskey;
+		$f = new Facebook( FB_KEY, FB_SEC, FB_AID, FB_NAM, $_SESSION['face_session'], $fblogin );
+	  $_SESSION['fbcomplete'] = true;
+		redirect_to('http://'.$_SESSION['current_user'].'.followbutton.com');
+  }
+
 }
