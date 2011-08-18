@@ -26,7 +26,7 @@ A. Try it at [try.followbutton.com](http://try.followbutton.com).
 
 **Q. How can I help out?**
 
-A. Check our wiki [followbutton.github.com](http://followbutton.github.com).
+A. Check our wiki [github.com/voitto/FollowButton/wiki](https://github.com/voitto/FollowButton/wiki).
 
 
 BUGS?
