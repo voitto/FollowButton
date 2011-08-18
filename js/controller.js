@@ -24,7 +24,22 @@ jQuery(function($){
   
   });
 
+  window.Share = Spine.Controller.create({
+	//el: $("body"),
 
+	events: {
+	"click #status" : "status"	
+	},
+	
+	status: function(){
+		alert('hi');
+	}
+	
+	//init: function(){
+//		status();	
+//	}
+	  
+  });
 
 
   window.FollowButtonApp = Spine.Controller.create({
@@ -160,6 +175,7 @@ jQuery(function($){
 
     init: function() {
       Profiles.init({ el:$("body") });
+	  Share.init({ el:$("body") });
       $.ajax({
         type : 'GET',
       	url : 'html/_index.html',
@@ -189,9 +205,6 @@ jQuery(function($){
     }
 
   });
-
-
-
 
   window.Profiles = Spine.Controller.create({
     events: {
