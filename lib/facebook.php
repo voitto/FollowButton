@@ -125,17 +125,20 @@ EOD;
 
 class FacebookToken {
 
-  var $api_root;
   var $next;
   var $token;
-  var $secret;
+  var $appid;
 
-  function FacebookToken( $next, $root ) {
+  function FacebookToken( $next, $appid ) {
 		$this->next = $next;
-	  $this->api_root = $root;
+		$this->appid = $appid;
   }
 
   function authorize_url() {
+    
+    $url = 'https://www.facebook.com/dialog/oauth?client_id='.$this->appid.'&redirect_uri='.$this->next.'&scope=offline_access,read_stream';
+    return $url;
+    
     $url = $this->api_root . '/login.php';
     $params = array('api_key' => Services_Facebook::$apiKey,
                     'v'       => '1.0');
@@ -164,8 +167,22 @@ class Facebook {
   var $appid;
   var $userid;
   var $api_root = 'http://www.facebook.com';
+  var $secret;
+  var $token;
+  var $access_token;
 
-  function Facebook( $key, $secret, $appid, $agent, $session=false, $next ){
+  function Facebook( $secret, $appid, $next, $token=false ){
+    
+    $this->next = $next;
+    $this->secret = $secret;
+    $this->appid = $appid;
+    if ($token)
+      $this->access_token = $token;
+    if (isset($_GET['code']))
+      $_GET['oauth_token'] = $_GET['code'];
+    return true;
+    
+    
     Services_Facebook::$apiKey = $key;
     Services_Facebook::$secret = $secret;
     $this->api = new Services_Facebook();
@@ -179,13 +196,20 @@ class Facebook {
   }
 
   function request_token() {
-    $token = $this->api->auth->createToken();
-    $this->token = new FacebookToken($this->next,$this->api_root);
-    $this->token->token = $token;
+    //$token = $this->api->auth->createToken();
+    $this->token = new FacebookToken($this->next,$this->appid);
+    //$this->token->token = $token;
     return $this->token;
   }
 
 	function authorize_from_access() {
+    $tokenurl = 'https://graph.facebook.com/oauth/access_token?client_id='.$this->appid.'&redirect_uri='.$this->next.'&client_secret='.$this->secret.'&code='.$_GET['code'];
+    $data = $this->http($tokenurl);
+    $parts = explode('=',$data);
+    $user = 'me';
+    $this->access_token = $parts[1];
+	  return array($user,$parts[1]);
+    
 		$sess_data = (array) $this->api->auth->callMethod('auth.getSession',array('auth_token'=>$_GET['auth_token']));
 	  $this->userid = $sess_data['uid'];
 	  return array($sess_data['uid'],$sess_data['session_key']);
@@ -254,7 +278,10 @@ class Facebook {
  		return (array)simplexml_load_string($response->asXML());
   }
 
-  function friends_timeline( $uid = false ) {
+  function friends_timeline( $user = 'me' ) {
+    $newsfeed = 'https://graph.facebook.com/'.$user.'/home?access_token='.$this->access_token;
+    return $this->http($newsfeed);
+    
     if (!$uid)
       $uid = $this->userid;
 		$hash = md5("app_id=".$this->appid."session_key=".$this->api->sessionKey."source_id=".$uid.Services_Facebook::$secret);
