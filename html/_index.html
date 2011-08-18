@@ -4,9 +4,9 @@
         <div id="share">
         	<span id="no-border"> Share: </span>
             <span id="status"> Status </span>
-            <span> Link </span>
-            <span> Photo </span>
-            <span id="no-right-border"> Video </span>
+            <span id="shareLink"> Link </span>
+            <span id="sharePhoto"> Photo </span>
+            <span id="shareVideo"> Video </span>
         </div>
         
         <!--<h1 id="share" style="float:right;">Share Something</h1>-->
@@ -22,8 +22,6 @@
     <div id="tohide">
     <div class="sixteen columns">
     
-   <!-- <input type="button" value="Photo" id="photobtn" />
-    <input type="button" value="Video" id="videobtn" />-->
     <br />
     <!--<input type="file" style="display:none;margin-bottom:10px;" id="upphoto" />
     <input type="file" style="display:none;margin-bottom:10px;" id="upvideo" />-->
@@ -36,12 +34,39 @@
     
     </div>-->
     
-    <!--<div class="sixteen columns">
+    <div class="sixteen columns" id="shareInput">
     
-    <div style="width: 470px; margin: 0 0 0 320px;">
-    	<textarea style="float:left;display:inline;width:300px;height:100px;" id="thepost"></textarea>
-        <input type="button" value="Share!" id="submitbtn" style="float:left;display:inline;margin-top:30px;" />
-    </div>-->
+        <div id="statusInput" class="display-none">
+        
+            <textarea id="statusText"></textarea>
+            <input type="button" value="Share!" id="statusBtn" />
+            
+        </div>
+        
+        
+        <div id="linkInput" class="display-none">
+        	
+            <input type="text" id="linkText" />
+            <textarea></textarea>
+        
+        </div>
+        
+        
+        <div id="photoInput" class="display-none">
+        
+        	<div id="photoText"></div>
+        
+        </div>
+        
+        
+        <div id="videoInput" class="display-none">
+        
+        	<div id="videoText"></div>
+        
+        </div>
+        
+        
+        
     </div>
     </div>
    
