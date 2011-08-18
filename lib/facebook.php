@@ -52,66 +52,66 @@ if (!class_exists('Helper')) {
 
 
 class FacebookHelper extends Helper {
-	
-	function header( $key, $xd, $next, $url ) {
-		
-		echo <<<EOD
-			<script type="text/javascript">
-			  function facebook_onlogin() {
-			    window.location='$url';
-			  }
-			  function facebook_dologin() {
-					FB_RequireFeatures(["XFBML"], function(){ 
-						FB.Facebook.init('$key', '$xd', null);
-						FB.ensureInit(function () { 
-							FB.Connect.requireSession(facebook_onlogin, true);
-						});
-					});
-				}
-			</script>
+  
+  function header( $key, $xd, $next, $url ) {
+    
+    echo <<<EOD
+      <script type="text/javascript">
+        function facebook_onlogin() {
+          window.location='$url';
+        }
+        function facebook_dologin() {
+          FB_RequireFeatures(["XFBML"], function(){ 
+            FB.Facebook.init('$key', '$xd', null);
+            FB.ensureInit(function () { 
+              FB.Connect.requireSession(facebook_onlogin, true);
+            });
+          });
+        }
+      </script>
 EOD;
 
-	}
-
-  function xmlns() {
-		echo <<<EOD
- xmlns:fb="http://www.facebook.com/2008/fbml
-EOD;
-	
   }
 
-	function login() {
+  function xmlns() {
+    echo <<<EOD
+ xmlns:fb="http://www.facebook.com/2008/fbml
+EOD;
+  
+  }
+
+  function login() {
     
     //$tag = $this->content_tag( 'a', 'Login with Facebook', array( 'href' => 'JavaScript:facebook_dologin();' )); 
-		echo <<<EOD
-			<script src="http://static.ak.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+    echo <<<EOD
+      <script src="http://static.ak.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
       <a href="JavaScript:facebook_dologin();">Login with Facebook</a>
 EOD;
 
-	}
+  }
 
-	function redirect() {
+  function redirect() {
 
-		echo <<<EOD
-			<script src="http://static.ak.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+    echo <<<EOD
+      <script src="http://static.ak.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
       <script type="text/javascript">
-		  // <![CDATA[
+      // <![CDATA[
         facebook_dologin();
       // ]]>
       </script>
 EOD;
 
-	}
+  }
 
   function doctype() {
-	
-	echo <<<EOD
+  
+  echo <<<EOD
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
 EOD;
-	}
-	
+  }
+  
 }
 
 /**
@@ -130,8 +130,8 @@ class FacebookToken {
   var $appid;
 
   function FacebookToken( $next, $appid ) {
-		$this->next = $next;
-		$this->appid = $appid;
+    $this->next = $next;
+    $this->appid = $appid;
   }
 
   function authorize_url() {
@@ -145,7 +145,7 @@ class FacebookToken {
     $params['next'] = $this->next;
     return $url . '?' . http_build_query($params);
   }
-	
+  
 }
 
 /**
@@ -202,20 +202,20 @@ class Facebook {
     return $this->token;
   }
 
-	function authorize_from_access() {
+  function authorize_from_access() {
     $tokenurl = 'https://graph.facebook.com/oauth/access_token?client_id='.$this->appid.'&redirect_uri='.$this->next.'&client_secret='.$this->secret.'&code='.$_GET['code'];
     $data = $this->http($tokenurl);
     $parts = explode('=',$data);
     $user = 'me';
     $this->access_token = $parts[1];
-	  return array($user,$parts[1]);
+    return array($user,$parts[1]);
     
-		$sess_data = (array) $this->api->auth->callMethod('auth.getSession',array('auth_token'=>$_GET['auth_token']));
-	  $this->userid = $sess_data['uid'];
-	  return array($sess_data['uid'],$sess_data['session_key']);
-	}
-	
-	function permission_to( $perm, $uid=false, $force=false, $return=false ) {
+    $sess_data = (array) $this->api->auth->callMethod('auth.getSession',array('auth_token'=>$_GET['auth_token']));
+    $this->userid = $sess_data['uid'];
+    return array($sess_data['uid'],$sess_data['session_key']);
+  }
+  
+  function permission_to( $perm, $uid=false, $force=false, $return=false ) {
     $params = array(
       'ext_perm' => $perm,
       'uid' => $this->userid
@@ -224,38 +224,38 @@ class Facebook {
       $params['uid'] = $uid;
     if (!$force){
       $response = $this->api->users->callMethod( 'users.hasAppPermission', $params );
-  		$xml = simplexml_load_string($response->asXML());
-	  	$xml = (array) $xml;
-	  }
+      $xml = simplexml_load_string($response->asXML());
+      $xml = (array) $xml;
+    }
     if ($force || !$xml[0]) {
 
       $url = $this->api_root . '/connect/prompt_permissions.php';
-	    $params = array('api_key' => Services_Facebook::$apiKey,
-	                    'v'       => '1.0');
-	    if ($uid){
-	      $params['uid'] = $uid;
-	    } elseif ($this->userid) {
-	      $params['uid'] = $this->userid;
-	    } else {
-	      unset($params['uid']);
-	      $params['session_key'] = $this->api->sessionKey;
+      $params = array('api_key' => Services_Facebook::$apiKey,
+                      'v'       => '1.0');
+      if ($uid){
+        $params['uid'] = $uid;
+      } elseif ($this->userid) {
+        $params['uid'] = $this->userid;
+      } else {
+        unset($params['uid']);
+        $params['session_key'] = $this->api->sessionKey;
       }
-	   
-			$params['ext_perm'] = $perm;
-	    $params['next'] = $this->next;
-	    $url = $url . '?' . http_build_query($params);
-	    $apikey = Services_Facebook::$apiKey;
-	    $next = $this->next;
+     
+      $params['ext_perm'] = $perm;
+      $params['next'] = $this->next;
+      $url = $url . '?' . http_build_query($params);
+      $apikey = Services_Facebook::$apiKey;
+      $next = $this->next;
       $url = "http://facebook.com/authorize.php?api_key=$apikey&v=1.0&ext_perm=$perm&next=$next";
 
-	    if ($return)
-	      return $url;
+      if ($return)
+        return $url;
       header( 'Location:' . $url );
       exit;
     }
   }
 
-	function has_permission( $perm, $uid=false ) {
+  function has_permission( $perm, $uid=false ) {
     $params = array(
       'ext_perm' => $perm,
       'uid' => $this->userid
@@ -263,8 +263,8 @@ class Facebook {
     if ($uid)
       $params['uid'] = $uid;
     $response = $this->api->users->callMethod( 'users.hasAppPermission', $params );
- 		$xml = simplexml_load_string($response->asXML());
-  	$xml = (array) $xml;
+     $xml = simplexml_load_string($response->asXML());
+    $xml = (array) $xml;
     return $xml[0];
   }
 
@@ -275,7 +275,7 @@ class Facebook {
     if ($uid)
       $params['uid'] = $uid;
     $response = $this->api->users->callMethod( 'friends.get', $params );
- 		return (array)simplexml_load_string($response->asXML());
+     return (array)simplexml_load_string($response->asXML());
   }
 
   function friends_timeline( $user = 'me' ) {
@@ -284,33 +284,33 @@ class Facebook {
     
     if (!$uid)
       $uid = $this->userid;
-		$hash = md5("app_id=".$this->appid."session_key=".$this->api->sessionKey."source_id=".$uid.Services_Facebook::$secret);
+    $hash = md5("app_id=".$this->appid."session_key=".$this->api->sessionKey."source_id=".$uid.Services_Facebook::$secret);
 
-		$url = 'http://www.facebook.com/activitystreams/feed.php';
-		$url .= '?source_id=';
-		$url .= $uid;
-		$url .= '&app_id=';
-		$url .= $this->appid;
-		$url .= '&session_key=';
-		$url .= $this->api->sessionKey;
-		$url .= '&sig=';
-		$url .= $hash;
-		$url .= '&v=0.7&read';
+    $url = 'http://www.facebook.com/activitystreams/feed.php';
+    $url .= '?source_id=';
+    $url .= $uid;
+    $url .= '&app_id=';
+    $url .= $this->appid;
+    $url .= '&session_key=';
+    $url .= $this->api->sessionKey;
+    $url .= '&sig=';
+    $url .= $hash;
+    $url .= '&v=0.7&read';
 
     return $this->http($url);
 
   }
 
   function like( $id, $uid=false ) {
-	  //$this->permission_to( 'publish_stream', $uid );
-	  $params = array(
-	    'uid' => $this->userid,
-	  );
-	  if ($uid)
-	    $params['uid'] = $uid;
+    //$this->permission_to( 'publish_stream', $uid );
+    $params = array(
+      'uid' => $this->userid,
+    );
+    if ($uid)
+      $params['uid'] = $uid;
     $params['post_id'] = $id;
-	  $res = $this->api->users->callMethod( 'stream.addLike', $params );
-	  return (intval((string)$res) == 1);
+    $res = $this->api->users->callMethod( 'stream.addLike', $params );
+    return (intval((string)$res) == 1);
   }
 
   function notify( $message, $subject, $recipients=false ) {
@@ -321,48 +321,48 @@ class Facebook {
     );
     if ($recipients)
       $params['recipients'] = implode(',',$recipients);
-	  $res = $this->api->users->callMethod( 'notifications.sendEmail', $params );
-	  return (intval((string)$res) == 1);
+    $res = $this->api->users->callMethod( 'notifications.sendEmail', $params );
+    return (intval((string)$res) == 1);
   }
 
   function publish( $status, $uid=false ) {
-	  //$this->permission_to( 'publish_stream', $uid );
-	  $params = array(
-	    'uid' => $this->userid,
-	  );
-	  if ($uid)
-	    $params['uid'] = $uid;
+    //$this->permission_to( 'publish_stream', $uid );
+    $params = array(
+      'uid' => $this->userid,
+    );
+    if ($uid)
+      $params['uid'] = $uid;
     $params['message'] = $status;
-	  $res = $this->api->users->callMethod( 'stream.publish', $params );
-	  return (string)$res;
+    $res = $this->api->users->callMethod( 'stream.publish', $params );
+    return (string)$res;
   }
 
   function update( $status, $uid=false ) {
-	  $this->permission_to( 'status_update', $uid );
-	  $params = array(
-	    'uid' => $this->userid,
-	  );
-	  if ($uid)
-	    $params['uid'] = $uid;
-	  if (is_bool($status) && $status === true) {
-	    $params['clear'] = 'true';
-	  } else {
-	    $params['status'] = $status;
-	  }
-	  $res = $this->api->users->callMethod( 'users.setStatus', $params );
-	  return (intval((string)$res) == 1);
+    $this->permission_to( 'status_update', $uid );
+    $params = array(
+      'uid' => $this->userid,
+    );
+    if ($uid)
+      $params['uid'] = $uid;
+    if (is_bool($status) && $status === true) {
+      $params['clear'] = 'true';
+    } else {
+      $params['status'] = $status;
+    }
+    $res = $this->api->users->callMethod( 'users.setStatus', $params );
+    return (intval((string)$res) == 1);
   }
 
   function search( $string ) {
   }
 
   function avatar_url($uids) {
-	  $fieldlist = array(
-	    'pic_square'
-	  );
-	  $fields = implode(',',$fieldlist);
-	  $params = array(
-	    'uid' => $this->userid,
+    $fieldlist = array(
+      'pic_square'
+    );
+    $fields = implode(',',$fieldlist);
+    $params = array(
+      'uid' => $this->userid,
       'api_key' => Services_Facebook::$apiKey,
       'call_id' => microtime(true),
       'sig' =>  md5("app_id=".$this->appid."session_key=". $this->api->sessionKey."source_id=".$this->userid.Services_Facebook::$secret),
@@ -370,29 +370,29 @@ class Facebook {
       'fields' => $fields,
       'session_key' => $this->api->sessionKey,
       'uids' => $uids
-	  );
-	  $response = $this->api->users->callMethod( 'users.getinfo', $params );
-		$xml = simplexml_load_string($response->asXML());
-		foreach($xml as $k=>$v){
-		  foreach($v as $b=>$r){
-				if ($b == 'pic_square'){
-					$av = (array)$r;
-					return $av[0];
-				}
-		  }
-		}
-		return false;
+    );
+    $response = $this->api->users->callMethod( 'users.getinfo', $params );
+    $xml = simplexml_load_string($response->asXML());
+    foreach($xml as $k=>$v){
+      foreach($v as $b=>$r){
+        if ($b == 'pic_square'){
+          $av = (array)$r;
+          return $av[0];
+        }
+      }
+    }
+    return false;
   }
 
   function userinfo($uids) {
-	  $fieldlist = array(
-	    'pic_square',
-	    'name',
-	    'uid'
-	  );
-	  $fields = implode(',',$fieldlist);
-	  $params = array(
-	    'uid' => $this->userid,
+    $fieldlist = array(
+      'pic_square',
+      'name',
+      'uid'
+    );
+    $fields = implode(',',$fieldlist);
+    $params = array(
+      'uid' => $this->userid,
       'api_key' => Services_Facebook::$apiKey,
       'call_id' => microtime(true),
       'sig' =>  md5("app_id=".$this->appid."session_key=". $this->api->sessionKey."source_id=".$this->userid.Services_Facebook::$secret),
@@ -400,58 +400,58 @@ class Facebook {
       'fields' => $fields,
       'session_key' => $this->api->sessionKey,
       'uids' => $uids
-	  );
-	  $response = $this->api->users->callMethod( 'users.getinfo', $params );
-		return (array)simplexml_load_string($response->asXML());
+    );
+    $response = $this->api->users->callMethod( 'users.getinfo', $params );
+    return (array)simplexml_load_string($response->asXML());
   }
 
   function getpages() {
-	  $fieldlist = array(
-	    'page_id',
-	    'name'
-	  );
-	  $fields = implode(',',$fieldlist);
-	  $params = array(
-	    'uid' => $this->userid,
+    $fieldlist = array(
+      'page_id',
+      'name'
+    );
+    $fields = implode(',',$fieldlist);
+    $params = array(
+      'uid' => $this->userid,
       'api_key' => Services_Facebook::$apiKey,
       'call_id' => microtime(true),
       'sig' =>  md5("app_id=".$this->appid."session_key=". $this->api->sessionKey."source_id=".$this->userid.Services_Facebook::$secret),
       'v' => '1.0',
       'fields' => $fields,
       'session_key' => $this->api->sessionKey
-	  );
-	  $pages = array();
-	  $response = $this->api->users->callMethod( 'pages.getinfo', $params );
-		$xml = simplexml_load_string($response->asXML());
-		foreach($xml as $k=>$v){
-		  foreach($v as $b=>$r){
-			  if ((string) $b == 'name')
-			    $name = (string) $r;
-			  if ((string) $b == 'page_id')
-			    $pid = (string) $r;
-		  }
-	    $pages[$pid] = array('name'=>$name);
-		}
-		return $pages;
+    );
+    $pages = array();
+    $response = $this->api->users->callMethod( 'pages.getinfo', $params );
+    $xml = simplexml_load_string($response->asXML());
+    foreach($xml as $k=>$v){
+      foreach($v as $b=>$r){
+        if ((string) $b == 'name')
+          $name = (string) $r;
+        if ((string) $b == 'page_id')
+          $pid = (string) $r;
+      }
+      $pages[$pid] = array('name'=>$name);
+    }
+    return $pages;
   }
 
   function ispageadmin( $p ) {
-	  $params = array(
-	    'page_id' => $p,
-	    'uid' => $this->userid,
+    $params = array(
+      'page_id' => $p,
+      'uid' => $this->userid,
       'api_key' => Services_Facebook::$apiKey,
       'call_id' => microtime(true),
       'sig' =>  md5("app_id=".$this->appid."session_key=". $this->api->sessionKey."source_id=".$this->userid.Services_Facebook::$secret),
       'v' => '1.0',
       'session_key' => $this->api->sessionKey
-	  );
-	  //return true;
-	  $response = $this->api->users->callMethod( 'pages.isAdmin', $params );
-		$xml = simplexml_load_string($response->asXML());
-		$xml = (array) $xml;
+    );
+    //return true;
+    $response = $this->api->users->callMethod( 'pages.isAdmin', $params );
+    $xml = simplexml_load_string($response->asXML());
+    $xml = (array) $xml;
     if (!$xml[0])
-	    return false;
-		return true;
+      return false;
+    return true;
   }
 
   function http($url, $post_data = null) {/*{{{*/
@@ -459,7 +459,7 @@ class Facebook {
     if (defined("CURL_CA_BUNDLE_PATH")) curl_setopt($ch, CURLOPT_CAINFO, CURL_CA_BUNDLE_PATH);
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
-		curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_HEADER, false);
     curl_setopt($ch, CURLOPT_TIMEOUT, 60);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     //////////////////////////////////////////////////
@@ -482,8 +482,8 @@ class Facebook {
 
 if (!function_exists('redirect_to')) {
   function redirect_to( $url ) {
-  	  header('Location: ' . $url );
-  	  exit;
+      header('Location: ' . $url );
+      exit;
   }
 }
 
