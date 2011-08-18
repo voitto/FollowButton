@@ -120,6 +120,12 @@ textarea:focus {
 	-webkit-box-shadow: 0 0 3px rgba(0,0,0,.2);
 	box-shadow:  0 0 3px rgba(0,0,0,.2); 
 	}
+	
+span {
+	border-right: 1px solid white;
+	padding:0 10px;
+	
+}
 		
 /*==================================================*/
 
@@ -162,9 +168,18 @@ textarea:focus {
 	
 #share {
 	color:white;
-	font:50px 'minion pro';
+	font:25px 'minion pro';
+	text-align:center;
 	margin-bottom: 10px;
 	text-shadow: 1px 1px rgba(0, 0, 0, .75);
+}
+
+#no-border {
+	border:none;
+}
+
+#no-right-border {
+	border-right:none;
 }
 
 #title {
@@ -207,14 +222,15 @@ ul.tabs {
 	ul.tabs li a { 
 		display: block; 
 		text-decoration: none;
-		color:white;
+		color:#395774;
+		font-weight:bold;
 		width: 80px; 
 		height: 35px; 
 		padding: 5px 20px 0;
 		margin: 0 auto -5px;  
 		line-height: 30px; 
-		border: solid 3px #fff;
-		background: #395774;
+		border: solid 3px #395774;
+		background: #fff;
 		font-size: 20px;
 		-webkit-border-top-left-radius: 10px;
 		-webkit-border-top-right-radius: 10px; 
@@ -225,7 +241,7 @@ ul.tabs {
 	}
 	
 	ul.tabs li a.active { 
-		background: #395774; 
+		background: #fff; 
 		height: 49px;
 		position: relative;
 		top: -12px;
