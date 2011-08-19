@@ -15,16 +15,20 @@ $buffer = file_get_contents($link);
 
 //function catch_image() {
 	
-	$description = preg_match('/<meta.*name=[\'"].*description[\'"].*content=[\'"]([\'"]*)[\'"].*>/i',$buffer,$descMatches);
+	//.*name=[\'"].*description[\'"].*content=[\'"]([\'"]*)[\'"]>
+	
+	$description = preg_match('/<meta/i',$buffer,$descMatches);
 	
 	echo $descMatches[0];
 
-	$image = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $buffer, $imgMatches);
+	$image = preg_match('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $buffer, $imgMatches);
 	//$first_img = $matches [1] [0];
 	
-	foreach ($matches as $a) {
-		echo $a . "\n";	
-	}
+	//echo "\n" . $imgMatches[0];
+	
+	//foreach ($matches as $a) {
+//		echo $a . "\n";	
+//	}
 	
 	//echo $matches[0];
 	
