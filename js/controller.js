@@ -69,8 +69,7 @@ jQuery(function($){
 				alert(typeof 'hi');
 				alert(typeof data);
 				
-				var blah = String(data);			    
-				$("#appendTo").append(blah);
+				$("#appendTo").append('<p>'+blah+'</p>');
 				$("#appendDiv").append(data);
 				$("#appendDiv").append('hi');
 				$("#appendTo").append('hello');
