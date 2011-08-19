@@ -39,16 +39,27 @@
         <div id="statusInput" class="display-none">
         
             <textarea id="statusText"></textarea>
-            <input type="button" value="Share!" id="statusBtn" />
+            <input type="button" value="Share!" class="shareBtn" />
             
         </div>
         
         
-        <div id="linkInput" class="display-none">
+        <div id="linkInput" class="">
         	
-            <input type="text" id="linkText" />
-            <textarea></textarea>
-        
+            <form id="linkForm">
+            	<label for="linkText">Paste or type a URL</label>
+                <input type="text" id="linkText" name="linkText" class="display-block" />
+                <input type="submit" value="Attach Link" id="attachLink" />
+                <div style="width:300px;height:300px;background:white;border:1px solid black;" id="appendDiv"><ul id="appendTo" style="color:black;"></ul></div>
+            </form>
+            
+            <?php echo catch_image() ?>
+               
+                <div id="linkShare" class="display-none">
+                    <textarea id="linkDesc" class="display-block"></textarea>
+                    <input type="submit" value="Share!" />
+                </div>
+            
         </div>
         
         

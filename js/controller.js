@@ -29,8 +29,9 @@ jQuery(function($){
 	events: {
 	"click #status"      : "status",
 	"click #shareLink"   : "shareLink",
+	"click #attachLink"  : "attachLink",
 	"click #sharePhoto"  : "sharePhoto",
-	"click #shareVideo"  : "shareVideo"
+	"click #shareVideo"  : "shareVideo",
 	},
 	
 	status: function(){
@@ -55,6 +56,22 @@ jQuery(function($){
 		
 	},
 	
+	attachLink: function(){
+		
+		var linkText = $("#linkText").val();
+		$.ajax({
+			type   : "POST",
+			url    : "../model/links.php",
+			data   : {"linkText":linkText},
+			success: function(data){
+				alert(data);
+				$("#appendTo").append(data);
+			}
+		});	
+		
+		return false;
+	},
+	
 	sharePhoto: function() {
 		
 		if ($("#photoInput").css('display') == 'none') {
@@ -77,13 +94,9 @@ jQuery(function($){
 			
 		}
 		else $("#videoInput").hide();
-		//if ($("#videoInput").css('display') == 'none') $("#videoText").show();
-//		else $("#videoText").hide();
 		
-	}
+	},
 	
-	
-	  
   });
 
 
