@@ -141,6 +141,77 @@ jQuery(function($){
         }
       })
     },
+    poll: function() {
+
+
+      $.ajax({
+        contentType: 'application/json',
+        dataType: 'json',
+  			type : 'GET',
+        url : '/changes',
+        success : function(data) {
+          var feeds=new Array();
+    			for (var feed in data['updatedFeeds']['updatedFeed']){
+    				feedtitle = data['updatedFeeds']['updatedFeed'][feed]['feedTitle'];
+
+    				if (feedtitle == 'everyone') {
+
+    				  $("#everyoneStream").html('');
+    				  var everyoneItems = data['updatedFeeds']['updatedFeed'][feed]['item'];
+
+
+              $.ajax({
+                type : 'GET',
+              	url : 'html/posts/_show.html',
+                success : function(html) {
+          				for (var item in everyoneItems){
+          				  title = everyoneItems[item]['title'];
+          				  body = everyoneItems[item]['body'];
+          				  avatar = everyoneItems[item]['enclosure'][0]['url'];
+
+
+                    $("#everyoneStream").prepend($(Mustache.to_html(html, {'title':title,'body':body,'username':body,'avatar':avatar})));
+          			  }
+                }
+              });
+
+
+
+
+    				} else {
+
+
+      				for (var item in data['updatedFeeds']['updatedFeed'][feed]['item']){
+      				  title = data['updatedFeeds']['updatedFeed'][feed]['item'][item]['title'];
+      				  //alert(title);
+      				  body = data['updatedFeeds']['updatedFeed'][feed]['item'][item]['body'];
+      				  if (undefined !== title)
+      						feeds[feedtitle] = true;
+      			  }
+  			    }
+    			}
+    			sources = new Array();
+    			feedarr = new Array();
+    			var id = 0;
+    			for(var f in feeds) {
+    				var a = new Array();
+    				a['name'] = f;
+    				a['id'] = id;
+    				feedarr[id] = f;
+    				sources.push(a);
+    				id++;
+    			}
+//    			$(this).data('feeds',feedarr);
+//          return {
+//    	      sources : sources
+//          };
+        }
+      });
+
+
+
+      //alert('poll');
+    },
     
     settings: function() {
       $.ajax({
@@ -239,6 +310,9 @@ jQuery(function($){
     },
 
     init: function() {
+      setInterval(this.poll, 15*1000);
+      this.poll();
+      
       Profiles.init({ el:$("body") });
 	  Share.init({ el:$("body") });
       $.ajax({

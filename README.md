@@ -22,11 +22,11 @@ A. It's a self-hosted sharing tool, with a portable friends list. Follow our [bl
 
 **Q. How can I play with it?**
 
-A. Try it at [try.followbutton.com](http://try.followbutton.com).
+A. Sign up for our announcements (hosted and open source) at [followbutton.com](http://followbutton.com).
 
 **Q. How can I help out?**
 
-A. Check our wiki [followbutton.github.com](http://followbutton.github.com).
+A. Check our wiki [github.com/voitto/FollowButton/wiki](https://github.com/voitto/FollowButton/wiki).
 
 
 BUGS?
