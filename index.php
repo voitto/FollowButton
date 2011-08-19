@@ -63,6 +63,7 @@ function changes( $request, $response ) {
   $end = count($j->data);
   $items = array();
   $count = 0;
+  krsort($j->data);
   foreach($j->data as $key=>$post) {
     $count++;
     if ($count == $end)
