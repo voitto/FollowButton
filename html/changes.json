@@ -1,0 +1,45 @@
+{
+	"updatedFeeds":
+	{
+		"updatedFeed": [
+		{{#sources}}
+		{
+			"feedTitle": "{{title}}",
+			"feedUrl": "{{feedurl}}",
+			"websiteUrl": "{{url}}",
+			"whenLastUpdate": "{{lastupdate}}",
+			"item": [
+			{{#items}}
+				{
+					"id": "{{id}}",
+					"title": {{{title}}},
+					"link": "{{link}}",
+					"permaLink": "{{permalink}}",
+					"pubDate": "{{pubdate}}",
+					"body": {{{body}}}{{#has_enc}},
+					"enclosure":
+					[
+						{{#enclosures}}
+						{
+							"url": "{{enc_url}}",
+							"type": "{{enc_type}}",
+							"length": {{enc_length}}
+						}{{#last}},{{/last}}
+						{{/enclosures}}
+					]{{/has_enc}},
+					"comments": "{{comments}}"
+				}{{#last}},{{/last}}
+			{{/items}}
+			]
+			}{{#last}},{{/last}}
+			{{/sources}}
+		]
+	},
+	"metadata":
+	{
+		"docs": "{{docs}}",
+		"whenGMT": "{{whengmt}}",
+		"whenLocal": "{{whenlocal}}",
+		"secs": "{{secs}}"
+	}
+}
