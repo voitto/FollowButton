@@ -72,7 +72,7 @@ function changes( $request, $response ) {
     $enclosures = array();
     $enclosures[] =
     array(
-      'enc_url' => $post->icon,
+      'enc_url' => 'http://graph.facebook.com/'.$post->from->id.'/picture?type=small',
       'enc_type' => '',
       'enc_length' => 0,
       'last'=>false
@@ -84,11 +84,10 @@ function changes( $request, $response ) {
       'link' => '',
       'permalink' => '',
       'pubdate' => '',
-      'body' => json_encode($post->name),
+      'body' => json_encode($post->from->name),
       'enclosures' => $enclosures,
       'has_enc' => true
     );
-
   }
   
   //id [1] => from [2] => message [3] => picture [4] => link [5] => name [6] => caption [7] => description [8] => icon [9] => actions [10] => type [11] => application [12] => created_time [13] => updated_time [14] => comments )
