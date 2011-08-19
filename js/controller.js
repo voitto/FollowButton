@@ -25,20 +25,78 @@ jQuery(function($){
   });
 
   window.Share = Spine.Controller.create({
-	//el: $("body"),
 
 	events: {
-	"click #status" : "status"	
+	"click #status"      : "status",
+	"click #shareLink"   : "shareLink",
+	"click #attachLink"  : "attachLink",
+	"click #sharePhoto"  : "sharePhoto",
+	"click #shareVideo"  : "shareVideo",
 	},
 	
 	status: function(){
-		alert('hi');
-	}
+		
+		if ($("#statusInput").css('display') == 'none') { 
+			$("#shareInput > div").each(function(){$(this).hide();});
+			$("#statusInput").show(); 
+			$("#statusText").focus();
+		}
+		else $("#statusInput").hide();
+		
+	},
 	
-	//init: function(){
-//		status();	
-//	}
-	  
+	shareLink: function() {
+		
+		if ($("#linkInput").css('display') == 'none') { 
+			$("#shareInput > div").each(function(){$(this).hide();});
+			$("#linkInput").show(); 
+			$("#linkText").focus();
+		}
+		else $("#linkInput").hide();
+		
+	},
+	
+	attachLink: function(){
+		
+		var linkText = $("#linkText").val();
+		$.ajax({
+			type   : "POST",
+			url    : "../model/links.php",
+			data   : {"linkText":linkText},
+			success: function(data){
+				alert(data);
+				$("#appendTo").append(data);
+			}
+		});	
+		
+		return false;
+	},
+	
+	sharePhoto: function() {
+		
+		if ($("#photoInput").css('display') == 'none') {
+			
+			$("#shareInput > div").each(function(){$(this).hide();});
+			$("#photoInput").show();
+			
+		}
+		else $("#photoInput").hide();
+		
+	},
+	
+	shareVideo: function() {
+		
+		
+		if ($("#videoInput").css('display') == 'none') {
+			
+			$("#shareInput > div").each(function(){$(this).hide();});
+			$("#videoInput").show();
+			
+		}
+		else $("#videoInput").hide();
+		
+	},
+	
   });
 
 
