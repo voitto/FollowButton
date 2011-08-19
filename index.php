@@ -3,6 +3,7 @@
 require 'config.php';
 require 'lib/Klein.php';
 
+respond( 'GET',      '/changes',                 'changes' );
 respond( 'GET',      '/[:resource]',             'constructor' );
 respond( 'POST',     '/[:resource]',             'constructor' );
 respond( 'PUT',      '/[:resource]/[:id]',       'constructor' );
@@ -41,5 +42,74 @@ function index($request,$response) {
     $params['username'] = $_SESSION['current_user'];
   echo $m->render(file_get_contents('html/index.html'),$params);
 }
+
+function changes( $request, $response ) {
+  require 'lib/Mustache.php';
+  $m = new Mustache;
+  $resource = 'everyone';
+  $tpl = 'html/changes.json';
+  session_start();
+	require 'lib/facebook.php';
+	$return = 'http://'.$_SESSION['current_user'].'.followbutton.com/profiles/facebook';
+	require 'lib/Mullet.php';
+  $conn = new Mullet('guest','guest');
+  $coll = $conn->user->profiles;
+  $cursor = $coll->find(array(
+    'username' => $_SESSION['current_user']
+  ));
+  $user = $cursor->getNext();
+	$f = new Facebook( FB_SEC, FB_AID, $return,	$user->facebook_token );
+  $j = json_decode($f->friends_timeline());
+  $end = count($j->data);
+  $items = array();
+  $count = 0;
+  foreach($j->data as $key=>$post) {
+    $count++;
+    if ($count == $end)
+      $last = false;
+    else
+      $last = true;
+    $enclosures = array();
+    $enclosures[] =
+    array(
+      'enc_url' => $post->icon,
+      'enc_type' => '',
+      'enc_length' => 0,
+      'last'=>false
+      );
+    $items[] = array(
+      'last' => $last,
+      'id' => $post->id,
+      'title' => json_encode($post->message),
+      'link' => '',
+      'permalink' => '',
+      'pubdate' => '',
+      'body' => json_encode($post->name),
+      'enclosures' => $enclosures,
+      'has_enc' => true
+    );
+
+  }
+  
+  //id [1] => from [2] => message [3] => picture [4] => link [5] => name [6] => caption [7] => description [8] => icon [9] => actions [10] => type [11] => application [12] => created_time [13] => updated_time [14] => comments )
+
+
+
+  $collections[] = array(
+    'last' => false,
+    'title' => $resource,
+    'feedurl' => '',
+    'url' => '',
+    'lastupdate' => '',
+    'items' => $items 
+  );
+  header('HTTP/1.1 200 OK');
+  header('Content-Type: application/json');
+  echo $m->render(file_get_contents($tpl), array(
+      'sources' => $collections
+  ));
+  exit;
+}
+
 
 dispatch();
