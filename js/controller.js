@@ -60,12 +60,20 @@ jQuery(function($){
 		
 		var linkText = $("#linkText").val();
 		$.ajax({
-			type   : "POST",
-			url    : "../model/links.php",
-			data   : {"linkText":linkText},
+			type     : "POST",
+			url      : "../model/links.php",
+			data     : {"linkText":linkText},
+			//dataType : "json",
 			success: function(data){
 				alert(data);
-				$("#appendTo").append(data);
+				alert(typeof 'hi');
+				alert(typeof data);
+				
+				var blah = String(data);			    
+				$("#appendTo").append(blah);
+				$("#appendDiv").append(data);
+				$("#appendDiv").append('hi');
+				$("#appendTo").append('hello');
 			}
 		});	
 		
