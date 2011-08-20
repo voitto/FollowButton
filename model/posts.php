@@ -24,19 +24,21 @@ class Posts extends MulletMapper {
   	  'title' => $arr->title
   	));
   	
+  	if ($arr->sendfb == 1) {
+      session_start();
+    	require 'lib/facebook.php';
+    	$return = 'http://'.$_SESSION['current_user'].'.followbutton.com/profiles/facebook';
+
+
+      $coll = $conn->user->profiles;
+      $cursor = $coll->find(array(
+        'username' => $_SESSION['current_user']
+      ));
+      $user = $cursor->getNext();
+    	$f = new Facebook( FB_SEC, FB_AID, $return,	$user->facebook_token );
   	
-    session_start();
-  	require 'lib/facebook.php';
-  	$return = 'http://'.$_SESSION['current_user'].'.followbutton.com/profiles/facebook';
-
-
-    $coll = $conn->user->profiles;
-    $cursor = $coll->find(array(
-      'username' => $_SESSION['current_user']
-    ));
-    $user = $cursor->getNext();
-  	$f = new Facebook( FB_SEC, FB_AID, $return,	$user->facebook_token );
-    $result = $f->publish($arr->title,$user->facebook_uid);
+      $result = $f->publish($arr->title,$user->facebook_uid);
+    }
   	
   	return array(
   		'ok'=>$result,'msg'=>$result

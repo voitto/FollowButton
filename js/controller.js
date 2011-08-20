@@ -107,11 +107,16 @@ jQuery(function($){
 	},
 	
 	doTweet: function() {
+	  
+	  var fb = $("#shareToFacebook").attr('checked');
+	  var sendfb = 0;
+	  if (fb == true)
+	    sendfb = 1;
 		$.ajax({
       contentType: 'application/json',
       dataType: 'json',
 			type : 'POST',
-			data : JSON.stringify({'title':$("#statusText").val()}),
+			data : JSON.stringify({'title':$("#statusText").val(),'sendfb':sendfb}),
       url : '/posts',
 			success: function(req){
         if (false == req['ok']) {
@@ -120,7 +125,8 @@ jQuery(function($){
   			  $("#statusText").val('');
 	      }
 			}
-		});	
+		});
+			
 	}
 	
   });
