@@ -78,6 +78,7 @@ function changes( $request, $response ) {
       'enc_length' => 0,
       'last'=>false
       );
+      if (isset($post->message))
     $items[] = array(
       'last' => $last,
       'id' => $post->id,
