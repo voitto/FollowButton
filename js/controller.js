@@ -32,6 +32,7 @@ jQuery(function($){
 	"click #attachLink"  : "attachLink",
 	"click #sharePhoto"  : "sharePhoto",
 	"click #shareVideo"  : "shareVideo",
+	"click .shareBtn"    : "doTweet"
 	},
 	
 	status: function(){
@@ -104,6 +105,23 @@ jQuery(function($){
 		else $("#videoInput").hide();
 		
 	},
+	
+	doTweet: function() {
+		$.ajax({
+      contentType: 'application/json',
+      dataType: 'json',
+			type : 'POST',
+			data : JSON.stringify({'title':$("#statusText").val()}),
+      url : '/posts',
+			success: function(req){
+        if (false == req['ok']) {
+  			  alert('not cool, bro');
+        } else  {
+  			  $("#statusText").val('');
+	      }
+			}
+		});	
+	}
 	
   });
 

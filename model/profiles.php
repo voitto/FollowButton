@@ -121,8 +121,8 @@ class Profiles extends MulletMapper {
       $token = $f->request_token();
       redirect_to( $token->authorize_url() );
     }
-    list($user,$token) = $f->authorize_from_access();
-    if (empty($user) || empty($token))
+    list($userid,$token) = $f->authorize_from_access();
+    if (empty($userid) || empty($token))
       trigger_error('error: could not get token or userid from Facebook',E_USER_ERROR);
     $conn = new Mullet('guest','guest');
     $coll = $conn->user->profiles;
@@ -132,12 +132,14 @@ class Profiles extends MulletMapper {
     if ($cursor->hasNext()) {
       $user = $cursor->getNext();
       $user->facebook_token = $token;
+      $user->facebook_uid = $userid;
       $result = $coll->update(
         array( 'username' => $_SESSION['current_user'] ),
         array($user)
       );
     } else {
       $user = array();
+      $user['facebook_uid'] = $userid;
       $user['facebook_token'] = $token;
       $user['password'] = '';
       $user['username'] = $_SESSION['current_user'];
@@ -145,7 +147,7 @@ class Profiles extends MulletMapper {
         $user
       );
     }
-    redirect_to('http://'.$_SESSION['current_user'].'.followbutton.com');
+    redirect_to('http://'.$_SESSION['current_user'].'.followbutton.com');  
   }
 
   function facebookstream( $request, $response ) {

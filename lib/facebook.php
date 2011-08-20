@@ -136,7 +136,7 @@ class FacebookToken {
 
   function authorize_url() {
     
-    $url = 'https://www.facebook.com/dialog/oauth?client_id='.$this->appid.'&redirect_uri='.$this->next.'&scope=offline_access,read_stream';
+    $url = 'https://www.facebook.com/dialog/oauth?client_id='.$this->appid.'&redirect_uri='.$this->next.'&scope=offline_access,read_stream,publish_stream';
     return $url;
     
     $url = $this->api_root . '/login.php';
@@ -208,7 +208,14 @@ class Facebook {
     $parts = explode('=',$data);
     $user = 'me';
     $this->access_token = $parts[1];
-    return array($user,$parts[1]);
+
+    $graph_url = "https://graph.facebook.com/me?access_token=".$this->access_token;
+
+        $user = json_decode($this->http($graph_url));
+        
+
+
+    return array($user->id,$parts[1]);
     
     $sess_data = (array) $this->api->auth->callMethod('auth.getSession',array('auth_token'=>$_GET['auth_token']));
     $this->userid = $sess_data['uid'];
@@ -325,7 +332,14 @@ class Facebook {
     return (intval((string)$res) == 1);
   }
 
-  function publish( $status, $uid=false ) {
+  function publish( $status, $user ) {
+    $newsfeed = 'https://graph.facebook.com/'.$user.'/feed';
+    return $this->http($newsfeed,array('message'=>$status,'access_token'=>$this->access_token));
+    
+  //  params = array('access_token'=>$facebook_access_token, 'message'=>$status);
+  //  $url = "https://graph.facebook.com/$facebook_id/feed";
+    
+    
     //$this->permission_to( 'publish_stream', $uid );
     $params = array(
       'uid' => $this->userid,
