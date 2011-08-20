@@ -58,6 +58,7 @@ jQuery(function($){
 	
 	attachLink: function(){
 		
+		$("#indicator").show();
 		var linkText = $("#linkText").val();
 		$.ajax({
 			type     : "POST",
@@ -66,13 +67,13 @@ jQuery(function($){
 			//dataType : "json",
 			success: function(data){
 				alert(data);
-				alert(typeof 'hi');
-				alert(typeof data);
 				
-				$("#appendTo").append('<p>'+blah+'</p>');
+				$("#appendDiv").html('');
+				//$("#appendTo").html(data);
 				$("#appendDiv").append(data);
-				$("#appendDiv").append('hi');
-				$("#appendTo").append('hello');
+				$("#indicator").hide();
+				//$("#appendDiv").append('hi');
+				//$("#appendTo").append('hello');
 			}
 		});	
 		
