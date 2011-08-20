@@ -32,7 +32,8 @@ jQuery(function($){
 	"click #attachLink"  : "attachLink",
 	"click #sharePhoto"  : "sharePhoto",
 	"click #shareVideo"  : "shareVideo",
-	"click .shareBtn"    : "doTweet"
+	"click .shareBtn"    : "doTweet",
+	"submit .fbComment" : "comment"
 	},
 	
 	status: function(){
@@ -127,6 +128,26 @@ jQuery(function($){
 			}
 		});
 			
+	},
+	
+	comment: function(e) {
+	  var objid = e.originalEvent.target.id;
+	  var comment = $("#comment"+objid).val();
+		$.ajax({
+      contentType: 'application/json',
+      dataType: 'json',
+			type : 'POST',
+			data : JSON.stringify({'title':comment,'objid':objid}),
+      url : '/posts/comment',
+			success: function(req){
+        if (false == req['ok']) {
+  			  alert('so not cool, bro');
+        } else  {
+  			  $("#comment"+objid).val('');
+	      }
+			}
+		});
+		return false;
 	}
 	
   });

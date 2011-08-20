@@ -16,6 +16,36 @@ class Posts extends MulletMapper {
 	function put() {
 	}
 	
+	
+	function comment() {
+    $arr = json_decode(file_get_contents('php://input'));
+  	$conn = new Mullet('guest','guest');
+  	$coll = $conn->user->posts;
+  	$result = $coll->insert(array(
+  	  'title' => $arr->title
+  	));
+  	
+
+    session_start();
+  	require 'lib/facebook.php';
+  	$return = 'http://'.$_SESSION['current_user'].'.followbutton.com/profiles/facebook';
+
+
+    $coll = $conn->user->profiles;
+    $cursor = $coll->find(array(
+      'username' => $_SESSION['current_user']
+    ));
+    $user = $cursor->getNext();
+  	$f = new Facebook( FB_SEC, FB_AID, $return,	$user->facebook_token );
+	
+    $result = $f->comment($arr->title,$arr->objid);
+
+  	
+  	return array(
+  		'ok'=>$result,'msg'=>$result
+  	);
+	}
+	
 	function post() {
     $arr = json_decode(file_get_contents('php://input'));
   	$conn = new Mullet('guest','guest');

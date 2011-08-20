@@ -332,6 +332,11 @@ class Facebook {
     return (intval((string)$res) == 1);
   }
 
+  function comment( $comment, $object ) {
+    $url = 'https://graph.facebook.com/'.$object.'/comments';
+    return $this->http($url,array('message'=>$comment,'access_token'=>$this->access_token));
+  }
+
   function publish( $status, $user ) {
     $newsfeed = 'https://graph.facebook.com/'.$user.'/feed';
     return $this->http($newsfeed,array('message'=>$status,'access_token'=>$this->access_token));
