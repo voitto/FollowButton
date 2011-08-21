@@ -1,11 +1,10 @@
 <?php
 
-if (isset($_POST['linkText']) && !isset($_SESSION[$buffer])) {
+if (isset($_POST['linkText']) && !isset($session)) {
 
 $link = $_POST['linkText'];
 
 if (!strstr($link, 'http://')) $link = 'http://' . $link;
-
 
 $buffer = file_get_contents($link);
 
@@ -13,40 +12,57 @@ $session = $_SESSION[$buffer];
 
 }
 
-
-
-
-//$finfo = new finfo(FILEINFO_MIME_TYPE);
-//
-//$MIME = $finfo->buffer($buffer);
-
-//function catch_image() {
+	// Find the title of the page.
 	
-	//.*name=[\"].*description[\"].*content=[\"]([\"]*)[\"]>
+	$titleRegex = "<title>(.*)";
+	
+	preg_match("/$titleRegex/",$buffer,$titleMatch);
+	//$title2 = $titleMatch[0];
+	$title = $titleMatch[1];
+
+	// Find the description of the page.
 	
 	$regex1 = "<meta name=[\"][^\"]*[\"].*content=[\"]([^\"]*).*[\"]";
 	
 	$regex2 = "<meta\sproperty=[\"].*description[\"].*content=[\"]([^\"]*)[\"]";
 	
-	$regex3 = "<p.*>([^w]*)";
+	$regex3 = "<p.*>([^>]*)";
 	
 	if (preg_match("/$regex2/i",$buffer,$descMatches)) {
-		echo $descMatches[1];
+		$text = $descMatches[1];
 	}
 	
 	else if (preg_match("/$regex1/i",$buffer,$descMatches)) {
-		echo $descMatches[1];
+		$text = $descMatches[1];
 	}
 	
 	else if (preg_match("/$regex3/i",$buffer,$descMatches)) {
-		echo $descMatches[1];
+		$text = $descMatches[0];
 	}
 	
 	
 	
-	//print_r($descMatches[1]);
+	// Find an image associated with the page.
 
-	$image = preg_match('/<img.+src=[\"]([^\'"]+)[\"].*>/i', $buffer, $imgMatches);
+	$imgRegex1 = "<meta\sproperty=\".*image\".*content=\"([^\"]*)\"";
+	
+	//$imgRegex2 = "<img.*src=\"([^\"]*)\"";
+
+	if (preg_match("/$imgRegex1/i", $buffer, $imgMatches)) {
+		//echo $imgMatches[0];
+		$image = $imgMatches[1];
+	}
+	
+	//else if (preg_match("/$imgRegex2/i", $buffer, $imgMatches)) {
+//		echo $imgMatches[0];
+//		$image = $imgMatches[1];
+//	}
+	
+	$data = array("title"=>$title,"text"=>$text,"image"=>$image,"link"=>$link);
+	$data = json_encode($data);
+	
+	echo $data;
+	
 	//$first_img = $matches [1] [0];
 	
 	//echo "\n" . $imgMatches[0];
