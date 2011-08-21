@@ -233,11 +233,13 @@ jQuery(function($){
           				for (var item in everyoneItems){
           				  title = everyoneItems[item]['title'];
           				  body = everyoneItems[item]['body'];
+          				  comments = everyoneItems[item]['comments'];
           				  id = everyoneItems[item]['id'];
           				  avatar = everyoneItems[item]['enclosure'][0]['url'];
 
 
-                    $("#everyoneStream").prepend($(Mustache.to_html(html, {'title':title,'body':body,'username':body,'avatar':avatar,'id':id})));
+                    $("#everyoneStream").prepend($(Mustache.to_html(html, {'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
+
           			  }
                 }
               });
