@@ -308,7 +308,10 @@ class Facebook {
 
   }
 
-  function like( $id, $uid=false ) {
+  function like( $object ) {
+    $url = 'https://graph.facebook.com/'.$object.'/likes';
+    return $this->http($url,array('access_token'=>$this->access_token));
+
     //$this->permission_to( 'publish_stream', $uid );
     $params = array(
       'uid' => $this->userid,

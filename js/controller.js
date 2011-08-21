@@ -33,7 +33,8 @@ jQuery(function($){
 	"click #sharePhoto"  : "sharePhoto",
 	"click #shareVideo"  : "shareVideo",
 	"click .shareBtn"    : "doTweet",
-	"submit .fbComment" : "comment"
+	"submit .fbComment"  : "comment",
+	"submit .fbLike"     : "like"
 	},
 	
 	status: function(){
@@ -148,6 +149,25 @@ jQuery(function($){
 			}
 		});
 		return false;
+	},
+
+	like: function(e) {
+	  var objid = e.originalEvent.target.id;
+		$.ajax({
+      contentType: 'application/json',
+      dataType: 'json',
+			type : 'POST',
+			data : JSON.stringify({'objid':objid}),
+      url : '/posts/like',
+			success: function(req){
+        if (false == req['ok']) {
+  			  alert('so not cool, bro');
+        } else  {
+  			  $("#likebtn"+objid).hide();
+	      }
+			}
+		});
+		return false;
 	}
 	
   });
@@ -213,10 +233,11 @@ jQuery(function($){
           				for (var item in everyoneItems){
           				  title = everyoneItems[item]['title'];
           				  body = everyoneItems[item]['body'];
+          				  id = everyoneItems[item]['id'];
           				  avatar = everyoneItems[item]['enclosure'][0]['url'];
 
 
-                    $("#everyoneStream").prepend($(Mustache.to_html(html, {'title':title,'body':body,'username':body,'avatar':avatar})));
+                    $("#everyoneStream").prepend($(Mustache.to_html(html, {'title':title,'body':body,'username':body,'avatar':avatar,'id':id})));
           			  }
                 }
               });
