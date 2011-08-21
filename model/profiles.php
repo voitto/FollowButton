@@ -124,7 +124,7 @@ class Profiles extends MulletMapper {
     list($userid,$token) = $f->authorize_from_access();
     if (empty($userid) || empty($token))
       trigger_error('error: could not get token or userid from Facebook',E_USER_ERROR);
-    $conn = new Mullet('guest','guest');
+    $conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
     $coll = $conn->user->profiles;
     $cursor = $coll->find(array(
       'username' => $_SESSION['current_user']

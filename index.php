@@ -52,7 +52,7 @@ function changes( $request, $response ) {
 	require 'lib/facebook.php';
 	$return = 'http://'.$_SESSION['current_user'].'.followbutton.com/profiles/facebook';
 	require 'lib/Mullet.php';
-  $conn = new Mullet('guest','guest');
+  $conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
   $coll = $conn->user->profiles;
   $cursor = $coll->find(array(
     'username' => $_SESSION['current_user']

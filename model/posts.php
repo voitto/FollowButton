@@ -19,7 +19,7 @@ class Posts extends MulletMapper {
 	
 	function comment() {
     $arr = json_decode(file_get_contents('php://input'));
-  	$conn = new Mullet('guest','guest');
+  	$conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
   	$coll = $conn->user->posts;
   	$result = $coll->insert(array(
   	  'title' => $arr->title
@@ -48,7 +48,7 @@ class Posts extends MulletMapper {
 
 	function like() {
     $arr = json_decode(file_get_contents('php://input'));
-  	$conn = new Mullet('guest','guest');
+  	$conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
   	
 
     session_start();
@@ -72,7 +72,7 @@ class Posts extends MulletMapper {
 	
 	function post() {
     $arr = json_decode(file_get_contents('php://input'));
-  	$conn = new Mullet('guest','guest');
+  	$conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
   	$coll = $conn->user->posts;
   	$result = $coll->insert(array(
   	  'title' => $arr->title
