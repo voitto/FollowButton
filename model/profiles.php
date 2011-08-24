@@ -173,23 +173,20 @@ class Profiles extends MulletMapper {
     $result = $coll->find(array(
       'username' => $_SESSION['current_user']
     ));
-  	if ($result->hasNext()) {
+  	if ($result->hasNext())
       $twittok = $result->getNext();
-    	list($atoken,$asecret) = $t->authorize_from_request(
-    	  $twittok->oauth_token,
-    	  $_SESSION['token_secret'],
-    	  $twittok->oauth_verifier
-    	);
-    	$_SESSION['twit_token'] = $atoken;
-    	$_SESSION['twit_secret'] = $asecret;
-      $result = $coll->remove(array(
-        'username' => $_SESSION['current_user']
-      ));
-    }
+  	list($atoken,$asecret) = $t->authorize_from_request(
+  	  $twittok->oauth_token,
+  	  $_SESSION['token_secret'],
+  	  $twittok->oauth_verifier
+  	);
+  	$_SESSION['twit_token'] = $atoken;
+  	$_SESSION['twit_secret'] = $asecret;
     redirect_to('http://'.$_SESSION['current_user'].'.followbutton.com');
   }
 
   function twitterstream( $request, $response ) {
+    session_start();
   	require_once 'lib/twitter.php';
   	require_once 'lib/OAuth.php';
   	$t = new Twitter( TW_KEY, TW_SEC );
