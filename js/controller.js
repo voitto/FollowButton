@@ -67,16 +67,17 @@ jQuery(function($){
 			type     : "POST",
 			url      : "../model/links.php",
 			data     : {"linkText":linkText},
-			//dataType : "json",
+			dataType : "json",
 			success: function(data){
-				alert(data);
+				//alert(data["title"]);
+				//alert(data["title2"]);
 				
 				$("#appendDiv").html('');
-				//$("#appendTo").html(data);
-				$("#appendDiv").append(data);
+				$("#appendDiv").append('<img src=\"'+data["image"]+'\" style=\"height:100px;width:100px;margin-bottom:5px;\" />');			
+				$("#appendDiv").append('<h2 style=\"font-weight:bold;\">'+data["title"]+'</h2><br />');
+				$("#appendDiv").append('<h5 style=\"color:#555;\">'+data["link"]+'</h5><br />');
+				$("#appendDiv").append('<h3>'+data["text"]+'</h3>');
 				$("#indicator").hide();
-				//$("#appendDiv").append('hi');
-				//$("#appendTo").append('hello');
 			}
 		});	
 		
