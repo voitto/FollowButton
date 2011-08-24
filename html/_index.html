@@ -9,15 +9,11 @@
             <span id="shareVideo"> Video </span>
         </div>
         
-        <!--<h1 id="share" style="float:right;">Share Something</h1>-->
-        <!--<input type="button" value="Hide" style="position:absolute; float:right;" />-->
+        
+        
+   <!-- <img src="image/hide.png" style="height:40px;width:140px;margin-top:8px;cursor: pointer;" id="hideshare" />
+    <img src="image/show.png" style="height:40px;width:140px;margin-top:8px;display:none;cursor: pointer;" id="showshare" />-->
     
-   <!-- </div>-->
-    
-    <!--<div id="showhide" class="five columns">
-    <img src="image/hide.png" style="height:40px;width:140px;margin-top:8px;cursor: pointer;" id="hideshare" />
-    <img src="image/show.png" style="height:40px;width:140px;margin-top:8px;display:none;cursor: pointer;" id="showshare" />
-    </div>-->
     
     <div id="tohide">
     <div class="sixteen columns">
@@ -52,13 +48,13 @@
         </div>
         
         
-        <div id="linkInput" class="">
+        <div id="linkInput" class="display-none">
         	
             <form id="linkForm">
             	<label for="linkText">Paste or type a URL</label>
                 <input type="text" id="linkText" name="linkText" class="display-block" />
                 <input type="submit" value="Attach Link" id="attachLink" />
-                <div style="width:500px;height:270px;background:white;border:1px solid black;color:black;padding:10px;margin:5px auto;" id="appendDiv"><img src="image/indicator.gif" style="display:none;width:75px;height:75px" id="indicator" /></div>
+                <div style="width:500px;height:auto;background:white;border:1px solid black;color:black;padding:10px;margin:5px auto;display:none;" id="link-div"><img src="image/indicator.gif" style="display:none;width:75px;height:75px" id="indicator" /></div>
             </form>
                            
                 <div id="linkShare" class="display-none">
@@ -86,6 +82,14 @@
         
     </div>
     </div>
+    
+    
+    <div id="icons-div">
+        <a href="/profiles/facebook"><img src="image/facebook-grey.png" class="social-icons" /></a>
+        <img src="image/twitter-grey.png" class="social-icons" />
+        <img src="image/g+-grey.png" class="social-icons" />
+        <img src="image/followbutton-grey.png" class="social-icons" />
+    </div> <!--end icons-div-->
    
    
     <div class="sixteen columns">
@@ -118,41 +122,10 @@
                     </video>
                     <h3>My videos</h3>
                 </div>
-                
+               
                 <div class="nested full">
                 	<h1 style="padding-bottom:10px; border-bottom:3px dashed white;">Activity</h1>
-                    
-           <!--         <script src="http://widgets.twimg.com/j/2/widget.js"></script>
-<script>
-new TWTR.Widget({
-  version: 2,
-  type: 'profile',
-  rpp: 4,
-  interval: 6000,
-  width: 800,
-  height: 300,
-  theme: {
-    shell: {
-      background: '#000000',
-      color: '#ffffff'
-    },
-    tweets: {
-      background: '#395774',
-      color: '#ffffff',
-      links: '#4aed05'
-    }
-  },
-  features: {
-    scrollbar: false,
-    loop: false,
-    live: false,
-    hashtags: true,
-    timestamp: true,
-    avatars: true,
-    behavior: 'all'
-  }
-}).render().setUser('brianjesse').start();
-</script>-->
+   
                     
                     <div class="nested full">
                 <div class="four columns">
@@ -209,18 +182,7 @@ new TWTR.Widget({
          
          <ul id="everyoneStream"></ul>
                 
-                 <!--<div class="two columns">
-                	<img style="border:1px solid black; height:80px;width:50px;" />
-                    <p>[User]</p>
-                </div>
-                
-                <div class="ten columns">
-                	<h3>[User] Posted a video.</h3>
-                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
-                    <video style="height:150px;width:200px;border:1px solid white;"></video>
-                    
-                    
-                </div>-->
+           
             
             </li>
         </ul>

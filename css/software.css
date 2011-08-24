@@ -55,6 +55,7 @@
 		
 	a {
 		text-decoration:none;
+		color:white;
 	}
 		
 	hr { border: solid #ddd; border-width: 1px 0 0; clear: both; margin: 10px 0 30px; height: 0; }
@@ -80,9 +81,8 @@ body {
 
 input[type="button"],
 input[type="submit"] {
-	font:22px 'Arvo', serif;
+	font:bold 22px 'Arvo', serif;
 	color:white;
-	font-weight: bold;
 	height: 50px;
 	width: auto;
 	-moz-border-radius: 25px;
@@ -164,10 +164,6 @@ span {
 	-moz-box-shadow: 0 0 5px rgba(0,0,0,.6);
 	box-shadow:  0 0 5px rgba(0,0,0,.6); 
 }
-
-#account {
-	cursor:default;
-}
 		
 #fblogo {
 	width: 100px;
@@ -198,6 +194,12 @@ span {
 	text-shadow: 1px 1px rgba(0, 0, 0, .75);
 }
 
+#link-div {
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border-radius:10px;
+}
+
 #no-border {
 	border:none;
 	cursor:default;
@@ -221,6 +223,39 @@ span {
 /*float:left;
 display:inline;*/
 margin-top:30px;
+}
+
+#icons-div {
+	width:350px;
+	margin:0 auto;
+}
+
+.social-icons {
+	height:60px;
+	width:60px;
+	margin:0 10px;
+}
+
+#footer {
+	height: 53px;
+	max-width:950px;
+	margin:0 auto;
+	-moz-box-shadow: 0 0 5px rgba(0,0,0,.6);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,1);
+	box-shadow:  0 0 5px rgba(0,0,0,.6);
+	background: #395774;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+	padding-top: 27px;
+	font-size: 25px;
+	color: white;
+	margin-top:20px;
+}
+
+.footer-links {
+	
+	margin:0 70px;
 }
 
 #tooltip {
