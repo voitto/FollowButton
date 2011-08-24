@@ -41,7 +41,7 @@ jQuery(function($){
 		
 		if ($("#statusInput").css('display') == 'none') { 
 			$("#shareInput > div").each(function(){$(this).hide();});
-			$("#statusInput").show(); 
+			$("#statusInput").fadeIn(200); 
 			$("#statusText").focus();
 		}
 		else $("#statusInput").hide();
@@ -50,9 +50,10 @@ jQuery(function($){
 	
 	shareLink: function() {
 		
+		$("#link-div").hide();
 		if ($("#linkInput").css('display') == 'none') { 
 			$("#shareInput > div").each(function(){$(this).hide();});
-			$("#linkInput").show(); 
+			$("#linkInput").fadeIn(200); 
 			$("#linkText").focus();
 		}
 		else $("#linkInput").hide();
@@ -60,7 +61,7 @@ jQuery(function($){
 	},
 	
 	attachLink: function(){
-		
+		$("#link-div").fadeIn(200);
 		$("#indicator").show();
 		var linkText = $("#linkText").val();
 		$.ajax({
@@ -72,11 +73,14 @@ jQuery(function($){
 				//alert(data["title"]);
 				//alert(data["title2"]);
 				
-				$("#appendDiv").html('');
-				$("#appendDiv").append('<img src=\"'+data["image"]+'\" style=\"height:100px;width:100px;margin-bottom:5px;\" />');			
-				$("#appendDiv").append('<h2 style=\"font-weight:bold;\">'+data["title"]+'</h2><br />');
-				$("#appendDiv").append('<h5 style=\"color:#555;\">'+data["link"]+'</h5><br />');
-				$("#appendDiv").append('<h3>'+data["text"]+'</h3>');
+				$("#link-div").html('');
+				$("#indicator").show();
+				if (data["image"] != null) {
+				$("#link-div").append('<img src=\"'+data["image"]+'\" style=\"max-width:100px;max-height:100px;margin-bottom:5px;float:left\" />');	
+				}
+				$("#link-div").append('<h2 style=\"font-weight:bold;\">'+data["title"]+'</h2><br />');
+				$("#link-div").append('<h5 style=\"color:#555;\">'+data["link"]+'</h5><br />');
+				$("#link-div").append('<h3>'+data["text"]+'</h3>');
 				$("#indicator").hide();
 			}
 		});	
@@ -89,7 +93,7 @@ jQuery(function($){
 		if ($("#photoInput").css('display') == 'none') {
 			
 			$("#shareInput > div").each(function(){$(this).hide();});
-			$("#photoInput").show();
+			$("#photoInput").fadeIn(200);
 			
 		}
 		else $("#photoInput").hide();
@@ -102,7 +106,7 @@ jQuery(function($){
 		if ($("#videoInput").css('display') == 'none') {
 			
 			$("#shareInput > div").each(function(){$(this).hide();});
-			$("#videoInput").show();
+			$("#videoInput").fadeIn(200);
 			
 		}
 		else $("#videoInput").hide();
@@ -184,11 +188,11 @@ jQuery(function($){
     },
   
     events: {
+	  "click #account"   : "account",
       "click #showhide"  : "showHide",
       "click #settings"  : "settings",
 	  "click #privacy"   : "privacy",
 	  "click #following" : "following",
-	  "click #appearance": "appearance",
       "click #logout"    : "logout"
     },
     
@@ -282,6 +286,30 @@ jQuery(function($){
 
       //alert('poll');
     },
+	
+	account: function() {
+	$.ajax({
+        type : 'GET',
+      	url : 'html/_index.html',
+        success : function(html) {
+          var tpl = html;
+          $.ajax({
+            contentType: 'application/json',
+            dataType: 'json',
+      			type : 'POST',
+      			data : JSON.stringify({}),
+            url : '/_index',
+            success : function(req) {
+              if (false == req['ok']) {
+         				alert('sorry, there was an error loading the page');
+              } else  {
+                $("#partials").html($(Mustache.to_html(tpl, req)));
+      	      }
+            }
+          })
+        }
+      });
+	},
     
     settings: function() {
       $.ajax({
@@ -343,30 +371,6 @@ jQuery(function($){
       			type : 'POST',
       			data : JSON.stringify({}),
             url : '/profiles/_following',
-            success : function(req) {
-              if (false == req['ok']) {
-         				alert('sorry, there was an error logging out');
-              } else  {
-                $("#partials").html($(Mustache.to_html(tpl, req)));
-      	      }
-            }
-          })
-        }
-      });
-    },
-	
-	 appearance: function() {
-      $.ajax({
-        type : 'GET',
-      	url : 'html/profiles/_appearance.html',
-        success : function(html) {
-          var tpl = html;
-          $.ajax({
-            contentType: 'application/json',
-            dataType: 'json',
-      			type : 'POST',
-      			data : JSON.stringify({}),
-            url : '/profiles/_appearance',
             success : function(req) {
               if (false == req['ok']) {
          				alert('sorry, there was an error logging out');

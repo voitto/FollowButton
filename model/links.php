@@ -17,12 +17,12 @@ $session = $_SESSION[$buffer];
 	$titleRegex = "<title>(.*)";
 	
 	preg_match("/$titleRegex/",$buffer,$titleMatch);
-	//$title2 = $titleMatch[0];
 	$title = $titleMatch[1];
+
 
 	// Find the description of the page.
 	
-	$regex1 = "<meta name=[\"][^\"]*[\"].*content=[\"]([^\"]*).*[\"]";
+	$regex1 = "<meta name=[\"].*description[\"].*content=[\"]([^\"]*).*[\"]";
 	
 	$regex2 = "<meta\sproperty=[\"].*description[\"].*content=[\"]([^\"]*)[\"]";
 	
@@ -46,35 +46,22 @@ $session = $_SESSION[$buffer];
 
 	$imgRegex1 = "<meta\sproperty=\".*image\".*content=\"([^\"]*)\"";
 	
-	//$imgRegex2 = "<img.*src=\"([^\"]*)\"";
+	$imgRegex2 = "<img.*src=\"([^\"]*)\"";
 
 	if (preg_match("/$imgRegex1/i", $buffer, $imgMatches)) {
 		//echo $imgMatches[0];
 		$image = $imgMatches[1];
 	}
 	
-	//else if (preg_match("/$imgRegex2/i", $buffer, $imgMatches)) {
-//		echo $imgMatches[0];
-//		$image = $imgMatches[1];
-//	}
+	else if (preg_match("/$imgRegex2/i", $buffer, $imgMatches)) {
+		//echo $imgMatches[0];
+		$image = $imgMatches[1];
+	}	
+	
 	
 	$data = array("title"=>$title,"text"=>$text,"image"=>$image,"link"=>$link);
 	$data = json_encode($data);
 	
 	echo $data;
-	
-	//$first_img = $matches [1] [0];
-	
-	//echo "\n" . $imgMatches[0];
-	
-	//foreach ($matches as $a) {
-//		echo $a . "\n";	
-//	}
-	
-	//echo $matches[0];
-	
-	//if (empty($first_img)) $first_img = "../image/follow.png";
-//	return $first_img;
-
 
 ?>
