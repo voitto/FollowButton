@@ -46,7 +46,7 @@ function index($request,$response) {
 function changes( $request, $response ) {
   require 'lib/Mustache.php';
   $m = new Mustache;
-  $resource = 'everyone';
+
   $tpl = 'html/changes.json';
   session_start();
 	require 'lib/facebook.php';
@@ -102,7 +102,7 @@ $combined = array();
 
   $collections[] = array(
     'last' => true,
-    'title' => 'everyone',
+    'title' => 'facebook',
     'feedurl' => '',
     'url' => '',
     'lastupdate' => '',
@@ -150,7 +150,7 @@ $combined = array();
 
   $collections[] = array(
     'last' => false,
-    'title' => 'everyone',
+    'title' => 'twitter',
     'feedurl' => '',
     'url' => '',
     'lastupdate' => '',

@@ -225,34 +225,50 @@ jQuery(function($){
     			for (var feed in data['updatedFeeds']['updatedFeed']){
     				feedtitle = data['updatedFeeds']['updatedFeed'][feed]['feedTitle'];
 
-    				if (feedtitle == 'everyone') {
-
+    				if (feedtitle == 'twitter') {
     				  $("#everyoneStream").html('');
     				  var everyoneItems = data['updatedFeeds']['updatedFeed'][feed]['item'];
-
-
               $.ajax({
                 type : 'GET',
-              	url : 'html/posts/_show.html',
+              	url : 'html/posts/_twitter.html',
                 success : function(html) {
           				for (var item in everyoneItems){
-          				  title = everyoneItems[item]['title'];
-          				  body = everyoneItems[item]['body'];
-          				  comments = everyoneItems[item]['comments'];
-          				  id = everyoneItems[item]['id'];
-          				  avatar = everyoneItems[item]['enclosure'][0]['url'];
-
-
-                    $("#everyoneStream").prepend($(Mustache.to_html(html, {'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
-
+          				  if (everyoneItems[item]['type'] == 'twitter') {
+            				  title = everyoneItems[item]['title'];
+            				  body = everyoneItems[item]['body'];
+            				  comments = everyoneItems[item]['comments'];
+            				  id = everyoneItems[item]['id'];
+            				  avatar = everyoneItems[item]['enclosure'][0]['url'];
+                      $("#everyoneStream").prepend($(Mustache.to_html(html, {'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
+                    }
           			  }
                 }
               });
+    				}
 
+    				if (feedtitle == 'facebook') {
+    				  $("#everyoneStream").html('');
+    				  var everyoneItems = data['updatedFeeds']['updatedFeed'][feed]['item'];
+              $.ajax({
+                type : 'GET',
+              	url : 'html/posts/_facebook.html',
+                success : function(html) {
+          				for (var item in everyoneItems){
+          				  if (everyoneItems[item]['type'] == 'facebook') {
+            				  title = everyoneItems[item]['title'];
+            				  body = everyoneItems[item]['body'];
+            				  comments = everyoneItems[item]['comments'];
+            				  id = everyoneItems[item]['id'];
+            				  avatar = everyoneItems[item]['enclosure'][0]['url'];
+                      $("#everyoneStream").prepend($(Mustache.to_html(html, {'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
+                    }
+          			  }
+                }
+              });
+    				}
 
-
-
-    				} else {
+    				/*
+    				 else {
 
 
       				for (var item in data['updatedFeeds']['updatedFeed'][feed]['item']){
@@ -263,6 +279,7 @@ jQuery(function($){
       						feeds[feedtitle] = true;
       			  }
   			    }
+  			    /*
     			}
     			sources = new Array();
     			feedarr = new Array();
