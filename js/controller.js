@@ -279,7 +279,7 @@ jQuery(function($){
       						feeds[feedtitle] = true;
       			  }
   			    }
-  			    /*
+  			    */
     			}
     			sources = new Array();
     			feedarr = new Array();
