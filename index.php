@@ -71,6 +71,21 @@ function changes( $request, $response ) {
     else
       $last = true;
     $enclosures = array();
+    
+    $comments = array();
+    foreach($post->comments->data as $p) {
+      $comments[] = array(
+        'name' => $p->from->name,
+        'userid' => $p->from->id,
+        'message' => $p->message,
+        'objid' => $p->id
+      );
+    }
+    $comment_html = '<ul>';
+    foreach($comments as $c) {
+      $comment_html .= '<li>'.$c['name'].': '.$c['message'].'<form class=\"fbLike\" id=\"'.$c['objid'].'\"><input id=\"likebtn'.$c['objid'].'\" type=\"submit\" value=\"Like\"/></form></li>';
+    }
+    $comment_html .= '</ul>';
     $enclosures[] =
     array(
       'enc_url' => 'http://graph.facebook.com/'.$post->from->id.'/picture?type=small',
@@ -88,6 +103,7 @@ function changes( $request, $response ) {
       'pubdate' => '',
       'body' => json_encode($post->from->name),
       'enclosures' => $enclosures,
+      'comments' => $comment_html,
       'has_enc' => true
     );
   }

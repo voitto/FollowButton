@@ -27,7 +27,7 @@
 						}{{#last}},{{/last}}
 						{{/enclosures}}
 					]{{/has_enc}},
-					"comments": "{{comments}}"
+					"comments": "{{{comments}}}"
 				}{{#last}},{{/last}}
 			{{/items}}
 			]
