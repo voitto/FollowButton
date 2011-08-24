@@ -157,5 +157,40 @@ class Profiles extends MulletMapper {
     $f = new Facebook( FB_SEC, FB_AID, $return,  $_SESSION['face_token'] );
     echo $f->friends_timeline();
   }
+  
+  function twitter( $request, $response ) {
+    session_start();
+  	require_once 'lib/twitter.php';
+  	require_once 'lib/OAuth.php';
+  	$t = new Twitter( TW_KEY, TW_SEC );
+  	if (!isset($_GET['oauth_token'])) {
+  		$token = $t->request_token();
+  		$_SESSION['token_secret'] = $token->secret;
+  		redirect_to( $token->authorize_url() );
+  	}
+    $conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
+  	$coll = $conn->user->twittokens;
+    $result = $coll->find(array(
+      'username' => $_SESSION['current_user']
+    ));
+  	if ($result->hasNext())
+      $twittok = $result->getNext();
+  	list($atoken,$asecret) = $t->authorize_from_request(
+  	  $twittok->oauth_token,
+  	  $_SESSION['token_secret'],
+  	  $twittok->oauth_verifier
+  	);
+  	$_SESSION['twit_token'] = $atoken;
+  	$_SESSION['twit_secret'] = $asecret;
+    redirect_to('http://'.$_SESSION['current_user'].'.followbutton.com');
+  }
+
+  function twitterstream( $request, $response ) {
+  	require_once 'lib/twitter.php';
+  	require_once 'lib/OAuth.php';
+  	$t = new Twitter( TW_KEY, TW_SEC );
+  	$t->authorize_from_access(  $_SESSION['twit_token'], $_SESSION['twit_secret'] );
+    return $t->friends_timeline();
+  }
 
 }
