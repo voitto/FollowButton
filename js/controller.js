@@ -216,7 +216,7 @@ jQuery(function($){
                            if (!(undefined == req[item]['user'])) {
                              var id = req[item]['id'];
                              var title = req[item]['text'];
-                             var username = req[item]['user']['screen_name'];
+                             var body = req[item]['user']['screen_name'];
                              var avatar = req[item]['user']['profile_image_url'];
                              var comments = '';
                              $("#everyoneStream").prepend($(Mustache.to_html(html,{'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
@@ -265,8 +265,9 @@ jQuery(function($){
                               if (!(undefined == req[item]['message'])) {
                                 var id = req[item]['id'];
                                 var title = req[item]['message'];
-                                var username = req[item]['from']['name'];
+                                var body = req[item]['from']['name'];
                                 var avatar = 'http://graph.facebook.com/'+req[item]['from']['id']+'/picture?type=small';
+                                var comments = '';
                                 $("#everyoneStream").prepend($(Mustache.to_html(html,{'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
                               }
                     			  }
@@ -514,7 +515,7 @@ jQuery(function($){
     },
 
     init: function() {
-      setInterval(this.poll, 10*1000);
+      setInterval(this.poll, 20*1000);
       this.poll();
       
       Profiles.init({ el:$("body") });
