@@ -154,8 +154,17 @@ class Profiles extends MulletMapper {
     session_start();
     require 'lib/facebook.php';
     $return = 'http://'.$_SESSION['current_user'].'.followbutton.com/profiles/facebook';
-    $f = new Facebook( FB_SEC, FB_AID, $return,  $_SESSION['face_token'] );
-    echo $f->friends_timeline();
+    $conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
+    $coll = $conn->user->profiles;
+    $cursor = $coll->find(array(
+      'username' => $_SESSION['current_user']
+    ));
+    if ($cursor->hasNext()) {
+      $user = $cursor->getNext();
+      $f = new Facebook( FB_SEC, FB_AID, $return,  $user->facebook_token );
+      echo $f->friends_timeline();
+    }
+    exit;
   }
   
   function twitter( $request, $response ) {
@@ -194,7 +203,8 @@ class Profiles extends MulletMapper {
   	require_once 'lib/OAuth.php';
   	$t = new Twitter( TW_KEY, TW_SEC );
   	$t->authorize_from_access(  $_SESSION['twit_token'], $_SESSION['twit_secret'] );
-    return $t->friends_timeline();
+    echo $t->friends_timeline();
+    exit;
   }
   
   function hastwitter( $request, $response ) {

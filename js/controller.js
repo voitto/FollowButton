@@ -199,6 +199,34 @@ jQuery(function($){
        } else  {
          $("#twitter-icon img").attr('src',"image/twitter-color.png");
          $("#facebook-icon img").attr('src',"image/facebook-grey.png");
+         
+               $.ajax({
+                  type : 'GET',
+                	 url : 'html/posts/_twitter.html',
+                  success : function(html) {
+                    var html = html;
+                    $.ajax({
+                       contentType: 'application/json',
+                       dataType: 'json',
+                       type : 'POST',
+                       data : JSON.stringify({}),
+                       url : '/profiles/twitterstream',
+                       success : function(req) {
+                         for (var item in req){
+                           if (!(undefined == req[item]['user'])) {
+                             var id = req[item]['id'];
+                             var title = req[item]['text'];
+                             var username = req[item]['user']['screen_name'];
+                             var avatar = req[item]['user']['profile_image_url'];
+                             var comments = '';
+                             $("#everyoneStream").prepend($(Mustache.to_html(html,{'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
+                           }
+                 			  }
+                       }
+                     });
+                  }
+                });
+         
           }
      }
    })
@@ -219,6 +247,35 @@ jQuery(function($){
        } else  {
          $("#twitter-icon img").attr('src',"image/twitter-grey.png");
          $("#facebook-icon img").attr('src',"image/facebook-color.png");
+         
+                  $.ajax({
+                     type : 'GET',
+                   	 url : 'html/posts/_facebook.html',
+                     success : function(html) {
+                       var html = html;
+                       $.ajax({
+                          contentType: 'application/json',
+                          dataType: 'json',
+                          type : 'POST',
+                          data : JSON.stringify({}),
+                          url : '/profiles/facebookstream',
+                          success : function(req) {
+                            var req = req['data'];
+                            for (var item in req){
+                              if (!(undefined == req[item]['message'])) {
+                                var id = req[item]['id'];
+                                var title = req[item]['message'];
+                                var username = req[item]['from']['name'];
+                                var avatar = 'http://graph.facebook.com/'+req[item]['from']['id']+'/picture?type=small';
+                                $("#everyoneStream").prepend($(Mustache.to_html(html,{'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
+                              }
+                    			  }
+                          }
+                        });
+                     }
+                   });
+         
+         
           }
      }
    })
