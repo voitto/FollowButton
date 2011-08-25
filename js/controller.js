@@ -238,6 +238,7 @@ jQuery(function($){
     },
   
     events: {
+	  "click #username"  : "account",
 	  "click #account"   : "account",
       "click #showhide"  : "showHide",
       "click #settings"  : "settings",

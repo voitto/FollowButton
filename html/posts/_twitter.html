@@ -1,16 +1,33 @@
 <li>
 <div class="nested full">
 <div class="four columns">
-	<img style="border:1px solid black; height:80px;width:50px;" src="{{avatar}}" />
-    <p>{{username}}</p>
+	<div class="polaroid">
+	<img style="border:1px solid black; height:60px;width:60px;" src="{{avatar}}" />
+    <p class="caption">{{username}}</p>
+    </div>
 </div>
     
 <div class="ten columns" id="{{id}}">
 	<h3>{{title}}</h3>
-    <p>{{body}}</p>
+    <!--<p>{{body}}</p>-->
     <div>{{{comments}}}</div>
-    <form class="fbComment" id="{{id}}"><textarea rows="2" cols="20" id="comment{{id}}"></textarea><input type="submit" value="Post comment to Facebook"/></form>
-    <form class="fbLike" id="{{id}}"><input id="likebtn{{id}}" type="submit" value="Like this on Facebook"/></form>
+    
+    <form class="twiFav" id="{{id}}">
+    	 <span class="twi-fav" id="twi-fav{{id}}">Favorite</span>
+    </form>
+    
+    <form class="twiRetweet" id="{{id}}">
+    	<span class="show-comment-box">Retweet</span>
+    	<textarea rows="2" cols="20" id="retweet{{id}}"></textarea>			    	<input type="submit" value="Post Comment"/>
+    </form>
+    
+    <form class="twiReply" id="{{id}}">
+    	<span class="show-comment-box">Reply</span>
+        <textarea rows="2" cols="20" id="twi-reply{{id}}"></textarea>
+        <input type="submit" value="Tweet" />
+    </form>
+    
+    
 
     
 </div>
