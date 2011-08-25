@@ -181,7 +181,10 @@ class Profiles extends MulletMapper {
   	  $twittok->oauth_verifier
   	);
   	$_SESSION['twit_token'] = $atoken;
-  	$_SESSION['twit_secret'] = $asecret;
+    $_SESSION['twit_secret'] = $asecret;
+    $result = $coll->remove(array(
+      'username' => $_SESSION['current_user']
+    ));
     redirect_to('http://'.$_SESSION['current_user'].'.followbutton.com');
   }
 

@@ -180,9 +180,8 @@ jQuery(function($){
 	
 	
 	showCommentBox: function(e) {
-		alert($(this).html());
-		//var some = e.originalEvent.target.parentNode.id;
-//		alert($(some).html());
+		var some = "#" + e.originalEvent.target.parentNode.id;
+		$(some + " textarea").show();
 	},
 	
 	twclick: function(){
@@ -217,8 +216,8 @@ jQuery(function($){
        if (false == req['ok']) {
          window.location.href = 'http://'+req['user']+'.followbutton.com/profiles/facebook';
        } else  {
-         $("#twicon img").attr('src',"image/twitter-grey.png");
-         $("#fbicon img").attr('src',"image/facebook-color.png");
+         $("#twitter-icon img").attr('src',"image/twitter-grey.png");
+         $("#facebook-icon img").attr('src',"image/facebook-color.png");
           }
      }
    })

@@ -155,9 +155,12 @@ span {
 
 #header {
 	background: #395774;
-	padding: 5px 0 0;
+	width:430px;
 	margin-bottom: 30px;
 	height:45px;
+	/*-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;*/
 	-webkit-border-bottom-left-radius: 40px;
 	-webkit-border-bottom-right-radius: 40px;
 	-moz-border-radius-bottomleft: 40px;
@@ -168,11 +171,18 @@ span {
 	-moz-box-shadow: 0 0 5px rgba(0,0,0,.6);
 	box-shadow:  0 0 5px rgba(0,0,0,.6); 
 }
+
+#username {
+	display:block;
+	float:left;
+}
 		
 #drop-arrow {
-	height:20px;
-	width:20px;
-	display:inline;
+	margin:5px 0 0 5px;
+	height:15px;
+	width:15px;
+	display:block;
+	float:left;
 }
 	
 #share {
@@ -381,12 +391,18 @@ ul.tabs {
 		display: block;
 		background: #395774;
 		padding: 10px 12px;
+		margin:0 35px;
+		text-align:center;
+		-webkit-box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		box-sizing:border-box;
 		text-decoration: none;
 		font-size: 20px;
 		width: 300px;
 		color: white;
 		white-space: nowrap;
 		cursor:pointer;
+		height: 45px;
 	}
 
 	#jsddm li a:hover {	
