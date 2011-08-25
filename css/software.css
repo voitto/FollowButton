@@ -169,11 +169,12 @@ span {
 	box-shadow:  0 0 5px rgba(0,0,0,.6); 
 }
 		
-#fblogo {
-	width: 100px;
-	height:40px;
+#drop-arrow {
+	height:20px;
+	width:20px;
+	display:inline;
 }
-		
+	
 #share {
 	color:white;
 	font:25px 'minion pro';
@@ -245,9 +246,9 @@ margin-top:30px;
 	border: 1px solid #BFBFBF;
 	margin:10px 0 10px 40px;
 	background-color: white;
-	-webkit-box-shadow: 2px 2px 3px rgba(135, 139, 144, 0.4);
-	-moz-box-shadow: 2px 2px 3px rgba(135, 139, 144, 0.4);
-	box-shadow: 2px 2px 3px rgba(135, 139, 144, 0.4);
+	-webkit-box-shadow: -2px 2px 3px rgba(135, 139, 144, 0.4);
+	-moz-box-shadow: -2px 2px 3px rgba(135, 139, 144, 0.4);
+	box-shadow: -2px 2px 3px rgba(135, 139, 144, 0.4);
 	-webkit-transform: rotate(-9deg);
 	-moz-transform: rotate(-9deg);
 	transform: rotate(-9deg);
