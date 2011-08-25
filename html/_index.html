@@ -87,7 +87,7 @@
     <div id="icons-div">
         <a href="/profiles/facebook"><img src="image/facebook-grey.png" class="social-icons" /></a>
         <a href="/profiles/twitter"><img src="image/twitter-grey.png" class="social-icons" /></a>
-        <img src="image/g+-grey.png" class="social-icons" />
+        <img src="image/gplus-grey.png" class="social-icons" />
         <img src="image/followbutton-grey.png" class="social-icons" />
     </div> <!--end icons-div-->
    
@@ -97,9 +97,8 @@
         <div style="width:400px; margin:20px auto;">
         <ul class="tabs">
             <!-- Give href an ID value of corresponding "tabs-content" <li>'s -->
-            <li><a class="active" href="#Me">Me</a></li>
-            <li><a href="#Split">Split</a></li>
-            <li><a href="#Everyone">Everyone</a></li>
+            <li><a class="active" href="#Everyone">Home</a></li>
+            <li><a href="#Me">Me</a></li>
 		</ul>
         </div>
     
@@ -110,7 +109,7 @@
     
         <ul class="tabs-content">
       <!-- Give ID that matches HREF of above anchors -->
-            <li id="MeTab" class="active">
+            <li id="MeTab">
             
             	<div class="one-half column">
                 	<img style="width:300px; height:250px; border:1px solid black;" />
@@ -148,37 +147,11 @@
             
             </li>
             
-            <li id="SplitTab">
-            
-            	<div class="one-half column" style="margin:0 0 0 -2px; border-right:3px white dashed;">
-                <h1 style="padding-bottom:10px; border-bottom:3px dashed white;">My Activity</h1>
-                <div class="two columns">
-                	<img style="border:1px solid black; height:50px;width:50px;" />
-                    <p>[User]</p>
-                </div>
                 
-                <div class="four columns">
-                	<h3>[Title]</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-                
-                </div>
-                
-                <div class="one-half column" style="margin: 0 0 0 -2px;padding:0 0 0 20px;">
-                <h1 style="padding-bottom:10px; border-bottom:3px dashed white;">Everyone's Activity</h1>
-                
-                
-                
-                
-
-                </div> 
-            
             
             </li>
-            <li id="EveryoneTab">
+            <li id="EveryoneTab" class="active">
             
-            	
-                <h1 style="padding-bottom:10px; border-bottom:3px dashed white;">Everyone's Activity</h1>
          
          <ul id="everyoneStream"></ul>
                 
