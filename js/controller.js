@@ -185,6 +185,7 @@ jQuery(function($){
 	},
 	
 	twclick: function(){
+    $("#everyoneStream").html('');
 
    $.ajax({
      contentType: 'application/json',
@@ -205,7 +206,7 @@ jQuery(function($){
     },
 	
 	fbclick: function(){
-
+   $("#everyoneStream").html('');
    $.ajax({
      contentType: 'application/json',
      dataType: 'json',
@@ -262,7 +263,9 @@ jQuery(function($){
       })
     },
     poll: function() {
-
+      var activeFeed = 'facebook';
+  	  if ($("#twitter-icon img").attr('src') == "image/twitter-color.png")
+  	    activeFeed = 'twitter';
 
       $.ajax({
         contentType: 'application/json',
@@ -274,28 +277,29 @@ jQuery(function($){
     			for (var feed in data['updatedFeeds']['updatedFeed']){
     				feedtitle = data['updatedFeeds']['updatedFeed'][feed]['feedTitle'];
 
-            /*
-                				if (feedtitle == 'twitter') {
+
+
+
+
+                				if (activeFeed == 'twitter' && feedtitle == 'twitter') {
                 				  var everyoneItems = data['updatedFeeds']['updatedFeed'][feed]['item'];
                           $.ajax({
                             type : 'GET',
                           	url : 'html/posts/_twitter.html',
                             success : function(html) {
                       				for (var item in everyoneItems){
-                      				  if (everyoneItems[item]['type'] == 'twitter') {
-                        				  title = everyoneItems[item]['title'];
-                        				  body = everyoneItems[item]['body'];
-                        				  comments = everyoneItems[item]['comments'];
-                        				  id = everyoneItems[item]['id'];
-                        				  avatar = everyoneItems[item]['enclosure'][0]['url'];
-                                  $("#everyoneStream").prepend($(Mustache.to_html(html, {'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
-                                }
+                      				  title = everyoneItems[item]['title'];
+                      				  body = everyoneItems[item]['body'];
+                      				  comments = everyoneItems[item]['comments'];
+                      				  id = everyoneItems[item]['id'];
+                      				  avatar = everyoneItems[item]['enclosure'][0]['url'];
+                                $("#everyoneStream").prepend($(Mustache.to_html(html, {'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
                       			  }
                             }
                           });
-                				}*/
+                				}
 
-                				if (feedtitle == 'facebook') {
+                				if (activeFeed == 'facebook' && feedtitle == 'facebook') {
                 				  var everyoneItems = data['updatedFeeds']['updatedFeed'][feed]['item'];
                           $.ajax({
                             type : 'GET',
@@ -452,7 +456,7 @@ jQuery(function($){
     },
 
     init: function() {
-      setInterval(this.poll, 15*1000);
+      setInterval(this.poll, 10*1000);
       this.poll();
       
       Profiles.init({ el:$("body") });
