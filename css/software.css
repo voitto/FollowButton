@@ -60,12 +60,12 @@
 		
 	hr { border: solid #ddd; border-width: 1px 0 0; clear: both; margin: 10px 0 30px; height: 0; }
 	
-	/*h1 { font-size: 46px; line-height: 50px; margin-bottom: 14px;}
-	h2 { font-size: 35px; line-height: 40px; margin-bottom: 10px; }
-	h3 { font-size: 28px; line-height: 34px; margin-bottom: 8px; }
-	h4 { font-size: 21px; line-height: 30px; margin-bottom: 4px; }
-	h5 { font-size: 17px; line-height: 24px; }
-	h6 { font-size: 14px; line-height: 21px; }*/
+	h1 { font-size: 46px;}
+	h2 { font-size: 35px;}
+	h3 { font-size: 28px;}
+	h4 { font-size: 21px;}
+	h5 { font-size: 17px;}
+	h6 { font-size: 14px;}
 	
 	
 	
@@ -115,13 +115,11 @@ input[type="password"] {
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
 	font-size:20px;
-	color: #777;
 	margin: 0;
 	width: 300px;
 	max-width: 100%;
 	display: inline;
 	margin-bottom: 20px;
-	background: #fff;
 }
 	
 textarea {
@@ -158,6 +156,16 @@ span {
 
 .display-block {
 	display:block;
+}
+
+.display-inline {
+	display:inline;
+}
+
+.borderless-input {
+	border:none;
+	background-color:#496784;
+	color:#0f0;
 }
 
 #header {
