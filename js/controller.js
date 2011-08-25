@@ -27,14 +27,17 @@ jQuery(function($){
   window.Share = Spine.Controller.create({
 
 	events: {
-	"click #status"      : "status",
-	"click #shareLink"   : "shareLink",
-	"click #attachLink"  : "attachLink",
-	"click #sharePhoto"  : "sharePhoto",
-	"click #shareVideo"  : "shareVideo",
-	"click .shareBtn"    : "doTweet",
-	"submit .fbComment"  : "comment",
-	"submit .fbLike"     : "like"
+	"click #status"      	  : "status",
+	"click #shareLink"   	  : "shareLink",
+	"click #attachLink"  	  : "attachLink",
+	"click #sharePhoto" 	  : "sharePhoto",
+	"click #shareVideo"   	  : "shareVideo",
+	"click .shareBtn"    	  : "doTweet",
+	"submit .fbComment" 	  : "comment",
+	"click .fb-like"     	  : "like",
+	"click .show-comment-box" : "showCommentBox",
+    "click #facebook-icon"    : "fbclick",
+    "click #twitter-icon"     : "twclick"
 	},
 	
 	status: function(){
@@ -157,7 +160,7 @@ jQuery(function($){
 	},
 
 	like: function(e) {
-	  var objid = e.originalEvent.target.id;
+	  var objid = e.originalEvent.target.parentNode.id;
 		$.ajax({
       contentType: 'application/json',
       dataType: 'json',
@@ -173,7 +176,54 @@ jQuery(function($){
 			}
 		});
 		return false;
-	}
+	},
+	
+	
+	showCommentBox: function(e) {
+		alert($(this).html());
+		//var some = e.originalEvent.target.parentNode.id;
+//		alert($(some).html());
+	},
+	
+	twclick: function(){
+
+   $.ajax({
+     contentType: 'application/json',
+     dataType: 'json',
+            type : 'POST',
+            data : JSON.stringify({}),
+     url : '/profiles/hastwitter',
+     success : function(req) {
+       if (false == req['ok']) {
+         window.location.href = 'http://'+req['user']+'.followbutton.com/profiles/twitter';
+       } else  {
+         $("#twitter-icon img").attr('src',"image/twitter-color.png");
+         $("#facebook-icon img").attr('src',"image/facebook-grey.png");
+          }
+     }
+   })
+      return false;
+    },
+	
+	fbclick: function(){
+
+   $.ajax({
+     contentType: 'application/json',
+     dataType: 'json',
+            type : 'POST',
+            data : JSON.stringify({}),
+     url : '/profiles/hasfacebook',
+     success : function(req) {
+       if (false == req['ok']) {
+         window.location.href = 'http://'+req['user']+'.followbutton.com/profiles/facebook';
+       } else  {
+         $("#twicon img").attr('src',"image/twitter-grey.png");
+         $("#fbicon img").attr('src',"image/facebook-color.png");
+          }
+     }
+   })
+      return false;
+    }
 	
   });
 

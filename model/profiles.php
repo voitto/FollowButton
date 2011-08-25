@@ -193,5 +193,27 @@ class Profiles extends MulletMapper {
   	$t->authorize_from_access(  $_SESSION['twit_token'], $_SESSION['twit_secret'] );
     return $t->friends_timeline();
   }
+  
+  function hastwitter( $request, $response ) {
+   session_start();
+   if (isset($_SESSION['twit_token']))
+     return array('ok'=>true);
+   return array('ok'=>false,'user'=>$_SESSION['current_user']);
+  }
+
+  function hasfacebook( $request, $response ) {
+   session_start();
+   $conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
+   $coll = $conn->user->profiles;
+   $cursor = $coll->find(array(
+     'username' => $_SESSION['current_user']
+   ));
+   if ($cursor->hasNext()) {
+     $user = $cursor->getNext();
+     if (!empty($user->facebook_token))
+       return array('ok'=>true);
+   }
+   return array('ok'=>false,'user'=>$_SESSION['current_user']);
+  }
 
 }
