@@ -168,6 +168,12 @@ span {
 	color:#0f0;
 }
 
+.borderless-input:focus {
+	outline:inset;
+	background-color:#fff;
+	/*color:#fff;*/
+}
+
 #header {
 	background: #395774;
 	width:370px;
