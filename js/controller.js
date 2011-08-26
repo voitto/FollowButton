@@ -36,8 +36,10 @@ jQuery(function($){
 	"submit .fbComment" 	  : "comment",
 	"click .fb-like"     	  : "like",
 	"click .show-comment-box" : "showCommentBox",
-	"click .show-reply-box" : "reply",
-	"click .do-retweet" : "doRetweet",
+	"click .show-retweet-box" : "showRetweetBox",
+	"click .show-reply-box"   : "showReplyBox",
+	"click .do-reply"         : "reply",
+	"click .do-retweet"       : "doRetweet",
     "click #facebook-icon"    : "fbclick",
     "click #twitter-icon"     : "twclick"
 	},
@@ -61,6 +63,18 @@ jQuery(function($){
 			}
 		});
 		return false;
+	},
+	
+	showRetweetBox: function(e) {
+		var parentForm = "#" + e.originalEvent.target.parentNode.id;
+		$(parentForm + " .retweet-textarea").show();
+		$(parentForm + " .do-retweet").show();
+	},
+	
+	showReplyBox: function(e) {
+		var parentForm = "#" + e.originalEvent.target.parentNode.id;
+		$(parentForm + " .reply-textarea").show();
+		$(parentForm + " .do-reply").show();
 	},
 	
 	status: function(){

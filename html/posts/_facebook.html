@@ -8,7 +8,7 @@
 </div>
     
 <div class="ten columns" id="{{id}}">
-	<h4 class="fb-post">{{title}}</h4>
+	<h4 class="fb-post post">{{title}}</h4>
     <!--<p>{{body}}</p>-->
     <div>{{{comments}}}</div>
     
@@ -18,8 +18,8 @@
     
     <form class="fbComment" id="{{id}}">
         <span class="show-comment-box">Comment</span>
-        <textarea rows="2" cols="20" style="display:none;" id="comment{{id}}"></textarea>
-        <input style="display:none;" type="submit" value="Post comment to Facebook"/>
+        <textarea rows="2" cols="20" class="display-none" id="comment{{id}}"></textarea>
+        <input class="display-none" type="submit" value="Post comment to Facebook"/>
     </form>
     
 

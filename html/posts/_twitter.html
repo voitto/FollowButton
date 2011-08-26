@@ -8,7 +8,7 @@
 </div>
     
 <div class="ten columns" id="{{id}}">
-	<h3>{{title}}</h3>
+	<h4 class="post">{{title}}</h4>
     <!--<p>{{body}}</p>-->
     <div>{{{comments}}}</div>
     
@@ -17,14 +17,14 @@
     </form>
     
     <form class="twiRetweet" id="{{id}}">
-    	<span class="do-retweet" id="retweet{{id}}">Retweet</span>
-    	<textarea rows="2" cols="20"></textarea>			    	<input type="submit" value="Post Comment"/>
+    	<span class="show-retweet-box" id="retweet{{id}}">Retweet</span>
+    	<textarea rows="2" cols="20" class="display-none retweet-textarea"></textarea>			    	<input type="button" value="Retweet" class="display-none do-retweet"/>
     </form>
     
     <form class="twiReply" id="{{id}}">
     	<span class="show-reply-box">Reply</span>
-        <textarea rows="2" cols="20" id="twi-reply{{id}}"></textarea>
-        <input type="submit" value="Tweet" />
+        <textarea rows="2" cols="20" id="twi-reply{{id}}" class="display-none reply-textarea"></textarea>
+        <input type="button" value="Tweet" class="display-none do-reply" />
     </form>
     
     
