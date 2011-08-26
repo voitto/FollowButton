@@ -46,6 +46,35 @@ class Posts extends MulletMapper {
   	);
 	}
 
+	function reply() {
+	  $arr = json_decode(file_get_contents('php://input'));
+    session_start();
+    require_once 'lib/twitter.php';
+    require_once 'lib/OAuth.php';
+    $t = new Twitter( TW_KEY, TW_SEC );
+    $t->authorize_from_access( $_SESSION['twit_token'], $_SESSION['twit_secret'] );
+    $response = $t->update($arr->title,$arr->objid);
+  	return array(
+  		'ok'=>true,
+  		'msg'=>$response
+  	);
+	}
+
+	function retweet() {
+    $arr = json_decode(file_get_contents('php://input'));
+    session_start();
+    require_once 'lib/twitter.php';
+    require_once 'lib/OAuth.php';
+    $t = new Twitter( TW_KEY, TW_SEC );
+    $t->authorize_from_access( $_SESSION['twit_token'], $_SESSION['twit_secret'] );
+    $response = $t->retweet($arr->objid);
+  	return array(
+  		'ok'=>true,
+  		'msg'=>$response
+  	);
+	}
+
+
 	function like() {
     $arr = json_decode(file_get_contents('php://input'));
   	$conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
@@ -77,7 +106,14 @@ class Posts extends MulletMapper {
   	$result = $coll->insert(array(
   	  'title' => $arr->title
   	));
-  	
+     if ($arr->sendtw == 1) {
+       session_start();
+       require_once 'lib/twitter.php';
+       require_once 'lib/OAuth.php';
+       $t = new Twitter( TW_KEY, TW_SEC );
+       $t->authorize_from_access( $_SESSION['twit_token'], $_SESSION['twit_secret'] );
+       $t->update($arr->title);
+     }  	
   	if ($arr->sendfb == 1) {
       session_start();
     	require 'lib/facebook.php';

@@ -36,8 +36,31 @@ jQuery(function($){
 	"submit .fbComment" 	  : "comment",
 	"click .fb-like"     	  : "like",
 	"click .show-comment-box" : "showCommentBox",
+	"click .show-reply-box" : "reply",
+	"click .do-retweet" : "doRetweet",
     "click #facebook-icon"    : "fbclick",
     "click #twitter-icon"     : "twclick"
+	},
+	
+	
+	doRetweet: function(e) {
+	  var objid = e.originalEvent.target.parentNode.id;
+		$.ajax({
+      contentType: 'application/json',
+      dataType: 'json',
+			type : 'POST',
+			data : JSON.stringify({'objid':objid}),
+      url : '/posts/retweet',
+			success: function(req){
+			  alert(req['msg']);
+        if (false == req['ok']) {
+  			  alert('so not cool, bro');
+        } else  {
+  			  $("#retweet"+objid).hide();
+	      }
+			}
+		});
+		return false;
 	},
 	
 	status: function(){
@@ -120,13 +143,17 @@ jQuery(function($){
 	  
 	  var fb = $("#shareToFacebook").attr('checked');
 	  var sendfb = 0;
+	  var tw = $("#shareToTwitter").attr('checked');
+	  var sendtw = 0;
 	  if (fb == true)
 	    sendfb = 1;
+	  if (tw == true)
+	    sendtw = 1;
 		$.ajax({
       contentType: 'application/json',
       dataType: 'json',
 			type : 'POST',
-			data : JSON.stringify({'title':$("#statusText").val(),'sendfb':sendfb}),
+			data : JSON.stringify({'title':$("#statusText").val(),'sendfb':sendfb,'sendtw':sendtw}),
       url : '/posts',
 			success: function(req){
         if (false == req['ok']) {
@@ -139,6 +166,27 @@ jQuery(function($){
 			
 	},
 	
+	reply: function(e) {
+	  var objid = e.originalEvent.target.parentNode.id;
+	  var comment = $("#twi-reply"+objid).val();
+		$.ajax({
+      contentType: 'application/json',
+      dataType: 'json',
+			type : 'POST',
+			data : JSON.stringify({'title':comment,'objid':objid}),
+      url : '/posts/reply',
+			success: function(req){
+        if (false == req['ok']) {
+  			  alert('so not cool, bro');
+        } else  {
+  			  $("#twi-reply"+objid).val('');
+	      }
+			}
+		});
+		return false;
+	},
+
+
 	comment: function(e) {
 	  var objid = e.originalEvent.target.id;
 	  var comment = $("#comment"+objid).val();

@@ -192,15 +192,39 @@ class Twitter {
 	  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	  return @curl_exec($ch);
 	}
-	
-  function update( $status ) {
+
+  function retweet( $statusid ) {
 	  $tk = new TwitterToken();
 	  $req = OAuthRequest::from_consumer_and_token(
 		  $this->consumer,
 		  $this->token,
 		  'POST',
+		  '/statuses/retweet/'.$statusid.'.xml',
+		  array( 'id' => $statusid )
+		);
+	  $req->sign_request(
+		  $this->method,
+		  $this->consumer,
+		  $this->token
+		);
+	  $response = $this->http( $req->get_normalized_http_url(), $req->to_postdata() );
+	  return $response.' '.$tk->api_root.'/statuses/retweet/'.$statusid.'.json';
+  }	
+
+  function update( $status, $in_reply_to_status_id=false ) {
+	  $tk = new TwitterToken();
+	  $arr = array( 'status' => $status );
+	  if ($in_reply_to_status_id)
+	    $arr = array( 
+	      'status' => $status, 
+	      'in_reply_to_status_id' => $in_reply_to_status_id
+	    );
+	  $req = OAuthRequest::from_consumer_and_token(
+		  $this->consumer,
+		  $this->token,
+		  'POST',
 		  $tk->api_root.'/statuses/update.xml',
-		  array( 'status' => $status )
+		  $arr
 		);
 	  $req->sign_request(
 		  $this->method,
