@@ -414,7 +414,12 @@ jQuery(function($){
                       				  comments = everyoneItems[item]['comments'];
                       				  id = everyoneItems[item]['id'];
                       				  avatar = everyoneItems[item]['enclosure'][0]['url'];
-                                $("#everyoneStream").prepend($(Mustache.to_html(html, {'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
+                      				  var newc = true;
+                      				  $('#everyoneStream li').each(function(index) {
+                                  if ($(this).find(".twiReply").attr('id') == id) newc = false;
+                                });
+                                if (newc == true)
+                                  $("#everyoneStream").prepend($(Mustache.to_html(html, {'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
                       			  }
                             }
                           });
