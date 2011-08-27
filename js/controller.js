@@ -69,13 +69,39 @@ jQuery(function($){
 		var parentForm = "#" + e.originalEvent.target.parentNode.id;
 		$(parentForm + " .retweet-textarea").show();
 		$(parentForm + " .do-retweet").show();
+		$(parentForm + " .show-retweet-box").hide();
 	},
 	
 	showReplyBox: function(e) {
 		var parentForm = "#" + e.originalEvent.target.parentNode.id;
 		$(parentForm + " .reply-textarea").show();
+		$(parentForm + " .reply-textarea").focus();
 		$(parentForm + " .do-reply").show();
+		$(parentForm + " .show-reply-box").hide();
+		//textareaFocus($(parentForm + " .reply-textarea"));
+		moveCaretToEnd(parentForm + " .reply-textarea");
+
+    // Work around Chrome's little problem
+    	window.setTimeout(function() {
+        moveCaretToEnd(parentForm + " .reply-textarea");
+    }, 1);
+
 	},
+	
+	//textareaFocus: function(el) {
+//		
+//	},
+	
+	moveCaretToEnd: function(el) {
+    if (typeof $(el).selectionStart == "number") {
+        $(el).selectionStart = $(el).selectionEnd = $(el).value.length;
+    } else if (typeof $(el).createTextRange != "undefined") {
+        $(el).focus();
+        var range = $(el).createTextRange();
+        range.collapse(false);
+        range.select();
+    }
+},
 	
 	status: function(){
 		
