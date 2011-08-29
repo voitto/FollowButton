@@ -89,7 +89,7 @@ class Profiles extends MulletMapper {
         'ok'=>true,
         'Email'=>$settings->email
       );
-    return array('ok'=>false)
+    return array('ok'=>false);
   }
   
   function _privacy( $request, $response ) {
