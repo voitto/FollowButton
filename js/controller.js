@@ -47,7 +47,6 @@ jQuery(function($){
 	},
 	
 	saveSettings: function(e) {
-    alert("save");
 	  var email = $("#emailval").val();
 		$.ajax({
       contentType: 'application/json',
@@ -59,7 +58,6 @@ jQuery(function($){
         if (false == req['ok']) {
   			  alert('so not cool, bro');
         } else  {
-  			  alert('saved!');
 	      }
 			}
 		});
