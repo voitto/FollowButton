@@ -41,10 +41,30 @@ jQuery(function($){
 	"click .do-reply"         : "reply",
 	"click .do-retweet"       : "doRetweet",
     "click #facebook-icon"    : "fbclick",
-    "click #twitter-icon"     : "twclick"
+    "click #twitter-icon"     : "twclick",
+    "click #saveSettings"     : "saveSettings"
+    
 	},
 	
-	
+	saveSettings: function(e) {
+    alert("save");
+	  var email = $("#emailval").val();
+		$.ajax({
+      contentType: 'application/json',
+      dataType: 'json',
+			type : 'POST',
+			data : JSON.stringify({'email':email}),
+      url : '/profiles/savesettings',
+			success: function(req){
+        if (false == req['ok']) {
+  			  alert('so not cool, bro');
+        } else  {
+  			  alert('saved!');
+	      }
+			}
+		});
+	},
+  
 	doRetweet: function(e) {
 	  var objid = e.originalEvent.target.parentNode.id;
 		$.ajax({
@@ -392,7 +412,6 @@ jQuery(function($){
 	  "click #privacy"   : "privacy",
 	  "click #following" : "following",
       "click #logout"    : "logout",
-      "click #saveSettings"     : "saveSettings"
     },
     
     logout: function() {
@@ -641,25 +660,8 @@ jQuery(function($){
     },
   
     showHide: function() {
-    },
+    }
     
-    saveSettings: function(e) {
-  	  var email = $("#emailval").val();
-  		$.ajax({
-        contentType: 'application/json',
-        dataType: 'json',
-  			type : 'POST',
-  			data : JSON.stringify({'email':email}),
-        url : '/profiles/savesettings',
-  			success: function(req){
-          if (false == req['ok']) {
-    			  alert('so not cool, bro');
-          } else  {
-    			  alert('saved!');
-  	      }
-  			}
-  		});
-  	},
 
   });
 
