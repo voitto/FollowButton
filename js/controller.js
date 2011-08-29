@@ -85,6 +85,7 @@ jQuery(function($){
     	window.setTimeout(function() {
         moveCaretToEnd(parentForm + " .reply-textarea");
     }, 1);
+    
 
 	},
 	
@@ -390,7 +391,8 @@ jQuery(function($){
       "click #settings"  : "settings",
 	  "click #privacy"   : "privacy",
 	  "click #following" : "following",
-      "click #logout"    : "logout"
+      "click #logout"    : "logout",
+      "click #saveSettings"     : "saveSettings"
     },
     
     logout: function() {
@@ -639,7 +641,25 @@ jQuery(function($){
     },
   
     showHide: function() {
-    }
+    },
+    
+    saveSettings: function(e) {
+  	  var email = $("#emailval").val();
+  		$.ajax({
+        contentType: 'application/json',
+        dataType: 'json',
+  			type : 'POST',
+  			data : JSON.stringify({'email':email}),
+        url : '/profiles/savesettings',
+  			success: function(req){
+          if (false == req['ok']) {
+    			  alert('so not cool, bro');
+          } else  {
+    			  alert('saved!');
+  	      }
+  			}
+  		});
+  	},
 
   });
 

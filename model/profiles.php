@@ -61,7 +61,35 @@ class Profiles extends MulletMapper {
   }
   
   function _settings( $request, $response ) {
-    return array();
+    session_start();
+    $conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
+    $coll = $conn->user->profiles;
+    $cursor = $coll->find(array(
+      'username' => $_SESSION['current_user']
+    ));
+    if ($cursor->hasNext())
+      $user = $cursor->getNext();
+    $conn = new Mullet();
+    $coll = $conn->user->settings;
+    $cursor = $coll->find(array(
+      'username' => $_SESSION['current_user']
+    ));
+    if ($cursor->hasNext()) {
+      $settings = $cursor->getNext();
+    } else {
+      $settings = array();
+      $settings['email'] = '';
+      $settings['username'] = $_SESSION['current_user'];
+      $result = $coll->insert(
+        $settings
+      );
+    }
+    if ($settings)
+      return array(
+        'ok'=>true,
+        'Email'=>$settings->email
+      );
+    return array('ok'=>false)
   }
   
   function _privacy( $request, $response ) {
@@ -228,5 +256,37 @@ class Profiles extends MulletMapper {
    }
    return array('ok'=>false,'user'=>$_SESSION['current_user']);
   }
+  
+  function savesettings( $request, $response ) {
+    $arr = json_decode(file_get_contents('php://input'));
+    session_start();
+    $conn = new Mullet();
+    $coll = $conn->user->settings;
+    $cursor = $coll->find(array(
+      'username' => $_SESSION['current_user']
+    ));
+    if ($cursor->hasNext()) {
+      $settings = array();
+      $settings['email'] = $arr->email;
+      $settings['username'] = $_SESSION['current_user'];
+      $result = $coll->update(
+        array('username'=>$_SESSION['current_user']),
+        array($settings)
+      );
+    } else {
+      $settings = array();
+      $settings['email'] = '';
+      $settings['username'] = $_SESSION['current_user'];
+      $result = $coll->insert(
+        $settings
+      );
+    }
+    return array(
+      'ok'=>true,
+      'Email'=>$settings->email
+    );
+  }
+  
+  
 
 }
