@@ -88,17 +88,17 @@ body {
 
 input[type="button"],
 input[type="submit"] {
-	font:bold 22px 'Arvo', serif;
+	font:bold 15px 'Arvo', serif;
 	color:white;
-	height: 50px;
+	height: auto;
 	width: auto;
 	-moz-border-radius: 25px;
 	-webkit-border-radius: 25px;
 	border-radius: 25px;
 	text-shadow:1px 1px 1px #000;
 	border:2px solid white;
-	margin:auto 30px 20px;
-	padding: 4px 12px;
+	margin:20px 30px;
+	padding: 4px 8px;
 	background: #80C45C;
 	background:-webkit-gradient(linear,center top,center bottom, from(#70b44c), to(#a0f47c));
 	background:-moz-linear-gradient(top, #70b44c, #a0f47c);
@@ -109,6 +109,7 @@ input[type="submit"] {
 
 input[type="text"],
 input[type="password"] {
+	font-family:'Arvo', serif;
 	padding: 6px 4px;
 	outline: none;
 	-moz-border-radius: 2px;
@@ -123,14 +124,16 @@ input[type="password"] {
 }
 	
 textarea {
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
 margin:10px	 auto;
+padding:5px;
 font-size:25px;
 font-family:'Arvo', serif;
 width:300px;
 height:100px;
+outline: none;
 }
 
 form {
@@ -224,6 +227,13 @@ span {
 }
 
 #link-div {
+	width:500px;
+	height:auto;
+	background:white;
+	border:1px solid black;
+	color:black;
+	padding:10px;
+	margin:5px auto;
 	-webkit-border-radius:10px;
 	-moz-border-radius:10px;
 	border-radius:10px;
@@ -236,6 +246,27 @@ span {
 
 #shareVideo {
 	border-right:none;
+}
+
+.media-div {
+	width:50%;
+	background:white;
+	border:1px solid black;
+	color:black;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	padding:15px;
+	margin:5px auto 40px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border-radius:10px;
+	height:auto;
+}
+
+.media-error {
+	color:red;
+	padding-top:15px;
 }
 
 #statusInput {

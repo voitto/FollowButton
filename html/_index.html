@@ -34,7 +34,7 @@
     
         <div id="statusInput" class="display-none">
         
-            <textarea id="statusText"></textarea>
+            <textarea id="status-text"></textarea>
             <input type="button" value="Share!" class="shareBtn" />
             <br />
            
@@ -54,7 +54,7 @@
             	<label for="linkText">Paste or type a URL</label>
                 <input type="text" id="linkText" name="linkText" class="display-block" />
                 <input type="submit" value="Attach Link" id="attachLink" />
-                <div style="width:500px;height:auto;background:white;border:1px solid black;color:black;padding:10px;margin:5px auto;display:none;" id="link-div"><img src="image/indicator.gif" style="display:none;width:75px;height:75px" id="indicator" /></div>
+                <div id="link-div" class="display-none"><img src="image/indicator.gif" style="display:none;width:75px;height:75px" id="indicator" /></div>
             </form>
                            
                 <div id="linkShare" class="display-none">
@@ -67,14 +67,32 @@
         
         <div id="photoInput" class="display-none">
         
-        	<div id="photoText"></div>
+        	<div class="media-div">
+            	
+            	<span>Upload a photo</span>
+                <input type="file" accept="image/jpeg" id="upload-photo" />
+                <span class="display-none media-error" id="photo-error">Photo must have a .jpeg, .gif, or .png file extension.</span>
+                <input type="submit" value="Upload Photo" id="submit-photo" class="display-none" />
+            
+            </div>
         
         </div>
         
         
         <div id="videoInput" class="display-none">
         
-        	<div id="videoText"></div>
+        	<div class="media-div" id="file-uploader">
+            
+            	<noscript>
+                	<p>Please enable Javascript to upload videos.</p>
+                </noscript>
+            
+            	<span>Upload a video</span>
+                <input type="file" accept="image/jpeg" id="upload-video" />
+                <span class="display-none media-error" id="video-error">Video must have a .mp4, .mpg, .ogv, or .ogg file extension.</span>
+                <input type="submit" value="Upload Video" id="submit-video" class="display-none" />
+            
+            </div>
         
         </div>
         
@@ -94,7 +112,7 @@
    
     <div class="sixteen columns">
         
-        <div style="width:400px; margin:20px auto;">
+        <div style="width:250px; margin:20px auto;">
         <ul class="tabs">
             <!-- Give href an ID value of corresponding "tabs-content" <li>'s -->
             <li><a class="active" href="#Everyone">Home</a></li>
@@ -110,6 +128,8 @@
         <ul class="tabs-content">
       <!-- Give ID that matches HREF of above anchors -->
             <li id="MeTab">
+            
+            <input type="text" id="me-filter" placeholder="Filter Stream" />
             
             	<div class="one-half column">
                 	<img style="width:300px; height:250px; border:1px solid black;" />
@@ -151,6 +171,8 @@
             
             </li>
             <li id="EveryoneTab" class="active">
+            
+            <input type="text" id="everyone-filter" placeholder="Filter Stream" />
             
          
          <ul id="everyoneStream"></ul>

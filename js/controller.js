@@ -31,8 +31,14 @@ jQuery(function($){
 	"click #shareLink"   	  : "shareLink",
 	"click #attachLink"  	  : "attachLink",
 	"click #sharePhoto" 	  : "sharePhoto",
+	"change #upload-photo"	  : "uploadPhoto",
+	"change #upload-video" 	  : "uploadVideo",
+	"click #submit-photo"	  : "submitPhoto",
+	"click #submit-video"	  : "submitVideo",
 	"click #shareVideo"   	  : "shareVideo",
 	"click .shareBtn"    	  : "doTweet",
+	"keyup #everyone-filter"  : "everyoneFilter",
+	"keyup #me-filter"		  : "meFilter",
 	"submit .fbComment" 	  : "comment",
 	"click .fb-like"     	  : "like",
 	"click .show-comment-box" : "showCommentBox",
@@ -44,6 +50,62 @@ jQuery(function($){
     "click #twitter-icon"     : "twclick",
     "click #saveSettings"     : "saveSettings"
     
+	},
+	
+	everyoneFilter: function(e) {
+		var criteria = e.originalEvent.target.value;
+		//alert(criteria);
+	},
+	
+	meFilter: function(e) {
+		var criteria = e.originalEvent.target.value;
+		//alert(criteria);
+	},
+	
+	submitPhoto: function() {
+		
+	},
+	
+	submitVideo: function() {
+		
+		var uploader = new qq.FileUploader({
+    // pass the dom node (ex. $(selector)[0] for jQuery users)
+    element: document.getElementById('file-uploader'),
+    // path to server-side upload script
+    action: '../model/upload-video.php',
+	
+	onComplete: function(response) {
+		alert(reponse);
+	}
+}); 
+		//$("#submit-video").jsupload({
+//			action: "..model/upload-video.php",
+//			
+//			onComplete: function(response) {
+//				alert(response);
+//			}
+//		});
+	},
+	
+	uploadPhoto: function(e) {
+		var file = e.originalEvent.target.value;
+		
+		if (file.search(".jpeg") != -1) {$("#photo-error").hide(); $("#submit-photo").show(); return;}
+		else if (file.search(".gif") != -1) {$("#photo-error").hide(); $("#submit-photo").show(); return;}
+		else if (file.search(".png") != -1) {$("#photo-error").hide(); $("#submit-photo").show(); return;}
+		
+		$("#photo-error").fadeIn(1000);
+	},
+	
+	uploadVideo: function(e) {
+		var file = e.originalEvent.target.value;
+		
+		if (file.search(".mp4") != -1) {$("#video-error").hide(); $("#submit-video").show(); return;}
+		else if (file.search(".mpg") != -1) {$("#video-error").hide(); $("#submit-video").show(); return;}
+		else if (file.search(".ogg") != -1) {$("#video-error").hide(); $("#submit-video").show(); return;}
+		else if (file.search(".ogv") != -1) {$("#video-error").hide(); $("#submit-video").show(); return;}
+		
+		$("#video-error").fadeIn(1000);
 	},
 	
 	saveSettings: function(e) {
@@ -127,7 +189,7 @@ jQuery(function($){
 		if ($("#statusInput").css('display') == 'none') { 
 			$("#shareInput > div").each(function(){$(this).hide();});
 			$("#statusInput").fadeIn(200); 
-			$("#statusText").focus();
+			$("#status-text").focus();
 		}
 		else $("#statusInput").hide();
 		
@@ -212,13 +274,13 @@ jQuery(function($){
       contentType: 'application/json',
       dataType: 'json',
 			type : 'POST',
-			data : JSON.stringify({'title':$("#statusText").val(),'sendfb':sendfb,'sendtw':sendtw}),
+			data : JSON.stringify({'title':$("#status-text").val(),'sendfb':sendfb,'sendtw':sendtw}),
       url : '/posts',
 			success: function(req){
         if (false == req['ok']) {
   			  alert('not cool, bro');
         } else  {
-  			  $("#statusText").val('');
+  			  $("#status-text").val('');
 	      }
 			}
 		});
