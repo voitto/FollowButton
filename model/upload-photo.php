@@ -1,5 +1,6 @@
 <?php
 
-
+echo 'hi';
+exit;
 
 ?>

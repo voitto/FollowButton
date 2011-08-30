@@ -63,7 +63,16 @@ jQuery(function($){
 	},
 	
 	submitPhoto: function() {
-		
+		 $('#upload-photo').fileupload({
+        dataType: 'json',
+        url: '../model/upload-photo.php',
+        done: function (data) {
+			alert(data);
+            $.each(data.result, function (index, file) {
+                $('<p/>').text(file.name).appendTo('body');
+            });
+        }
+    });
 	},
 	
 	submitVideo: function() {

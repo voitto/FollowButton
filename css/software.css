@@ -171,10 +171,30 @@ span {
 	color:#0f0;
 }
 
+.width-50-percent {
+	width:50%;
+	margin:0 auto;
+}
+
 .borderless-input:focus {
 	outline:inset;
 	background-color:#fff;
 	/*color:#fff;*/
+}
+
+.float-left {
+	float:left;
+}
+
+.large-font {
+	font-size:30px;
+	border:none;
+}
+
+#privacy-header {
+	padding-bottom:20px;
+	margin-bottom:20px;
+	margin-top:20px;
 }
 
 #header {
@@ -329,10 +349,20 @@ margin-top:30px;
 	margin:50px 0 10px 0;
 }
 
+#footer-container {
+	position:fixed;
+	left:50%;
+}
+
 #footer {
 	height: 53px;
 	max-width:950px;
-	margin:0 auto;
+	bottom:1%;
+
+	right:50%;
+	/*margin:0;*/
+	position:fixed;
+	z-index:-1;
 	-moz-box-shadow: 0 0 5px rgba(0,0,0,.6);
 	-webkit-box-shadow: 0 0 10px rgba(0,0,0,1);
 	box-shadow:  0 0 5px rgba(0,0,0,.6);
