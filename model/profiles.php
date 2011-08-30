@@ -287,6 +287,56 @@ class Profiles extends MulletMapper {
     );
   }
   
+  function hasgplus( $request, $response ) {
+   session_start();
+   if (isset($_SESSION['g_token']))
+     return array('ok'=>true);
+   return array('ok'=>false,'user'=>$_SESSION['current_user']);
+  }
+
+  function gplusstream( $request, $response ) {
+    session_start();
+  	require_once 'lib/buzz.php';
+  	require_once 'lib/OAuth.php';
+  	$b = new buzz(GG_KEY,GG_SEC,$return);
+  	$b->authorize_from_access(  $_SESSION['g_token'], $_SESSION['g_secret'] );
+    echo $b->friends_timeline();
+    exit;
+  }
+    
+  function gplus( $request, $response ) {
+    session_start();
+    $return = 'https://followbutton.com/gplus';
+  	require_once 'lib/buzz.php';
+  	require_once 'lib/OAuth.php';
+  	$b = new buzz(GG_KEY,GG_SEC,$return);
+  	if (!isset($_GET['oauth_token'])) {
+  		$token = $b->request_token();
+  		$_SESSION['gtoken_secret'] = $token->secret;
+  		redirect_to( $token->authorize_url() );
+  	}
+    $conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
+  	$coll = $conn->user->gtokens;
+    $result = $coll->find(array(
+      'username' => $_SESSION['current_user']
+    ));
+  	if ($result->hasNext())
+      $gtok = $result->getNext();
+  	list($atoken,$asecret) = $b->authorize_from_request(
+  	  $gtok->oauth_token,
+  	  $_SESSION['gtoken_secret'],
+  	  $gtok->oauth_verifier
+  	);
+  	$_SESSION['g_token'] = $atoken;
+    $_SESSION['g_secret'] = $asecret;
+    $result = $coll->remove(array(
+      'username' => $_SESSION['current_user']
+    ));
+    redirect_to('http://'.$_SESSION['current_user'].'.followbutton.com/?stream=gplus');
+  }
   
+  function _gplus( $request, $response ) {
+    return array('username'=>$_SESSION['current_user']);
+  }
 
 }

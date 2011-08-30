@@ -48,7 +48,8 @@ jQuery(function($){
 	"click .do-retweet"       : "doRetweet",
     "click #facebook-icon"    : "fbclick",
     "click #twitter-icon"     : "twclick",
-    "click #saveSettings"     : "saveSettings"
+    "click #saveSettings"     : "saveSettings",
+    "click #gplus-icon"     : "gclick"
     
 	},
 	
@@ -459,7 +460,78 @@ jQuery(function($){
      }
    })
       return false;
-    }
+    },
+    
+    gclick: function(){
+      $("#everyoneStream").html('');
+
+     $.ajax({
+       contentType: 'application/json',
+       dataType: 'json',
+              type : 'POST',
+              data : JSON.stringify({}),
+       url : '/profiles/hasgplus',
+       success : function(req) {
+         if (false == req['ok']) {
+           //window.location.href = 'http://'+req['user']+'.followbutton.com/profiles/gplus';
+           
+           
+           $.ajax({
+              type : 'GET',
+            	 url : 'html/profiles/_gplus.html',
+              success : function(html) {
+                var html = html;
+                $.ajax({
+                   contentType: 'application/json',
+                   dataType: 'json',
+                   type : 'POST',
+                   data : JSON.stringify({}),
+                   url : '/profiles/_gplus',
+                   success : function(req) {
+                      $("#everyoneStream").prepend($(Mustache.to_html(html,req)));
+                   }
+                 });
+              }
+            });
+           
+         } else  {
+           $("#twitter-icon img").attr('src',"image/twitter-grey.png");
+           $("#gplus-icon img").attr('src',"image/gplus-color.png");
+           $("#facebook-icon img").attr('src',"image/facebook-grey.png");
+
+                 $.ajax({
+                    type : 'GET',
+                  	 url : 'html/posts/_gplus.html',
+                    success : function(html) {
+                      var html = html;
+                      $.ajax({
+                         contentType: 'application/json',
+                         dataType: 'json',
+                         type : 'POST',
+                         data : JSON.stringify({}),
+                         url : '/profiles/gplusstream',
+                         success : function(req) {
+                           for (var item in req){
+                             if (!(undefined == req[item]['user'])) {
+                               var id = req[item]['id'];
+                               var title = req[item]['text'];
+                               var body = req[item]['user']['screen_name'];
+                               var avatar = req[item]['user']['profile_image_url'];
+                               var comments = '';
+                               $("#everyoneStream").prepend($(Mustache.to_html(html,{'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
+                             }
+                   			  }
+                         }
+                       });
+                    }
+                  });
+
+            }
+       }
+     })
+        return false;
+      }
+  	
 	
   });
 
