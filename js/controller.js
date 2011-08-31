@@ -49,7 +49,7 @@ jQuery(function($){
     "click #facebook-icon"    : "fbclick",
     "click #twitter-icon"     : "twclick",
     "click #saveSettings"     : "saveSettings",
-    "click #gplus-icon"     : "gclick"
+    "click #gplus-icon"       : "gclick"
     
 	},
 	
@@ -168,30 +168,13 @@ jQuery(function($){
 		$(parentForm + " .reply-textarea").focus();
 		$(parentForm + " .do-reply").show();
 		$(parentForm + " .show-reply-box").hide();
-		//textareaFocus($(parentForm + " .reply-textarea"));
-		moveCaretToEnd(parentForm + " .reply-textarea");
+		
+		// Sets focus of textarea to the end of the text
+		$(parentForm + " .reply-textarea").focus(); 
+		var val = $(parentForm + " .reply-textarea").val(); 
+		$(parentForm + " .reply-textarea").val(''); 
+		$(parentForm + " .reply-textarea").val(val);
 
-    // Work around Chrome's little problem
-    	window.setTimeout(function() {
-        moveCaretToEnd(parentForm + " .reply-textarea");
-    }, 1);
-    
-
-	},
-	
-	//textareaFocus: function(el) {
-//		
-//	},
-	
-	moveCaretToEnd: function(el) {
-    if (typeof $(el).selectionStart == "number") {
-        $(el).selectionStart = $(el).selectionEnd = $(el).value.length;
-    } else if (typeof $(el).createTextRange != "undefined") {
-        $(el).focus();
-        var range = $(el).createTextRange();
-        range.collapse(false);
-        range.select();
-    }
 },
 	
 	status: function(){
