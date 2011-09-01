@@ -31,12 +31,12 @@ jQuery(function($){
 	"click #shareLink"   	  : "shareLink",
 	"click #attachLink"  	  : "attachLink",
 	"click #sharePhoto" 	  : "sharePhoto",
-	"change #upload-photo"	  : "uploadPhoto",
+	"change #upload-photo"	  : "submitPhoto",
 	"change #upload-video" 	  : "uploadVideo",
-	"click #submit-photo"	  : "submitPhoto",
+	//"click #submit-photo"	  : "submitPhoto",
 	"click #submit-video"	  : "submitVideo",
 	"click #shareVideo"   	  : "shareVideo",
-	"click .shareBtn"    	  : "doTweet",
+	"click .share-button" 	  : "doTweet",
 	"keyup #everyone-filter"  : "everyoneFilter",
 	"keyup #me-filter"		  : "meFilter",
 	"submit .fbComment" 	  : "comment",
@@ -64,6 +64,7 @@ jQuery(function($){
 	},
 	
 	submitPhoto: function() {
+		$("#submit-photo").show();
 		 $('#upload-photo').fileupload({
         dataType: 'json',
         url: '../model/upload-photo.php',
@@ -191,6 +192,7 @@ jQuery(function($){
 	shareLink: function() {
 		
 		$("#link-div").hide();
+		$("#link-share").hide();
 		if ($("#linkInput").css('display') == 'none') { 
 			$("#shareInput > div").each(function(){$(this).hide();});
 			$("#linkInput").fadeIn(200); 
@@ -218,10 +220,11 @@ jQuery(function($){
 				if (data["image"] != null) {
 				$("#link-div").append('<img src=\"'+data["image"]+'\" style=\"max-width:100px;max-height:100px;margin-bottom:5px;float:left\" />');	
 				}
-				$("#link-div").append('<h2 style=\"font-weight:bold;\">'+data["title"]+'</h2><br />');
+				$("#link-div").append('<h3 style=\"font-weight:bold;\">'+data["title"]+'</h2><br />');
 				$("#link-div").append('<h5 style=\"color:#555;\">'+data["link"]+'</h5><br />');
-				$("#link-div").append('<h3>'+data["text"]+'</h3>');
+				$("#link-div").append('<h4>'+data["text"]+'</h3>');
 				$("#indicator").hide();
+				$("#link-share").show();
 			}
 		});	
 		
@@ -230,6 +233,8 @@ jQuery(function($){
 	
 	sharePhoto: function() {
 		
+		$("#upload-photo").val('');
+		//$("#submit-photo").hide();
 		if ($("#photoInput").css('display') == 'none') {
 			
 			$("#shareInput > div").each(function(){$(this).hide();});
@@ -242,7 +247,8 @@ jQuery(function($){
 	
 	shareVideo: function() {
 		
-		
+		$("#upload-video").val('');
+		$("#submit-video").hide();
 		if ($("#videoInput").css('display') == 'none') {
 			
 			$("#shareInput > div").each(function(){$(this).hide();});

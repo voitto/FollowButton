@@ -125,6 +125,7 @@ input[type="password"] {
 	
 textarea {
 -webkit-border-radius: 10px;
+display:inline;
 -moz-border-radius: 10px;
 border-radius: 10px;
 margin:10px	 auto;
@@ -172,7 +173,7 @@ span {
 }
 
 .width-50-percent {
-	width:50%;
+	width:72%;
 	margin:0 auto;
 	height:400px;
 }
@@ -185,11 +186,12 @@ span {
 
 .float-left {
 	float:left;
+	border:none;
+	/*margin:5px 0;*/
 }
 
 .large-font {
 	font-size:30px;
-	border:none;
 }
 
 #privacy-header {
@@ -300,10 +302,11 @@ span {
 	margin-right: 30px;
 }
 
-.shareBtn {
+.share-button {
 /*float:left;
 display:inline;*/
-margin-top:30px;
+margin-top:50px !important;
+/*margin:0;*/
 }
 
 #icons-div {

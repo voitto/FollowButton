@@ -34,32 +34,33 @@
     
         <div id="statusInput" class="display-none">
         
-            <textarea id="status-text"></textarea>
-            <input type="button" value="Share!" class="shareBtn" />
-            <br />
+            <textarea id="status-text" style="float:left;"></textarea>
+            <input type="button" value="Share!" style="float:left;" class="share-button" />
+            <br /><br />
            
-            <input type="checkbox" id="shareToFacebook" />
-             <label for="shareToFacebook">Share To Facebook</label>
-            <br />
+           <div class="width-50-percent" style="height:100px;clear:left;margin-top:20px;">
+            <input type="checkbox" id="shareToFacebook" class="float-left" />
+             <span for="shareToFacebook" class="float-left">Share To Facebook</span>
+            <br /><br />
            
-            <input type="checkbox" id="shareToTwitter" />
-             <label for="shareToTwitter">Share To Twitter</label>
+            <input type="checkbox" id="shareToTwitter" class="float-left" />
+             <span for="shareToTwitter" class="float-left">Share To Twitter</span>
+            </div>
             
         </div>
         
         
         <div id="linkInput" class="display-none">
         	
-            <form id="linkForm">
+         <form> <!--This is here to be able to press enter to click the submit button.-->
             	<label for="linkText">Paste or type a URL</label>
                 <input type="text" id="linkText" name="linkText" class="display-block" />
-                <input type="submit" value="Attach Link" id="attachLink" />
-                <div id="link-div" class="display-none"><img src="image/indicator.gif" style="display:none;width:75px;height:75px" id="indicator" /></div>
-            </form>
+                <input type="submit" value="Attach Link" id="attachLink" /><br /><br />
+                <div id="link-div" class="display-none"><img src="image/indicator.gif" style="display:none;width:75px;height:75px;" id="indicator" /></div>
+     </form>
                            
-                <div id="linkShare" class="display-none">
-                    <textarea id="linkDesc" class="display-block"></textarea>
-                    <input type="submit" value="Share!" />
+                <div id="link-share" class="display-none">
+                    <input type="submit" value="Share Link" />
                 </div>
             
         </div>
@@ -70,9 +71,9 @@
         	<div class="media-div">
             	
             	<span>Upload a photo</span>
-                <input type="file" accept="image/jpeg" id="upload-photo" />
-                <span class="display-none media-error" id="photo-error">Photo must have a .jpeg, .gif, or .png file extension.</span>
-                <input type="submit" value="Upload Photo" id="submit-photo" class="display-none" />
+                <input type="file" id="upload-photo" />
+               <!-- <span class="display-none media-error" id="photo-error">Photo must have a .jpeg, .gif, or .png file extension.</span>-->
+                <input type="submit" value="Upload Photo" id="submit-photo" class="display-none" />  
             
             </div>
         
@@ -81,11 +82,8 @@
         
         <div id="videoInput" class="display-none">
         
-        	<div class="media-div" id="file-uploader">
+        	<div class="media-div">
             
-            	<noscript>
-                	<p>Please enable Javascript to upload videos.</p>
-                </noscript>
             
             	<span>Upload a video</span>
                 <input type="file" accept="image/jpeg" id="upload-video" />
