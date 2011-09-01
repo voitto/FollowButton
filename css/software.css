@@ -154,6 +154,21 @@ span {
 /* # Class and ID Styles
 ================================================== */
 
+.border {
+	border-bottom:1px solid #bbb;
+	padding:20px 0;
+	margin:0 45px;
+	
+}
+
+.align-left {
+	text-align:left;
+}
+
+.align-center {
+	text-align:center;
+}
+
 .display-none {
 	display:none;
 }
@@ -350,7 +365,7 @@ margin-top:50px !important;
 }
 
 .post {
-	margin:50px 0 10px 0;
+	margin:10px 0 10px 0;
 }
 
 #footer {

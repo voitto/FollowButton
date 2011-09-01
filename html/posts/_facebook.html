@@ -1,14 +1,14 @@
 <li>
-<div class="nested full">
-<div class="four columns">
-	<div class="polaroid">
+<!--<div class="fourteen columns">-->
+<div class="fourteen columns border" id="{{id}}">
+	<div class="polaroid float-left">
 	<img style="border:1px solid black; height:60px;width:60px;" src="{{avatar}}" />
-    <p class="caption">{{username}}</p>
+    <p class="caption align-center">{{username}}</p>
     </div>
-</div>
+<!--</div>-->
     
-<div class="ten columns" id="{{id}}">
-	<h4 class="fb-post post">{{title}}</h4>
+
+	<h4 class="fb-post post" style="margin-top:42px;">{{title}}</h4>
     <!--<p>{{body}}</p>-->
 
     
@@ -22,12 +22,14 @@
         <input class="display-none" type="submit" value="Post comment to Facebook"/>
     </form>
 
-{{#haslikes}} <br/><span>{{#likes}}{{name}} {{/likes}} and {{likecount}} others like this</span>{{/haslikes}}  
+<div style="width:500px;margin-left:250px;">
+{{#haslikes}} <br/><span class="align-center" style="text-align:center;">{{#likes}}{{name}} {{/likes}} and {{likecount}} others like this</span>{{/haslikes}}  
 
-{{#hascomments}}<br/><span>{{#comments}}<img src="{{avatar}}" style="width:30px;height:30px;" />{{name}}: {{message}}<br/>{{/comments}}</span>{{/hascomments}}  
-
-    
+{{#hascomments}}<br/><br /><br />
+<div style="margin-bottom:0px;line-height:22px;text-align:left;">{{#comments}}<img src="{{avatar}}" class="float-left" style="width:50px;height:50px;margin:5px;" /><span style="font-weight:bold;border:none;">{{name}}</span><br /><div style="margin-left:75px;">
+ {{message}}</div><br/>{{/comments}}</div>{{/hascomments}}  
 </div>
+    <br />
 </div>
 
 <br clear="all">
