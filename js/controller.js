@@ -448,7 +448,8 @@ jQuery(function($){
                                       comments.push(
                                         {
                                           'name':comms[comm]['from']['name'],
-                                          'message':comms[comm]['message']
+                                          'message':comms[comm]['message'],
+                                          'avatar':'http://graph.facebook.com/'+comms[comm]['from']['id']+'/picture?type=small'
                                         }
                                       );
                                     hascomments = true;
