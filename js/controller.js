@@ -435,7 +435,7 @@ jQuery(function($){
                                 var title = req[item]['message'];
                                 var body = req[item]['from']['name'];
                                 var avatar = 'http://graph.facebook.com/'+req[item]['from']['id']+'/picture?type=small';
-                                var comments = '';
+                                var comments = [];
                                 var likes = [];
                                 var likecount = 0;
                                 var haslikes = false;
