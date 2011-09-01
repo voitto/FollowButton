@@ -436,7 +436,45 @@ jQuery(function($){
                                 var body = req[item]['from']['name'];
                                 var avatar = 'http://graph.facebook.com/'+req[item]['from']['id']+'/picture?type=small';
                                 var comments = '';
-                                $("#everyoneStream").prepend($(Mustache.to_html(html,{'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
+                                var likes = [];
+                                var likecount = 0;
+                                var haslikes = false;
+                                var manylikes = false;
+                                var hascomments = false;
+                                if (!(undefined == req[item]['comments'])){
+                                  if (req[item]['comments']['count'] > 0){
+                                    var comms = req[item]['comments']['data'];
+                                    for (comm in comms)
+                                      comments.push(
+                                        {
+                                          'name':comms[comm]['from']['name'],
+                                          'message':comms[comm]['message']
+                                        }
+                                      );
+                                    hascomments = true;
+                                  }
+                                }
+                                if (!(undefined == req[item]['likes'])){
+                                  likes = req[item]['likes']['data'];
+                                  likecount = req[item]['likes']['count'];
+                                  if (likecount > 0)
+                                    haslikes = true;
+                                  if (likecount > 1)
+                                    manylikes = true;
+                                }
+                                $("#everyoneStream").prepend($(Mustache.to_html(html,{
+                                  'title':title,
+                                  'body':body,
+                                  'username':body,
+                                  'avatar':avatar,
+                                  'id':id,
+                                  'comments':comments,
+                                  'likes':likes,
+                                  'likecount':likecount,
+                                  'haslikes':haslikes,
+                                  'hascomments':hascomments,
+                                  'manylikes':manylikes
+                                })));
                               }
                     			  }
                           }

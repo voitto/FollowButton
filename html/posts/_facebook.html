@@ -10,7 +10,7 @@
 <div class="ten columns" id="{{id}}">
 	<h4 class="fb-post post">{{title}}</h4>
     <!--<p>{{body}}</p>-->
-    <div>{{{comments}}}</div>
+
     
     <form class="fbLike" id="{{id}}">
     <span class="fb-like" id="likebtn{{id}}">Like</span>
@@ -21,7 +21,10 @@
         <textarea rows="2" cols="20" class="display-none" id="comment{{id}}"></textarea>
         <input class="display-none" type="submit" value="Post comment to Facebook"/>
     </form>
-    
+
+{{#haslikes}} <br/><span>{{#likes}}{{name}} {{/likes}} and {{likecount}} others like this</span>{{/haslikes}}  
+
+{{#hascomments}}<br/><span>{{#comments}}{{name}}: {{message}}<br/>{{/comments}}</span>{{/hascomments}}  
 
     
 </div>
