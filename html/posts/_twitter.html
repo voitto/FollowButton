@@ -13,16 +13,21 @@
     <div>{{{comments}}}</div>
     
     <form class="twiFav" id="{{id}}">
-    	 <span class="twi-fav" id="twi-fav{{id}}">Favorite</span>
+        <div id="twi-fav-icon" class="twitter-icons"></div>
+    	 <span class="twi-fav float-left" id="twi-fav{{id}}">Favorite</span>
+         
     </form>
     
     <form class="twiRetweet" id="{{id}}">
-    	<span class="show-retweet-box">Retweet</span>
+        <div id="twi-retweet-icon" class="twitter-icons"></div>
+    	<span class="show-retweet-box float-left">Retweet</span>
+        
     	<textarea rows="2" cols="20" class="display-none retweet-textarea"></textarea>			    	<input type="button" value="Retweet" class="display-none do-retweet"/>
     </form>
     
     <form class="twiReply" id="{{id}}">
-    	<span class="show-reply-box">Reply</span>
+        <div id="twi-reply-icon" class="twitter-icons"></div>
+    	<span class="show-reply-box float-left">Reply</span>
         <textarea rows="2" cols="20" id="twi-reply{{id}}" class="display-none reply-textarea">@{{username}}</textarea>
         <input type="button" value="Tweet" class="display-none do-reply" />
     </form>

@@ -368,6 +368,37 @@ margin-top:50px !important;
 	margin:10px 0 10px 0;
 }
 
+.twitter-icons {
+
+	float:left;
+	height:16px;
+	width:16px;
+	
+}
+
+#twi-fav-icon {
+	background: url('../image/twitter-icons.png') -32px 0;
+}
+
+#twi-fav-icon:hover {
+	background:url('../image/twitter-icons.png') -48px 0;
+}
+
+#twi-retweet-icon {
+	background:url('../image/twitter-icons.png') 48px 0;
+}
+#twi-retweet-icon:hover {
+	background:url('../image/twitter-icons.png') 32px 0;
+}
+
+#twi-reply-icon {
+	background:url('../image/twitter-icons.png') 0 0;
+}
+
+#twi-reply-icon:focus {
+	background:url('../image/twitter-icons.png') 96px 0;
+}
+
 #footer {
 	height: 53px;
 	max-width:950px;
