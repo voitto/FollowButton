@@ -430,9 +430,14 @@ jQuery(function($){
                           success : function(req) {
                             var req = req['data'];
                             for (var item in req){
-                              if (!(undefined == req[item]['message'])) {
                                 var id = req[item]['id'];
-                                var title = req[item]['message'];
+                                if (req[item]['type'] == 'status')
+                                  var title = req[item]['message'];
+                                if (req[item]['type'] == 'link')
+                                  var title = req[item]['description'];
+                                if (req[item]['type'] == 'photo' &&
+                                !(undefined == req[item]['message']))
+                                  var title = req[item]['message'];
                                 var body = req[item]['from']['name'];
                                 var avatar = 'http://graph.facebook.com/'+req[item]['from']['id']+'/picture?type=small';
                                 var comments = [];
@@ -443,6 +448,10 @@ jQuery(function($){
                                 var onelike = false;
                                 var hascomments = false;
                                 var manyothers = false;
+                                var haspic = false;
+                                var pic = '';
+                                var piclink = '';
+                                var message = '';
                                 if (!(undefined == req[item]['comments'])){
                                   if (req[item]['comments']['count'] > 0){
                                     var comms = req[item]['comments']['data'];
@@ -483,6 +492,11 @@ jQuery(function($){
                                   if (likecount > 1)
                                     manyothers = true;
                                 }
+                                if (!(undefined == req[item]['picture'])) {
+                                  pic = req[item]['picture'];
+                                  piclink = req[item]['link'];
+                                  haspic = true;
+                                }
                                 $("#everyoneStream").prepend($(Mustache.to_html(html,{
                                   'title':title,
                                   'body':body,
@@ -495,10 +509,13 @@ jQuery(function($){
                                   'haslikes':haslikes,
                                   'hascomments':hascomments,
                                   'manylikes':manylikes,
-                                  'manyothers':manyothers
+                                  'manyothers':manyothers,
+                                  'onelike':onelike,
+                                  'haspic':haspic,
+                                  'pic':pic,
+                                  'piclink':piclink
                                 })));
                               }
-                    			  }
                           }
                         });
                      }
