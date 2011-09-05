@@ -440,7 +440,9 @@ jQuery(function($){
                                 var likecount = 0;
                                 var haslikes = false;
                                 var manylikes = false;
+                                var onelike = false;
                                 var hascomments = false;
+                                var manyothers = false;
                                 if (!(undefined == req[item]['comments'])){
                                   if (req[item]['comments']['count'] > 0){
                                     var comms = req[item]['comments']['data'];
@@ -473,6 +475,13 @@ jQuery(function($){
                                     haslikes = true;
                                   if (likecount > 1)
                                     manylikes = true;
+                                  else
+                                    onelike = true;
+                                  if (haslikes) {
+                                    likecount = likecount - 1;
+                                  }
+                                  if (likecount > 1)
+                                    manyothers = true;
                                 }
                                 $("#everyoneStream").prepend($(Mustache.to_html(html,{
                                   'title':title,
@@ -485,7 +494,8 @@ jQuery(function($){
                                   'likecount':likecount,
                                   'haslikes':haslikes,
                                   'hascomments':hascomments,
-                                  'manylikes':manylikes
+                                  'manylikes':manylikes,
+                                  'manyothers':manyothers
                                 })));
                               }
                     			  }
