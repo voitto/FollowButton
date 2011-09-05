@@ -444,14 +444,25 @@ jQuery(function($){
                                 if (!(undefined == req[item]['comments'])){
                                   if (req[item]['comments']['count'] > 0){
                                     var comms = req[item]['comments']['data'];
-                                    for (comm in comms)
+                                    for (comm in comms) {
+                                      var commlikes = false;
+                                      if (!(undefined == comms[comm]['likes'])) {
+                                        commlikes = true;
+                                        if (comms[comm]['likes'] > 1)
+                                          var likes = comms[comm]['likes'] + ' people';
+                                        else
+                                          var likes = comms[comm]['likes'] + ' person';
+                                      }
                                       comments.push(
                                         {
                                           'name':comms[comm]['from']['name'],
                                           'message':comms[comm]['message'],
-                                          'avatar':'http://graph.facebook.com/'+comms[comm]['from']['id']+'/picture?type=small'
+                                          'avatar':'http://graph.facebook.com/'+comms[comm]['from']['id']+'/picture?type=small',
+                                          'likes':likes,
+                                          'haslikes':commlikes
                                         }
                                       );
+                                    }
                                     hascomments = true;
                                   }
                                 }
