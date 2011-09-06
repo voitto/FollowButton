@@ -8,7 +8,7 @@
 <!--</div>-->
     
 
-	<h4 class="fb-post post" style="margin-top:42px;">{{title}}</h4>
+	<h4 class="fb-post post" style="margin-top:42px;">{{#haspic}}<a href="{{piclink}}"><img src="{{pic}}"/></a>{{/haspic}} {{title}}</h4>
     <!--<p>{{body}}</p>-->
 
     
@@ -23,11 +23,11 @@
     </form>
 
 <div style="width:500px;margin-left:250px;">
-{{#haslikes}} <br/><span class="align-center" style="text-align:center;">{{#likes}}{{name}} {{/likes}} and {{likecount}} others like this</span>{{/haslikes}}  
+{{#haslikes}} <br/><span class="align-center" style="text-align:center;">{{#likes}}{{name}} {{/likes}} {{#manylikes}}and {{likecount}} other{{#manyothers}}s{{/manyothers}}&nbsp;like {{/manylikes}}{{#onelike}}likes {{/onelike}} this</span>{{/haslikes}}  
 
 {{#hascomments}}<br/><br /><br />
 <div style="margin-bottom:0px;line-height:22px;text-align:left;">{{#comments}}<img src="{{avatar}}" class="float-left" style="width:50px;height:50px;margin:5px;" /><span style="font-weight:bold;border:none;">{{name}}</span><br /><div style="margin-left:75px;">
- {{message}}</div><br/>{{/comments}}</div>{{/hascomments}}  
+ {{message}} {{#haslikes}}(liked by {{likes}} ){{/haslikes}}</div><br/>{{/comments}}</div>{{/hascomments}}  
 </div>
     <br />
 </div>
