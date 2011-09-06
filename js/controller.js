@@ -430,9 +430,14 @@ jQuery(function($){
                           success : function(req) {
                             var req = req['data'];
                             for (var item in req){
-                              if (!(undefined == req[item]['message'])) {
                                 var id = req[item]['id'];
-                                var title = req[item]['message'];
+                                if (req[item]['type'] == 'status')
+                                  var title = req[item]['message'];
+                                if (req[item]['type'] == 'link')
+                                  var title = req[item]['description'];
+                                if (req[item]['type'] == 'photo' &&
+                                !(undefined == req[item]['message']))
+                                  var title = req[item]['message'];
                                 var body = req[item]['from']['name'];
                                 var avatar = 'http://graph.facebook.com/'+req[item]['from']['id']+'/picture?type=small';
                                 var comments = [];
@@ -440,18 +445,35 @@ jQuery(function($){
                                 var likecount = 0;
                                 var haslikes = false;
                                 var manylikes = false;
+                                var onelike = false;
                                 var hascomments = false;
+                                var manyothers = false;
+                                var haspic = false;
+                                var pic = '';
+                                var piclink = '';
+                                var message = '';
                                 if (!(undefined == req[item]['comments'])){
                                   if (req[item]['comments']['count'] > 0){
                                     var comms = req[item]['comments']['data'];
-                                    for (comm in comms)
+                                    for (comm in comms) {
+                                      var commlikes = false;
+                                      if (!(undefined == comms[comm]['likes'])) {
+                                        commlikes = true;
+                                        if (comms[comm]['likes'] > 1)
+                                          var likes = comms[comm]['likes'] + ' people';
+                                        else
+                                          var likes = comms[comm]['likes'] + ' person';
+                                      }
                                       comments.push(
                                         {
                                           'name':comms[comm]['from']['name'],
                                           'message':comms[comm]['message'],
-                                          'avatar':'http://graph.facebook.com/'+comms[comm]['from']['id']+'/picture?type=small'
+                                          'avatar':'http://graph.facebook.com/'+comms[comm]['from']['id']+'/picture?type=small',
+                                          'likes':likes,
+                                          'haslikes':commlikes
                                         }
                                       );
+                                    }
                                     hascomments = true;
                                   }
                                 }
@@ -462,6 +484,18 @@ jQuery(function($){
                                     haslikes = true;
                                   if (likecount > 1)
                                     manylikes = true;
+                                  else
+                                    onelike = true;
+                                  if (haslikes) {
+                                    likecount = likecount - 1;
+                                  }
+                                  if (likecount > 1)
+                                    manyothers = true;
+                                }
+                                if (!(undefined == req[item]['picture'])) {
+                                  pic = req[item]['picture'];
+                                  piclink = req[item]['link'];
+                                  haspic = true;
                                 }
                                 $("#everyoneStream").prepend($(Mustache.to_html(html,{
                                   'title':title,
@@ -474,10 +508,14 @@ jQuery(function($){
                                   'likecount':likecount,
                                   'haslikes':haslikes,
                                   'hascomments':hascomments,
-                                  'manylikes':manylikes
+                                  'manylikes':manylikes,
+                                  'manyothers':manyothers,
+                                  'onelike':onelike,
+                                  'haspic':haspic,
+                                  'pic':pic,
+                                  'piclink':piclink
                                 })));
                               }
-                    			  }
                           }
                         });
                      }
