@@ -208,12 +208,10 @@ jQuery(function($){
 		var linkText = $("#linkText").val();
 		$.ajax({
 			type     : "POST",
-			url      : "../model/links.php",
+			url      : "/links/parseLink",
 			data     : {"linkText":linkText},
 			dataType : "json",
 			success: function(data){
-				//alert(data["title"]);
-				//alert(data["title2"]);
 				
 				$("#link-div").html('');
 				$("#indicator").show();

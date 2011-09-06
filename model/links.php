@@ -1,6 +1,12 @@
 <?php
 
-if (isset($_POST['linkText']) && !isset($session)) {
+class Links extends MulletMapper {
+	
+	function parseLink() {
+		
+		
+
+if (isset($_POST['linkText'])) {
 
 $link = $_POST['linkText'];
 
@@ -8,9 +14,9 @@ if (!strstr($link, 'http://')) $link = 'http://' . $link;
 
 $buffer = file_get_contents($link);
 
-$session = $_SESSION[$buffer];
-
 }
+
+
 
 	// Find the title of the page.
 	
@@ -59,9 +65,10 @@ $session = $_SESSION[$buffer];
 	}	
 	
 	
-	$data = array("title"=>$title,"text"=>$text,"image"=>$image,"link"=>$link);
-	$data = json_encode($data);
+	echo json_encode(array("title"=>$title,"text"=>$text,"image"=>$image,"link"=>$link));
+	exit;
+	}
 	
-	echo $data;
+}
 
 ?>
