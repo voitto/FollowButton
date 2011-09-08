@@ -2,6 +2,22 @@
 
 class Posts extends MulletMapper {
 	
+	function fileUpload() {
+		
+		$id = 1;
+		
+		foreach ($_FILES['files']['tmp_name'] as $file) {
+		
+		$destination = "/var/www/ben/uploads/".$id.".jpg";
+		
+		$id++;
+		
+		$result = move_uploaded_file($file, $destination);
+		
+		};
+		//print_r($files);
+	}
+	
 	function __construct() {
     /*
 	      validates_presence_of   :firstname, :lastname
