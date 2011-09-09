@@ -31,7 +31,7 @@ jQuery(function($){
 	"click #shareLink"   	  : "shareLink",
 	"click #attachLink"  	  : "attachLink",
 	"click #sharePhoto" 	  : "sharePhoto",
-	"change #upload-photo"	  : "submitPhoto",
+	"click #start-upload"	  : "submitPhoto",
 	"change #upload-video" 	  : "uploadVideo",
 	//"click #submit-photo"	  : "submitPhoto",
 	"click #submit-video"	  : "submitVideo",
@@ -64,10 +64,10 @@ jQuery(function($){
 	},
 	
 	submitPhoto: function() {
-		$("#submit-photo").show();
+		//$("#submit-photo").show();
 		 $('#upload-photo').fileupload({
         dataType: 'json',
-        url: '../model/upload-photo.php',
+        url: '/posts/fileUpload',
         done: function (data) {
 			alert(data);
             $.each(data.result, function (index, file) {
@@ -75,6 +75,7 @@ jQuery(function($){
             });
         }
     });
+	return false;
 	},
 	
 	submitVideo: function() {

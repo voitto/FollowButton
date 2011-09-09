@@ -79,9 +79,9 @@
             <div class="fileupload-buttonbar">
                 <label class="fileinput-button">
                     <span>Add files...</span>
-                    <input type="file" name="files[]" multiple>
+                    <input type="file" id="upload-photo" name="files[]" multiple>
                 </label>
-                <button type="submit" class="start">Start upload</button>
+                <button type="submit" id="start-upload" class="start">Start upload</button>
                 <button type="reset" class="cancel">Cancel upload</button>
                 <button type="button" class="delete">Delete files</button>
             </div>
@@ -116,6 +116,10 @@
     </div>
     </div>
     
+    <span id="facebook-notif" class="notifs">2</span>
+    <span id="twitter-notif" class="notifs">2</span>
+    <span id="gplus-notif" class="notifs">2</span>
+    <span id="followbutton-notif" class="notifs">2</span>
     
     <div id="icons-div">
         <a id="facebook-icon" href="/profiles/facebook"><img src="image/facebook-grey.png" class="social-icons" /></a>
