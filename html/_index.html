@@ -74,23 +74,16 @@
                 <input type="file" id="upload-photo" />
                 <span class="display-none media-error" id="photo-error">Photo must have a .jpeg, .gif, or .png file extension.</span>
                 <input type="submit" value="Upload Photo" id="submit-photo" class="display-none" />-->
-                 <div id="fileupload">
-        <form action="/posts/fileUpload" method="POST" enctype="multipart/form-data">
-            <div class="fileupload-buttonbar">
-                <label class="fileinput-button">
-                    <span>Add files...</span>
-                    <input type="file" id="upload-photo" name="files[]" multiple>
-                </label>
-                <button type="submit" id="start-upload" class="start">Start upload</button>
-                <button type="reset" class="cancel">Cancel upload</button>
-                <button type="button" class="delete">Delete files</button>
-            </div>
-        </form>
-        <div class="fileupload-content">
-            <table class="files"></table>
-            <div class="fileupload-progressbar"></div>
-        </div>
-    </div>  
+        
+                      <form class="upload" action="/posts/fileUpload" method="POST" enctype="multipart/form-data">
+                          <input type="file" name="files[]" multiple>
+                          <button>Upload</button>
+                          <div>Upload photos</div>
+                      </form>
+
+                      <table class="upload_files"></table>
+                      <table class="download_files"></table>
+        
             
             </div>
         

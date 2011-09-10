@@ -857,6 +857,53 @@ jQuery(function($){
          				alert('sorry, there was an error loading the page');
               } else  {
                 $("#partials").html($(Mustache.to_html(tpl, req)));
+                
+                
+                    var count = 0;
+                    var done = 0;
+                    $('.upload').fileUploadUI({
+                        uploadTable: $('.upload_files'),
+                        downloadTable: $('.download_files'),
+                        buildUploadRow: function (files, index) {
+                          var length = 0;
+                            for ( var p in files )
+                            {
+                              if (files.hasOwnProperty(p))
+                                length++;
+                            }
+                            count = length;
+                            var file = files[index];
+                            return $(
+                                '<tr>' +
+                                '<td>' + file.name + '<\/td>' +
+                                '<td class="file_upload_progress"><div><\/div><\/td>' +
+                                '<td class="file_upload_cancel">' +
+                                '<div class="ui-state-default ui-corner-all ui-state-hover" title="Cancel">' +
+                                '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
+                                '<\/div>' +
+                                '<\/td>' +
+                                '<\/tr>'
+                            );
+                        },
+                        buildDownloadRow: function (file) {
+                            return $(
+                                '<tr><td>' + file.name + '<\/td><\/tr>'
+                            );
+                        },
+                        onComplete: function (event, files, index, xhr, handler) {
+
+
+                          if (index == (count - 1)) {
+
+                            $('#yield').trigger('getTemplate',{'resource':'albums','action':'show','id':'{{albumkey}}'});
+                          }
+
+
+                        }
+                    });
+                
+                
+                
       	      }
             }
           })
