@@ -132,7 +132,7 @@ $combined = array();
     }
     */
     if (isset($post->text)) {
-        $newcomb['id'] = $post->id;
+        $newcomb['id'] = $post->id_str;
         $newcomb['text'] = $post->text;
         $newcomb['name'] = $post->user->screen_name;
         $newcomb['image'] = $post->user->profile_image_url;

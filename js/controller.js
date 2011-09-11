@@ -373,7 +373,10 @@ jQuery(function($){
 	},
 	
 	twclick: function(){
-    $("#everyoneStream").html('');
+
+	  if (!($("#twitter-icon img").attr('src') == "image/twitter-color.png"))
+      $("#everyoneStream").html('');
+
 
    $.ajax({
      contentType: 'application/json',
@@ -400,14 +403,34 @@ jQuery(function($){
                        data : JSON.stringify({}),
                        url : '/profiles/twitterstream',
                        success : function(req) {
+                         req.reverse();
                          for (var item in req){
                            if (!(undefined == req[item]['user'])) {
-                             var id = req[item]['id_str'];
-                             var title = req[item]['text'];
-                             var body = req[item]['user']['screen_name'];
-                             var avatar = req[item]['user']['profile_image_url'];
-                             var comments = '';
-                             $("#everyoneStream").prepend($(Mustache.to_html(html,{'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
+
+
+
+                            var id = req[item]['id_str'];
+
+
+                   				  var newc = true;
+                   				  $('#everyoneStream li').each(function(index) {
+                               if ($(this).find(".twiReply").attr('id') == id) newc = false;
+                             });
+                             if (newc == true) {
+
+                               var title = req[item]['text'];
+                               var body = req[item]['user']['screen_name'];
+                               var avatar = req[item]['user']['profile_image_url'];
+                               var comments = '';
+                               $("#everyoneStream").prepend($(Mustache.to_html(html,{'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
+
+                             }
+
+
+
+
+
+
                            }
                  			  }
                        }
@@ -422,7 +445,10 @@ jQuery(function($){
     },
 	
 	fbclick: function(){
-   $("#everyoneStream").html('');
+
+	  if (!($("#facebook-icon img").attr('src') == "image/facebook-color.png"))
+      $("#everyoneStream").html('');
+
    $.ajax({
      contentType: 'application/json',
      dataType: 'json',
@@ -450,7 +476,19 @@ jQuery(function($){
                           success : function(req) {
                             var req = req['data'];
                             for (var item in req){
-                                var id = req[item]['id'];
+                              
+                              var id = req[item]['id'];
+  
+                              var newc = true;
+                    				  $('#everyoneStream li').each(function(index) {
+                                if ($(this).find(".fbComment").attr('id') == id) newc = false;
+                              });
+                              
+                              if (newc == false)
+                                 continue;
+                    				  
+                              
+                              
                                 if (req[item]['type'] == 'status')
                                   var title = req[item]['message'];
                                 if (req[item]['type'] == 'link')
@@ -683,17 +721,15 @@ jQuery(function($){
                           	url : 'html/posts/_twitter.html',
                             success : function(html) {
                       				for (var item in everyoneItems){
-                      				  title = everyoneItems[item]['title'];
-                      				  body = everyoneItems[item]['body'];
-                      				  comments = everyoneItems[item]['comments'];
                       				  id = everyoneItems[item]['id'];
-                      				  avatar = everyoneItems[item]['enclosure'][0]['url'];
                       				  var newc = true;
                       				  $('#everyoneStream li').each(function(index) {
                                   if ($(this).find(".twiReply").attr('id') == id) newc = false;
                                 });
-                                if (newc == true)
-                                  $("#everyoneStream").prepend($(Mustache.to_html(html, {'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
+                                if (newc == true) {
+                                  $("#twitter-icon").trigger('click');
+                                  return false;
+                                }
                       			  }
                             }
                           });
@@ -706,17 +742,15 @@ jQuery(function($){
                           	url : 'html/posts/_facebook.html',
                             success : function(html) {
                       				for (var item in everyoneItems){
-                      				  title = everyoneItems[item]['title'];
-                      				  body = everyoneItems[item]['body'];
-                      				  comments = everyoneItems[item]['comments'];
                       				  id = everyoneItems[item]['id'];
-                      				  avatar = everyoneItems[item]['enclosure'][0]['url'];
                       				  var newc = true;
                       				  $('#everyoneStream li').each(function(index) {
                                   if ($(this).find(".fbComment").attr('id') == id) newc = false;
                                 });
-                                if (newc == true)
-                                  $("#everyoneStream").prepend($(Mustache.to_html(html, {'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
+                                if (newc == true) {
+                                  $("#facebook-icon").trigger('click');
+                                  return false;
+                                }
                       			  }
                             }
                           });
