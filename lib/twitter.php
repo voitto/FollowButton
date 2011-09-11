@@ -193,6 +193,24 @@ class Twitter {
 	  return @curl_exec($ch);
 	}
 
+  function favorite( $statusid ) {
+	  $tk = new TwitterToken();
+	  $req = OAuthRequest::from_consumer_and_token(
+		  $this->consumer,
+		  $this->token,
+		  'POST',
+		  $tk->api_root.'/favorites/create/'.$statusid.'.xml',
+		  array( 'id' => $statusid )
+		);
+	  $req->sign_request(
+		  $this->method,
+		  $this->consumer,
+		  $this->token
+		);
+	  $response = $this->http( $req->get_normalized_http_url(), $req->to_postdata() );
+	  return $response.' '.$tk->api_root.'/favorites/create/'.$statusid.'.json';
+  }	
+
   function retweet( $statusid ) {
 	  $tk = new TwitterToken();
 	  $req = OAuthRequest::from_consumer_and_token(

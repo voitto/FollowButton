@@ -49,10 +49,31 @@ jQuery(function($){
     "click #facebook-icon"    : "fbclick",
     "click #twitter-icon"     : "twclick",
     "click #saveSettings"     : "saveSettings",
-    "click #gplus-icon"       : "gclick"
+    "click #gplus-icon"       : "gclick",
+    "click .twi-fav"          : "doFavorite"
     
 	},
 	
+	doFavorite: function(e) {
+	  var objid = e.originalEvent.target.parentNode.id;
+		$.ajax({
+      contentType: 'application/json',
+      dataType: 'json',
+			type : 'POST',
+			data : JSON.stringify({'objid':objid}),
+      url : '/posts/favorite',
+			success: function(req){
+			  alert(req['msg']);
+        if (false == req['ok']) {
+  			  alert('so not cool, bro');
+        } else  {
+  			  $("#twi-fav"+objid).hide();
+	      }
+			}
+		});
+		return false;
+	},
+
 	everyoneFilter: function(e) {
 		var criteria = e.originalEvent.target.value;
 		//alert(criteria);
@@ -381,7 +402,7 @@ jQuery(function($){
                        success : function(req) {
                          for (var item in req){
                            if (!(undefined == req[item]['user'])) {
-                             var id = req[item]['id'];
+                             var id = req[item]['id_str'];
                              var title = req[item]['text'];
                              var body = req[item]['user']['screen_name'];
                              var avatar = req[item]['user']['profile_image_url'];

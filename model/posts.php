@@ -76,6 +76,20 @@ class Posts extends MulletMapper {
   	);
 	}
 
+	function favorite() {
+    $arr = json_decode(file_get_contents('php://input'));
+    session_start();
+    require_once 'lib/twitter.php';
+    require_once 'lib/OAuth.php';
+    $t = new Twitter( TW_KEY, TW_SEC );
+    $t->authorize_from_access( $_SESSION['twit_token'], $_SESSION['twit_secret'] );
+    $response = $t->favorite($arr->objid);
+  	return array(
+  		'ok'=>true,
+  		'msg'=>$response
+  	);
+	}
+
 	function retweet() {
     $arr = json_decode(file_get_contents('php://input'));
     session_start();
