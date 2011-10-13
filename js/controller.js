@@ -423,6 +423,12 @@ jQuery(function($){
                                var avatar = req[item]['user']['profile_image_url'];
                                var comments = '';
                                $("#everyoneStream").prepend($(Mustache.to_html(html,{'title':title,'body':body,'username':body,'avatar':avatar,'id':id,'comments':comments})));
+                               $('#everyoneStream').linkify({
+                                  handleLinks: function (links) {
+                                      links
+                                          .css('color', '#00F');
+                                    }
+                                }); 
 
                              }
 
@@ -573,6 +579,13 @@ jQuery(function($){
                                   'pic':pic,
                                   'piclink':piclink
                                 })));
+                                $('#everyoneStream').linkify({
+                                   handleLinks: function (links) {
+                                       links
+                                           .css('color', '#00F');
+                                     }
+                                 }); 
+                                
                               }
                           }
                         });
