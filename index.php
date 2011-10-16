@@ -1,31 +1,27 @@
 <?php
 
 require 'config.php';
-require 'lib/Klein.php';
+require 'lib/Moor.php';
 
-respond( 'GET',      '/changes',                 'changes' );
-respond( 'GET',      '/[:resource]',             'constructor' );
-respond( 'POST',     '/[:resource]',             'constructor' );
-respond( 'PUT',      '/[:resource]/[:id]',       'constructor' );
-respond( 'DELETE',   '/[:resource]/[:id]',       'constructor' );
-respond( 'GET',      '/[:resource]/[:action]',   'constructor' );
-respond( 'POST',     '/[:resource]/[:action]',   'constructor' );
-respond( 'GET',      '/',                        'index' );
+Moor::route( '/changes', 'changes' );
+Moor::route( '/:resource/:id([0-9A-Za-z_-]+)', 'constructor' );
+Moor::route( '/:resource', 'constructor' );
+Moor::route( '/', 'index' );
 
-function constructor($request,$response) {
+function constructor() {
   require 'lib/Mullet.php';
-  $model = 'model/'.$request->resource.".php";
+  $model = 'model/'.$_GET['resource'].".php";
   if (file_exists($model)) include $model;
-  $action = strtolower($request->method());
-  if (isset($request->action))
-    $action = $request->action;
-  $mapper = ucwords($request->resource);
+  $action = strtolower($_SERVER['REQUEST_METHOD']);
+  if (isset($_GET['id']) && in_array($action,array('get','post')))
+    $action = $_GET['id'];
+  $mapper = ucwords($_GET['resource']);
   if (class_exists($mapper))
     $obj = new $mapper;
   header('HTTP/1.1 200 OK');
   header('Content-Type: application/json');
   if (isset($obj) && method_exists($obj,$action))
-    echo json_encode($obj->$action($request,$response))."\n";
+    echo json_encode($obj->$action())."\n";
   else
     echo json_encode(array(
       'error'=>'internal error',
@@ -33,7 +29,7 @@ function constructor($request,$response) {
     ));
 }
 
-function index($request,$response) {
+function index() {
   require 'lib/Mustache.php';
   $m = new Mustache;
   session_start();
@@ -43,7 +39,7 @@ function index($request,$response) {
   echo $m->render(file_get_contents('html/index.html'),$params);
 }
 
-function changes( $request, $response ) {
+function changes() {
   require 'lib/Mustache.php';
   $m = new Mustache;
 
@@ -212,5 +208,6 @@ function render_items($titems) {
   return $items;
 }
 
+Moor::run();
 
-dispatch();
+

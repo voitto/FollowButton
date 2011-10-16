@@ -6,15 +6,15 @@ class Profiles extends MulletMapper {
     $this->validates_uniqueness_of( 'username' );
   }
 
-  function get( $request, $response ) {
+  function get() {
     return array();
   }
   
-  function put( $request, $response ) {
+  function put() {
     return array();
   }
 
-  function login( $request, $response ) {
+  function login() {
     $arr = json_decode(file_get_contents('php://input'));
     $conn = new Mullet();
     $coll = $conn->user->profiles;
@@ -31,7 +31,7 @@ class Profiles extends MulletMapper {
     return array('ok'=>false);
   }
 
-  function register( $request, $response ) {
+  function register() {
     $arr = json_decode(file_get_contents('php://input'));
     $conn = new Mullet();
     $coll = $conn->user->profiles;
@@ -56,11 +56,11 @@ class Profiles extends MulletMapper {
     return array('ok'=>false);
   }
   
-  function index( $request, $response ) {
+  function index() {
     return array('ok'=>true,'username'=>'cow-man');
   }
   
-  function _settings( $request, $response ) {
+  function _settings() {
     session_start();
     $conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
     $coll = $conn->user->profiles;
@@ -92,26 +92,26 @@ class Profiles extends MulletMapper {
     return array('ok'=>false);
   }
   
-  function _privacy( $request, $response ) {
+  function _privacy() {
     return array();
   }
   
-  function _following( $request, $response ) {
+  function _following() {
     return array();
   }
   
-  function _appearance( $request, $response ) {
+  function _appearance() {
     return array();
   }
   
-  function loggedin( $request, $response ) {
+  function loggedin() {
     session_start();
     if (isset($_SESSION['current_user']))
       return array( 'ok'=>true,'username'=>$_SESSION['current_user'] );
     return array( 'ok'=>false );
   }
   
-  function logout( $request, $response ) {
+  function logout() {
     session_start();
     unset($_SESSION['current_user']);
     if (!isset($_SESSION['current_user']))
@@ -119,14 +119,14 @@ class Profiles extends MulletMapper {
     return array( 'ok'=>false );
   }
 
-  function post( $request, $response ) {
+  function post() {
   }
 
-  function delete( $request, $response ) {
+  function delete() {
     return array();
   }
   
-  function checkAvail ( $request, $response ) {
+  function checkAvail () {
     $arr = json_decode(file_get_contents('php://input'));
     $conn = new Mullet();
     $coll = $conn->user->profiles;
@@ -140,7 +140,7 @@ class Profiles extends MulletMapper {
     return array('ok'=>true);
   }
 
-  function facebook( $request, $response ) {
+  function facebook() {
     session_start();
     require 'lib/facebook.php';
     $return = 'http://'.$_SESSION['current_user'].'.followbutton.com/profiles/facebook';
@@ -178,7 +178,7 @@ class Profiles extends MulletMapper {
     redirect_to('http://'.$_SESSION['current_user'].'.followbutton.com');  
   }
 
-  function facebookstream( $request, $response ) {
+  function facebookstream() {
     session_start();
     require 'lib/facebook.php';
     $return = 'http://'.$_SESSION['current_user'].'.followbutton.com/profiles/facebook';
@@ -195,7 +195,7 @@ class Profiles extends MulletMapper {
     exit;
   }
   
-  function twitter( $request, $response ) {
+  function twitter() {
     session_start();
   	require_once 'lib/twitter.php';
   	require_once 'lib/OAuth.php';
@@ -225,7 +225,7 @@ class Profiles extends MulletMapper {
     redirect_to('http://'.$_SESSION['current_user'].'.followbutton.com');
   }
 
-  function twitterstream( $request, $response ) {
+  function twitterstream() {
     session_start();
   	require_once 'lib/twitter.php';
   	require_once 'lib/OAuth.php';
@@ -235,14 +235,14 @@ class Profiles extends MulletMapper {
     exit;
   }
   
-  function hastwitter( $request, $response ) {
+  function hastwitter() {
    session_start();
    if (isset($_SESSION['twit_token']))
      return array('ok'=>true);
    return array('ok'=>false,'user'=>$_SESSION['current_user']);
   }
 
-  function hasfacebook( $request, $response ) {
+  function hasfacebook() {
    session_start();
    $conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
    $coll = $conn->user->profiles;
@@ -257,7 +257,7 @@ class Profiles extends MulletMapper {
    return array('ok'=>false,'user'=>$_SESSION['current_user']);
   }
   
-  function savesettings( $request, $response ) {
+  function savesettings() {
     $arr = json_decode(file_get_contents('php://input'));
     session_start();
     $conn = new Mullet();
@@ -287,14 +287,14 @@ class Profiles extends MulletMapper {
     );
   }
   
-  function hasgplus( $request, $response ) {
+  function hasgplus() {
    session_start();
    if (isset($_SESSION['g_token']))
      return array('ok'=>true);
    return array('ok'=>false,'user'=>$_SESSION['current_user']);
   }
 
-  function gplusstream( $request, $response ) {
+  function gplusstream() {
     session_start();
   	require_once 'lib/buzz.php';
   	require_once 'lib/OAuth.php';
@@ -304,7 +304,7 @@ class Profiles extends MulletMapper {
     exit;
   }
     
-  function gplus( $request, $response ) {
+  function gplus() {
     session_start();
     $return = 'https://followbutton.com/gplus';
   	require_once 'lib/buzz.php';
@@ -335,7 +335,7 @@ class Profiles extends MulletMapper {
     redirect_to('http://'.$_SESSION['current_user'].'.followbutton.com/?stream=gplus');
   }
   
-  function _gplus( $request, $response ) {
+  function _gplus() {
     return array('username'=>$_SESSION['current_user']);
   }
 
