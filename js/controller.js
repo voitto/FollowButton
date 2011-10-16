@@ -498,10 +498,11 @@ jQuery(function($){
                                 if (req[item]['type'] == 'status')
                                   var title = req[item]['message'];
                                 if (req[item]['type'] == 'link')
-                                  var title = req[item]['description'];
+                                  var title = req[item]['message'];
                                 if (req[item]['type'] == 'photo' &&
                                 !(undefined == req[item]['message']))
                                   var title = req[item]['message'];
+                                if (!(undefined == req[item]['description']))
                                 var body = req[item]['from']['name'];
                                 var avatar = 'http://graph.facebook.com/'+req[item]['from']['id']+'/picture?type=small';
                                 var comments = [];
