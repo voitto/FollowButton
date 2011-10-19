@@ -34,6 +34,8 @@ function index() {
   $m = new Mustache;
   session_start();
   $params = array();
+  if (!isset($_SESSION['base_url']))
+    $_SESSION['base_url'] = current_url();
   if (isset($_SESSION['current_user']))
     $params['username'] = $_SESSION['current_user'];
   echo $m->render(file_get_contents('html/index.html'),$params);
@@ -46,7 +48,7 @@ function changes() {
   $tpl = 'html/changes.json';
   session_start();
 	require 'lib/facebook.php';
-	$return = 'http://'.$_SESSION['current_user'].'.followbutton.com/profiles/facebook';
+	$return = $_SESSION['base_url'].'profiles/facebook';
 	require 'lib/Mullet.php';
   $conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
   $coll = $conn->user->profiles;
@@ -207,6 +209,20 @@ function render_items($titems) {
   }
   return $items;
 }
+
+function current_url(){
+  $url = "";
+  if ($_SERVER["HTTPS"] != "on")
+    $url .= "http://";
+  else
+    $url .= "https://";
+  if ($_SERVER["SERVER_PORT"] == "80")
+    $url .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+  else
+    $url .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+  return $url;
+}
+
 
 Moor::run();
 

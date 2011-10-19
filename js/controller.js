@@ -386,7 +386,7 @@ jQuery(function($){
      url : '/profiles/hastwitter',
      success : function(req) {
        if (false == req['ok']) {
-         window.location.href = 'http://'+req['user']+'.followbutton.com/profiles/twitter';
+         window.location.href = '/profiles/twitter';
        } else  {
          $("#twitter-icon img").attr('src',"image/twitter-color.png");
          $("#facebook-icon img").attr('src',"image/facebook-grey.png");
@@ -463,7 +463,7 @@ jQuery(function($){
      url : '/profiles/hasfacebook',
      success : function(req) {
        if (false == req['ok']) {
-         window.location.href = 'http://'+req['user']+'.followbutton.com/profiles/facebook';
+         window.location.href = '/profiles/facebook';
        } else  {
          $("#twitter-icon img").attr('src',"image/twitter-grey.png");
          $("#facebook-icon img").attr('src',"image/facebook-color.png");
@@ -704,7 +704,7 @@ jQuery(function($){
           if (false == req['ok']) {
      				alert('sorry, there was an error logging out');
           } else  {
-            window.location.href = 'http://followbutton.com/';
+            window.location.href = '/';
   	      }
         }
       })

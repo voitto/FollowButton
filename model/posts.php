@@ -44,7 +44,7 @@ class Posts extends MulletMapper {
 
     session_start();
   	require 'lib/facebook.php';
-  	$return = 'http://'.$_SESSION['current_user'].'.followbutton.com/profiles/facebook';
+  	$return = $_SESSION['base_url'].'profiles/facebook';
 
 
     $coll = $conn->user->profiles;
@@ -112,7 +112,7 @@ class Posts extends MulletMapper {
 
     session_start();
   	require 'lib/facebook.php';
-  	$return = 'http://'.$_SESSION['current_user'].'.followbutton.com/profiles/facebook';
+  	$return = $_SESSION['base_url'].'profiles/facebook';
 
 
     $coll = $conn->user->profiles;
@@ -147,7 +147,7 @@ class Posts extends MulletMapper {
   	if ($arr->sendfb == 1) {
       session_start();
     	require 'lib/facebook.php';
-    	$return = 'http://'.$_SESSION['current_user'].'.followbutton.com/profiles/facebook';
+    	$return = $_SESSION['base_url'].'profiles/facebook';
 
 
       $coll = $conn->user->profiles;

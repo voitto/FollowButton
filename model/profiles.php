@@ -143,7 +143,7 @@ class Profiles extends MulletMapper {
   function facebook() {
     session_start();
     require 'lib/facebook.php';
-    $return = 'http://'.$_SESSION['current_user'].'.followbutton.com/profiles/facebook';
+    $return = $_SESSION['base_url'].'profiles/facebook';
     $f = new Facebook( FB_SEC, FB_AID, $return );
     if (!isset($_GET['oauth_token'])) {
       $token = $f->request_token();
@@ -175,13 +175,13 @@ class Profiles extends MulletMapper {
         $user
       );
     }
-    redirect_to('http://'.$_SESSION['current_user'].'.followbutton.com');  
+    redirect_to($_SESSION['base_url']);  
   }
 
   function facebookstream() {
     session_start();
     require 'lib/facebook.php';
-    $return = 'http://'.$_SESSION['current_user'].'.followbutton.com/profiles/facebook';
+    $return = $_SESSION['base_url'].'profiles/facebook';
     $conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
     $coll = $conn->user->profiles;
     $cursor = $coll->find(array(
@@ -222,7 +222,7 @@ class Profiles extends MulletMapper {
     $result = $coll->remove(array(
       'username' => $_SESSION['current_user']
     ));
-    redirect_to('http://'.$_SESSION['current_user'].'.followbutton.com');
+    redirect_to($_SESSION['base_url']);
   }
 
   function twitterstream() {
@@ -306,7 +306,7 @@ class Profiles extends MulletMapper {
     
   function gplus() {
     session_start();
-    $return = 'https://followbutton.com/gplus';
+    $return = $_SESSION['base_url'].'profiles/gplus';
   	require_once 'lib/buzz.php';
   	require_once 'lib/OAuth.php';
   	$b = new buzz(GG_KEY,GG_SEC,$return);
@@ -332,7 +332,7 @@ class Profiles extends MulletMapper {
     $result = $coll->remove(array(
       'username' => $_SESSION['current_user']
     ));
-    redirect_to('http://'.$_SESSION['current_user'].'.followbutton.com/?stream=gplus');
+    redirect_to($_SESSION['base_url'].'?stream=gplus');
   }
   
   function _gplus() {
