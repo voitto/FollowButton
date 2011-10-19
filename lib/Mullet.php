@@ -77,7 +77,9 @@ class Mullet {
 	      break;
 		  case 'mongodb':
 	      $this->dbclass = 'MulletMongoDB';
-			    $this->conn = new Mongo();
+			  $this->conn = new Mongo(
+			    "mongodb://".DATABASE_USER.":".DATABASE_PASSWORD."@".DATABASE_HOST.":".DATABASE_PORT."/".DATABASE_NAME
+			  );
 	      break;
   		case 'couchdb':
         require_once 'lib/couch.php';
@@ -457,7 +459,70 @@ class MulletRemote extends MulletDatabase {
 
 class MulletMySQL extends MulletDatabase {
 
+	function create_fields_if_not_exists( $doc, $name ) {
+	  
+		$table = $this->name."_".$name;
+    $sql = "SHOW columns FROM ".$table;
+
+		if (class_exists('PDO')) {
+
+  		try {
+  		    $statement = $this->conn->prepare( $sql );
+  		    $statement->execute();
+  		    $results = $statement->fetchAll(PDO::FETCH_CLASS,get_class((object)array()));
+  				$columns = array();
+  				foreach($results as $k=>$v)
+  				  $columns[] = $v->Field;
+  		    foreach ($doc as $k=>$v)
+  		      if (in_array($k,$columns))
+  		        continue;
+  			    elseif (is_string($k) && is_array($v))
+  				    $this->conn->query( 'ALTER TABLE '.$table.' ADD COLUMN '.$k.' longblob' );
+  				  elseif (is_string($k) && is_string($v))
+  				    $this->conn->query( 'ALTER TABLE '.$table.' ADD COLUMN '.$k.' text' );
+  				  elseif (is_string($k) && is_object($v))
+  				    $this->conn->query( 'ALTER TABLE '.$table.' ADD COLUMN '.$k.' longblob' );
+  				  elseif (is_string($k) && is_integer($v))
+  				    $this->conn->query( 'ALTER TABLE '.$table.' ADD COLUMN '.$k.' integer' );
+    			  elseif (is_string($k) && is_integer((integer)$v))
+  				    $this->conn->query( 'ALTER TABLE '.$table.' ADD COLUMN '.$k.' integer' );
+  		} catch (PDOException $err) {
+  			echo $err->getMessage();
+  		}
+
+		  
+		} else {
+			
+
+	    $result = mysql_query( $sql );
+			$columns = array();
+	    while ($v = mysql_fetch_assoc($result))
+    	  $columns[] = $v['Field'];
+	    foreach ($doc as $k=>$v)
+	      if (in_array($k,$columns))
+	        continue;
+		    elseif (is_string($k) && is_array($v))
+    	    $result = mysql_query( 'ALTER TABLE '.$table.' ADD COLUMN '.$k.' longblob'  );
+			  elseif (is_string($k) && is_string($v))
+    	    $result = mysql_query('ALTER TABLE '.$table.' ADD COLUMN '.$k.' text' );
+			  elseif (is_string($k) && is_object($v))
+    	    $result = mysql_query('ALTER TABLE '.$table.' ADD COLUMN '.$k.' longblob' );
+			  elseif (is_string($k) && is_integer($v))
+    	    $result = mysql_query( 'ALTER TABLE '.$table.' ADD COLUMN '.$k.' integer'  );
+			  elseif (is_string($k) && is_integer((integer)$v))
+    	    $result = mysql_query( 'ALTER TABLE '.$table.' ADD COLUMN '.$k.' integer' );
+
+
+		  
+		}
+
+
+	}
+
+
 	function create_if_not_exists( $doc, $name ) {
+	  if (!is_object($doc) && isset($doc[0]))
+	    $doc= $doc[0];
     $query = "CREATE TABLE IF NOT EXISTS ".$this->name."_".$name." (";
     foreach ($doc as $k=>$v)
       if (in_array($k,array('keyname','jsonval')))
@@ -470,6 +535,8 @@ class MulletMySQL extends MulletDatabase {
 		    $query .= "$k BLOB(512),";
 		  elseif (is_string($k) && is_integer($v))
 		    $query .= "$k int(11),";
+		  elseif (is_string($k) && is_integer((integer)$v))
+		    $query .= "$k int(11),";
     $query .= " 
       keyname VARCHAR(255) PRIMARY KEY NOT NULL UNIQUE,
       jsonval TEXT )";
@@ -477,28 +544,31 @@ class MulletMySQL extends MulletDatabase {
 			$this->conn->query($query);
 		else
 			mysql_query( $query );
+		$this->create_fields_if_not_exists( $doc, $name );
 	}
 
 	function insert_doc( $doc, $collname ) {
+
+		$vals = array();
+    foreach ($doc as $k=>$v)
+      if (in_array($k,array('keyname','jsonval')))
+        continue;
+      elseif (is_string($k) && is_array($v))
+		    $vals[':'.$k] = base64_encode(serialize($v));
+		  elseif (is_string($k) && is_string($v))
+		    $vals[':'.$k] = mysql_escape_string($v);
+		  elseif (is_string($k) && is_object($v))
+		    $vals[':'.$k] = base64_encode(serialize($v));
+		  elseif (is_string($k) && is_integer($v))
+		    $vals[':'.$k] = $v;
+		  elseif (is_string($k) && is_integer((integer)$v))
+		    $vals[':'.$k] = $v;
+	  $query = "REPLACE INTO ".$this->name."_".$collname." (";
+	  foreach(array_keys($vals) as $k)
+	    $query .= substr($k,1).",";
+	  $query .= "keyname,jsonval) VALUES (";
+
 		if (class_exists('PDO')) {
-			$vals = array();
-	    foreach ($doc as $k=>$v)
-	      if (in_array($k,array('keyname','jsonval')))
-	        continue;
-	      elseif (is_string($k) && is_array($v))
-			    $vals[':'.$k] = base64_encode(serialize($v));
-			  elseif (is_string($k) && is_string($v))
-			    $vals[':'.$k] = mysql_escape_string($v);
-			  elseif (is_string($k) && is_object($v))
-			    $vals[':'.$k] = base64_encode(serialize($v));
-			  elseif (is_string($k) && is_integer($v))
-			    $vals[':'.$k] = $v;
-			  elseif (is_string($k) && is_integer((integer)$v))
-			    $vals[':'.$k] = $v;
-		  $query = "REPLACE INTO ".$this->name."_".$collname." (";
-		  foreach(array_keys($vals) as $k)
-		    $query .= substr($k,1).",";
-		  $query .= "keyname,jsonval) VALUES (";
 		  foreach(array_keys($vals) as $k)
 		    $query .= "$k,";
 	    $query .= ":keyname,:jsonval);";
@@ -512,7 +582,14 @@ class MulletMySQL extends MulletDatabase {
 			}
 			return true;
 		} else {
-		  $query = "REPLACE INTO ".$this->name."_".$collname." (keyname,jsonval) VALUES ('".md5(uniqid(rand(), true))."','".serialize( $doc )."');";
+		  foreach($vals as $k=>$v)
+        if (in_array($k,array('keyname','jsonval')))
+          continue;
+        elseif (is_string($k) && is_integer($v))
+	        $query .= "$v".",";
+  		  else
+	        $query .= "'$v'".",";
+	    $query .= "'".md5(uniqid(rand(), true))."','".serialize( $doc )."');";
 			$result = mysql_query( $query );
 			if ($result)
 			  return true;
@@ -521,28 +598,28 @@ class MulletMySQL extends MulletDatabase {
 	}
 
 	function remove_doc( $criteria, $collname ) {
+	  $query = "DELETE FROM ".$this->name."_".$collname." WHERE ";
+	  $and = '';
+	  $result = false;
+    foreach ($criteria as $c)
+	    foreach ($c as $k=>$v) {
+	      if (is_string($k) && is_string($v))
+			    $query .= $and . "$k = '$v' ";
+			  elseif (is_string($k) && is_integer($v))
+			    $query .= $and . "$k = $v ";
+			  $and = 'and ';
+		  }
 		if (class_exists('PDO')) {
-		  $query = "DELETE FROM ".$this->name."_".$collname." WHERE ";
-		  $and = '';
-	    foreach ($criteria as $c)
-		    foreach ($c as $k=>$v) {
-		      if (is_string($k) && is_string($v))
-				    $query .= $and . "$k = '$v' ";
-				  elseif (is_string($k) && is_integer($v))
-				    $query .= $and . "$k = $v ";
-				  $and = 'and ';
-			  }
 			$result = $this->conn->exec( $query );
-			if ($result) 
-			  return true;
 		} else {
-			// XXX
+			$result = mysql_query( $query );
 		}
+		if ($result) 
+		  return true;
 		return false;
 	}
 
 	function update_doc( $criteria, $newobj, $collname ) {
-		if (class_exists('PDO')) {
 		  $query = "UPDATE ".$this->name."_".$collname." SET ";
 		  $vals = array( ':jsonval' => serialize( $newobj ) );
 	    foreach ($newobj as $n)
@@ -558,8 +635,13 @@ class MulletMySQL extends MulletDatabase {
 				  elseif (is_string($k) && is_integer((integer)$v))
 				    $vals[':'.$k] = $v;
 				  $comma = '';
-				  foreach(array_keys($vals) as $k){
-				    $query .= $comma.substr($k,1)."=".$k;
+				  foreach($vals as $k=>$v){
+            if (class_exists('PDO'))
+  				    $query .= $comma.substr($k,1)."=".$k;
+  				  elseif (is_integer($v))
+  				    $query .= $comma.substr($k,1)."=".$v;
+  				  else
+  				    $query .= $comma.substr($k,1)."='".$v."'";
 					  $comma = ",";
 				  }
 		  $query .= " WHERE ";
@@ -572,15 +654,17 @@ class MulletMySQL extends MulletDatabase {
 				    $query .= $and . "$k = $v ";
 				  $and = 'and ';
 				}
-					try {
-				    $statement = $this->conn->prepare( $query );
-				    $statement->execute( $vals );
-					} catch (PDOException $err) {
-						echo $err->getMessage();
-					}
-					return true;
+    if (class_exists('PDO')) {
+			try {
+		    $statement = $this->conn->prepare( $query );
+		    $statement->execute( $vals );
+			} catch (PDOException $err) {
+				echo $err->getMessage();
+			}
+			return true;
 		} else {
-			// XXX
+      $result = mysql_query( $query );
+      return true;
 		}
 		return false;
 	}
@@ -608,7 +692,7 @@ class MulletMySQL extends MulletDatabase {
 	    unset($criteria['limit']);
     }
 	  $results = false;
-    $query = "SELECT keyname, jsonval FROM ".$this->name."_".$collname;
+    $query = "SELECT * FROM ".$this->name."_".$collname;
 	  if ($criteria)
 	    $query .= " WHERE ";
 	  $and = '';
@@ -624,14 +708,19 @@ class MulletMySQL extends MulletDatabase {
   	if (class_exists('PDO')) {
 			try {
 		    $statement = $this->conn->prepare( $query );
-		    $statement->execute( $vals );
+		    $statement->execute();
 			} catch (PDOException $err) {
 				echo $err->getMessage();
 			}
 	    $results = $statement->fetchAll(PDO::FETCH_CLASS,get_class((object)array()));
 		} else {
 			$result = mysql_query( $query );
-			$results = mysql_fetch_assoc( $result );
+			$i = 0;
+			$results = array();
+			while ($res = mysql_fetch_assoc($result)) {
+			  $results[$i] = (object)$res;
+			  $i++;
+			}
 		}
 	  return new MulletIterator($results);
   }
@@ -1076,27 +1165,57 @@ class MulletMongoDB extends MulletDatabase {
    }
    
    function remove_doc( $criteria, $collname ) {
-	   //print_r($criteria);
-//	   exit;
-	   $dbname = $this->name;
-	   $db = $this->conn->$dbname;
-	   $coll = $db->$collname;
-	   $coll->remove($criteria);
+
+     $dbname = DATABASE_NAME;
+     $db = $this->conn->$dbname;
+     $collname = $this->name."_".$collname;
+     $coll = $db->$collname;
+     $crit = array();
+     foreach ($criteria as $c) {
+      if (isset($c['id'])) {
+        $mongoID = new MongoID($c['id']);
+        $c['_id'] = $mongoID;
+        unset($c['id']);
+      }
+      foreach($c as $k=>$v)
+        $crit[$k] = $v;
+     }
+     $coll->remove($crit,true);
+
    }
 
    function update_doc( $criteria, $newobj, $collname ) {
-	   $dbname = $this->name;
-	   $db = $this->conn->$dbname;
-	   $coll = $db->$collname;
-	   $coll->update($criteria,$newobj,array("multiple"=>true));
+
+     $dbname = DATABASE_NAME;
+     $db = $this->conn->$dbname;
+     $collname = $this->name."_".$collname;
+     $coll = $db->$collname;
+     $crit = array();
+     foreach ($criteria as $c) {
+      if (isset($c['id'])) {
+        $mongoID = new MongoID($c['id']);
+        $c['_id'] = $mongoID;
+        unset($c['id']);
+      }
+      foreach($c as $k=>$v)
+        $crit[$k] = $v;
+     }
+     if (isset($newobj[0]['id']))
+       unset($newobj[0]['id']);
+     if (isset($newobj[0]['ok']))
+       unset($newobj[0]['ok']);
+     $coll->update($crit,array('$set'=>$newobj[0]),array("multiple"=>true));
 
    }
 
    function insert_doc( $doc, $collname ) {
-	   $dbname = $this->name;
-	   $db = $this->conn->$dbname;
-	   $coll = $db->$collname;
-	   $coll->insert($doc);
+
+      $dbname = DATABASE_NAME;
+      $db = $this->conn->$dbname;
+      $collname = $this->name."_".$collname;
+      $coll = $db->$collname;
+      $coll->insert($doc);
+
    }
 
 function count( $collname ) {
@@ -1106,28 +1225,41 @@ function validate_uniqueness_of( $collname, $key, $newval ) {
 }
 
 function find( $collname, $criteria = false ) {
-	
-	$dbname = $this->name;
+
+	$dbname = DATABASE_NAME;
 	$db = $this->conn->$dbname;
+	$collname = $this->name."_".$collname;
 	$coll = $db->$collname;
-	if (!$criteria) $result = $coll->find();
+	$data = array();
+	if (!$criteria)
+	  $cursor = $coll->find();
 	else
-	$result = $coll->find($criteria);
-	return $result;
-	//foreach ($obj as $key=>$val)
-//      if (in_array($key,array('keyname','jsonval')))
-	
-	//return new MulletIterator($result->results);
-	//foreach ($cursor as $obj) {
-//		echo $obj[$criteria] . " ";
-//	}
-	
-	//foreach ($cursor as $obj) {
-//		echo $obj[$criteria] . "\n";
-//	}
-	
-	   
-	
+	  $cursor = $coll->find($criteria);
+  foreach ($cursor as $doc) {
+    $result = (array)$doc;
+	  $item = new stdClass;
+    $_id = $result['_id'];
+    $key = '$id';
+		foreach($result as $k=>$v)
+		  if (!in_array($k,array('_id')))
+		    $item->$k = $v;
+	  if (!isset($item->id))
+	    $item->id = $_id->$key;
+    $item->keyname = $_id->$key;
+	  if (!$criteria)
+		  $data[] = $item;
+		else {
+		  $match = false;
+		    foreach ($criteria as $k=>$v) {
+          if ($item->$k == $v)
+            $match = true;
+				}
+		  if ($match)
+		    $data[] = $item;
+		}
+	}
+  return new MulletIterator($data);
+
 }
 
    function find_one( $collname ) {
