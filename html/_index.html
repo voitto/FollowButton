@@ -140,7 +140,11 @@
         <ul class="tabs-content">
       <!-- Give ID that matches HREF of above anchors -->
             <li id="MeTab">
-            
+               <div style="padding:30px;">
+
+                 <a style="color:black;" href="javascript:(function(){var i = document.createElement('iframe'); i.setAttribute('id', 'worker'); var url = 'http://{{username}}.followbutton.com/html/bookmarklet.html'; url = url + '?url=' + encodeURIComponent(location.href); url = url + '?title=' + encodeURIComponent(document.title); i.src = url; i.setAttribute('style', 'z-index: 1000;left:10px;top:10px;width:168px; position: fixed;width:168px;height: 100px; border: 3px solid #red; background-color: #ffffff;'); setTimeout('top.document.body.removeChild(document.getElementById(&quot;worker&quot;))', 3000); document.body.appendChild(i);})();">DRAG THIS TO TOOLBAR</a>
+
+                 </div>
             <input type="text" id="me-filter" placeholder="Filter Stream" />
             
             	<div class="one-half column">

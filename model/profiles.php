@@ -338,5 +338,38 @@ class Profiles extends MulletMapper {
   function _gplus() {
     return array('username'=>$_SESSION['current_user']);
   }
+  
+  function followbutton() {
+    session_start();
+    $conn = new Mullet();
+    $coll = $conn->user->bookmarks;
+    $result = $coll->insert(array(
+      'url' => $_POST['url'],
+      'title' => $_POST['title']
+    ));
+    $contents = file_get_contents($_POST['url']);
+    $pattern = '~(<link[^>]+)/?>~i';
+    $feeds = array();
+    $result = @preg_match_all($pattern, $contents, $matches);
+    if (isset($matches[1]) && count($matches[1]) > 0) {
+      foreach ($matches[1] as $link) {
+        if (!mb_check_encoding($link, 'UTF-8'))
+          $link = mb_convert_encoding($link, 'UTF-8');
+        $link = html_entity_decode($link, ENT_QUOTES, "utf-8");
+        $xml = @simplexml_load_string(rtrim($link, ' /') . ' />');
+        if ($xml === false)
+          continue;
+        $attributes = $xml->attributes();
+        if (!isset($attributes['rel']) || !@preg_match('~^(?:alternate|service\.feed)~i', $attributes['rel']))
+          continue;
+        if (!isset($attributes['type']) || !@preg_match('~^application/(?:atom|rss|rdf)\+xml~', $attributes['type']))
+          continue;
+        if (!isset($attributes['href']))
+          continue;
+        $feeds[] = $attributes['href'];
+      }
+    }
+    return $feeds;
+  }
 
 }

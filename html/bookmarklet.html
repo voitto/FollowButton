@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js">
+</script>
+<script>
+$(document).ready(function(){
+
+// unescape() could also be used in place of decodeURIComponent()
+var iframeUrl = decodeURIComponent(location.href);
+
+// urlComponents[0] contains 'http://page...iframe-test.html'
+// urlComponents[1] contains 'url=[URL of current page]'
+// urlComponents[2] contains 'title=[Title of current page]'
+var urlComponents = iframeUrl.split('?');
+
+// currentUrl[0] contains 'url'
+// currentUrl[1] contains '[URL of current page]'
+var currentUrl = urlComponents[1].split('=');
+
+// title[0] contains 'title'
+// title[1] contains '[Title of current page]'
+var title = urlComponents[2].split('=');
+	
+	//alert("url: " + currentUrl[1] + "\n\n" + "title: " + title[1]);
+	
+$.ajax({
+	type: 'POST',
+	url : '/profiles/followbutton',
+	data: {"url":currentUrl[1], "title":title[1]},
+	success:function(data) {
+		alert(title[1] + "\n\n" + currentUrl[1] + "\n\n" + data);
+	}
+});
+
+return false;
+	
+});
+</script>
+</head>
+
+<body>
+
+</body>
+</html>
