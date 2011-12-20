@@ -220,11 +220,23 @@ class Profiles extends MulletMapper {
   	  $_SESSION['token_secret'],
   	  $twittok->oauth_verifier
   	);
-  	$_SESSION['twit_token'] = $atoken;
-    $_SESSION['twit_secret'] = $asecret;
     $result = $coll->remove(array(
       'username' => $_SESSION['current_user']
     ));
+    $conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
+    $coll = $conn->user->profiles;
+    $cursor = $coll->find(array(
+      'username' => $_SESSION['current_user']
+    ));
+    if ($cursor->hasNext()) {
+      $user = $cursor->getNext();
+      $user->twitter_token = $atoken;
+      $user->twitter_secret = $asecret;
+      $result = $coll->update(
+        array( 'username' => $_SESSION['current_user'] ),
+        array($user)
+      );
+    }
     redirect_to($_SESSION['base_url']);
   }
 
@@ -232,17 +244,33 @@ class Profiles extends MulletMapper {
     session_start();
   	require_once 'lib/twitter.php';
   	require_once 'lib/OAuth.php';
-  	$t = new Twitter( TW_KEY, TW_SEC );
-  	$t->authorize_from_access(  $_SESSION['twit_token'], $_SESSION['twit_secret'] );
-    echo $t->friends_timeline();
+    $conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
+    $coll = $conn->user->profiles;
+    $cursor = $coll->find(array(
+      'username' => $_SESSION['current_user']
+    ));
+    if ($cursor->hasNext()) {
+      $user = $cursor->getNext();
+    	$t = new Twitter( TW_KEY, TW_SEC );
+    	$t->authorize_from_access(  $user->twitter_token, $user->twitter_secret );
+      echo $t->friends_timeline();
+    }
     exit;
   }
   
   function hastwitter() {
-   session_start();
-   if (isset($_SESSION['twit_token']))
-     return array('ok'=>true);
-   return array('ok'=>false,'user'=>$_SESSION['current_user']);
+    session_start();
+    $conn = new Mullet(REMOTE_USER,REMOTE_PASSWORD);
+    $coll = $conn->user->profiles;
+    $cursor = $coll->find(array(
+      'username' => $_SESSION['current_user']
+    ));
+    if ($cursor->hasNext()) {
+      $user = $cursor->getNext();
+      if (!empty($user->twitter_token))
+        return array('ok'=>true);
+    }
+    return array('ok'=>false,'user'=>$_SESSION['current_user']);
   }
 
   function hasfacebook() {

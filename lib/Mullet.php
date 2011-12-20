@@ -365,11 +365,13 @@ class MulletRemote extends MulletDatabase {
 	}
 
 	function update_doc( $criteria, $newobj, $collname ) {
+	  if (!is_array($newobj))
+	    $newobj = array($newobj);
 	  $url = 'https://datamullet.com/'.$this->name.'/'.$collname.'/_update';
 		$data = $this->post(
 			$url,
       array(
-	      'newobj'=>json_encode(array($newobj)),
+	      'newobj'=>json_encode($newobj),
 	      'criteria'=>json_encode(array($criteria))
       ),
 			array(
